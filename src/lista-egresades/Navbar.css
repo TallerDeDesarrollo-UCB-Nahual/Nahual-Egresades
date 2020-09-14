@@ -1,0 +1,16 @@
+.menu{
+    background-color: #87D734;
+    height: 80;
+}
+
+.logo{
+    margin: 10px;
+    height: 60px;
+}
+
+.nav-title{
+    color: white;
+    margin: 10px;
+    position: absolute;
+    top: 20px;
+}
