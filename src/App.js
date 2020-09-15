@@ -8,8 +8,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" component={Navbar} />
-        <Route exact path="/table" component={Nahual_Table} />
+        <Route exact path="/" component={Nahual_Table} />
       </Switch>
     </Router>
   );
