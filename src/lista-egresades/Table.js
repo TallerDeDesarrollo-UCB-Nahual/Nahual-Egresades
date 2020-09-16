@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Icon, Label, Menu, Table } from 'semantic-ui-react'
+import { Icon, Label, Menu, Table } from 'semantic-ui-react';
+import Modal from '../utils/modal/Modal';
 import Navbar from './Navbar';
 import './Table.css';
 import edit from '../images/edit.png';
@@ -13,6 +14,7 @@ export default class Nahual_Table extends Component{
 constructor(){
   super();
   this.state = {
+    openModal: false,
     egresades: [
       {
         "fullName": "clodomiro saavedra perez",
@@ -60,9 +62,14 @@ constructor(){
         "module": "Testing Automation"
       }
     ]
-  }
-  
+  }  
  
+}
+openModal(){
+  this.setState({openModal: true});
+}
+closeModal(){
+  this.setState({openModal: false});
 }
 render() {
   return (
@@ -113,12 +120,13 @@ render() {
               <img src={edit} className="icon"></img>
               <label className="icon-text">Editar</label>
               <img src={see} className="icon"></img>
-              <label className="icon-text">Ver</label>
+              <label onClick={this.openModal.bind(this)} className="icon-text">Ver</label>
             </Table.Cell>
           </Table.Row>
         ))}
         </Table.Body>
-
+        <Modal open={this.state.openModal}
+        closeModal={this.closeModal.bind(this)}/>
         <Table.Footer>
           <Table.Row>
             <Table.HeaderCell colSpan='4' className="no-border">
