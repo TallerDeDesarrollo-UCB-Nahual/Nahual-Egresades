@@ -26,9 +26,10 @@ export default class Nahual_Table extends Component {
           "quarter": 1,
           "englishLevel": "Basico",
           "firstJobName": "Tsoft",
-          "linkedin": "https://linkedin/clodomiro",
+          "linkedin": "https://www.linkedin.com/clodomiro",
+          "campus": "buenos aires",
           "isEmployed": true,
-          "module": "Testing funcional"
+          "moduleCompleted": "Testing funcional"
         },
         {
           "fullName": "Test 2",
@@ -41,9 +42,10 @@ export default class Nahual_Table extends Component {
           "quarter": 1,
           "englishLevel": "Intermedio",
           "firstJobName": "Tsoft",
-          "linkedin": "https://linkedin/clodomiro",
+          "linkedin": "https://www.linkedin.com/clodomiro",
+          "campus": "buenos aires",
           "isEmployed": true,
-          "module": "Testing funcional"
+          "moduleCompleted": "Testing funcional"
         },
         {
           "fullName": "Test 3",
@@ -56,9 +58,10 @@ export default class Nahual_Table extends Component {
           "quarter": 1,
           "englishLevel": "Intermedio",
           "firstJobName": "Tsoft",
-          "linkedin": "https://linkedin/clodomiro",
+          "linkedin": "https://www.linkedin.com/clodomiro",
+          "campus": "buenos aires",
           "isEmployed": true,
-          "module": "Testing Automation"
+          "moduleCompleted": "Testing Automation"
         }
       ]
     }
@@ -105,7 +108,7 @@ export default class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.egresades.map((value) => (
+              {this.state.egresades.map((value,i) => (
                 <Table.Row>
                   <Table.Cell className="table-border">
                     <Label className="name" >{value.fullName}</Label><br></br>
@@ -121,15 +124,13 @@ export default class Nahual_Table extends Component {
                     <label className="icon-text">Editar</label>
 
 
-                    <Modal value={this} name={value.fullName} open={this.state.openModal}
-                      closeModal={this.closeModal.bind(this)} />
+                    <Modal graduate={value}  open={this.state.openModal}
+                      closeModal={this.closeModal.bind(this)} key={i}/>
 
                   </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
-
-
             <Table.Footer>
               <Table.Row>
                 <Table.HeaderCell colSpan='4' className="no-border">
