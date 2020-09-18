@@ -1,7 +1,7 @@
-import React from 'react'
-import { Button, Header, Image, Modal, Grid } from 'semantic-ui-react'
-import see from '../../../../images/see.png';
-import LogoNahual from '../../../../images/proyecto-nahual.webp'
+import React from 'react';
+import { Button, Image, Modal, Grid } from 'semantic-ui-react';
+import './Modal.css';
+import LogoNahual from '../../../../images/proyecto-nahual.webp';
 import BodyModal from './Body-modal';
 
 function ModalExampleModal(graduate) {
@@ -13,10 +13,9 @@ function ModalExampleModal(graduate) {
       onOpen={() => setOpen(true)}
       size="small"
       closeIcon
-      trigger={<Button className="button">
-        <img src={see} className="icon"></img>
-        <label className="icon-text">Ver</label>
-      </Button>}
+      trigger={ 
+      <Button> <i class="eye icon"></i>
+        <label className="icon-text">Ver</label> </Button>}
     >
           <Modal.Header>
           <Grid>
@@ -27,10 +26,9 @@ function ModalExampleModal(graduate) {
 
       <Modal.Content image>
         <Image size='medium' src='https://react.semantic-ui.com/images/avatar/large/rachel.png' wrapped />
-
         <BodyModal graduate ={graduate}/>
-
       </Modal.Content>
+
       <Modal.Actions>
         <Button color='grey' onClick={() => setOpen(false)}>
           Atras

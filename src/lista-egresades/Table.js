@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Icon, Label, Menu, Table } from 'semantic-ui-react';
+import { Icon, Label, Button, Menu, Table } from 'semantic-ui-react';
 import Modal from '../components/egresade/view-egresade/modal/Modal';
 import Navbar from './Navbar';
 import './Table.css';
-import edit from '../images/edit.png';
 import filter from '../images/filter.png';
 import imp from '../images/imp.png';
 import search from '../images/search.png'
@@ -71,9 +70,6 @@ export default class Nahual_Table extends Component {
     this.setState({ openModal: true });
     console.log(event.target.value);
   }
-  closeModal() {
-    this.setState({ openModal: false });
-  }
   render() {
     return (
       <div>
@@ -108,7 +104,7 @@ export default class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.egresades.map((value,i) => (
+              {this.state.egresades.map((value, i) => (
                 <Table.Row>
                   <Table.Cell className="table-border">
                     <Label className="name" >{value.fullName}</Label><br></br>
@@ -119,14 +115,14 @@ export default class Nahual_Table extends Component {
                   </Table.Cell>
                   <Table.Cell className="table-border">
                     <Label className="card-green">• {value.module}</Label></Table.Cell>
+
                   <Table.Cell colSpan="3" className="table-border">
-                    <img src={edit} className="icon"></img>
-                    <label className="icon-text">Editar</label>
+                    <Button className="view-button">
+                      <i class="edit icon"></i>
+                      <label className="icon-text">Editar</label> </Button>
 
 
-                    <Modal graduate={value}  open={this.state.openModal}
-                      closeModal={this.closeModal.bind(this)} key={i}/>
-
+                    <Modal graduate={value} open={this.state.openModal} />
                   </Table.Cell>
                 </Table.Row>
               ))}
