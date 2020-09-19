@@ -1,11 +1,28 @@
-.card-link{
+.card-lightBlue{
     background-color: #8ec5df;
     border-radius: 40px;
     padding: 5px 10px;
     color: #120fb9;
+    width: max-content;
 }
-.ui-input{
-    width: auto;
-    vertical-align: none;
-    
+
+.card-lightGreen{
+    background-color: #84d388;
+    border-radius: 40px;
+    padding: 5px 10px;
+    color: #0f6607;
+    width: max-content;
+}
+
+/* #form-data{
+    vertical-align: top !important;
+} */
+
+.ui.form .inline.field:not(.wide) .ui.input {
+  width: 50%;
+  vertical-align: top !important;
+}
+
+.title-data {
+    font-size: 1.1rem;
 }

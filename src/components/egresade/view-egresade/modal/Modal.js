@@ -54,7 +54,7 @@ function ModalExampleModal(graduate) {
               <Header as='h3'> <Icon name='linkedin' />Linkedin</Header>
               <Grid columns='equal'>
                 <Grid.Column></Grid.Column>
-                <Grid.Column width={15}><a className="card-link" href={graduate.graduate.linkedin} target="_blank">• {graduate.graduate.linkedin} </a></Grid.Column>
+                <Grid.Column width={15}><a className="card-lightBlue" href={graduate.graduate.linkedin} target="_blank">• {graduate.graduate.linkedin} </a></Grid.Column>
               </Grid>
 
 

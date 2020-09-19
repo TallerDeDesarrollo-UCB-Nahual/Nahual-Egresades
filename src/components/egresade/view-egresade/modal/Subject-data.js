@@ -7,13 +7,13 @@ function SubjectData({ graduate }) {
       <Grid.Column>
         <Header as='h3'> <Icon name='graduation' />Cursos Realizados</Header>
         <Grid columns='equal'>
-        <Grid.Column/>
+          <Grid.Column />
           <Grid.Column floated="right" width={11}>
-            <Icon color='green' name='check' /> {graduate.graduate.module}
+            <Icon color='green' name='check' /> <span className="card-green">{graduate.graduate.module}</span>
           </Grid.Column>
 
           <Grid.Column floated="left" width={4}>
-            {graduate.graduate.graduationYear}
+            <span className="card-green">{graduate.graduate.graduationYear}</span>
           </Grid.Column>
         </Grid>
       </Grid.Column>
