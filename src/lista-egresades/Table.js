@@ -66,10 +66,10 @@ export default class Nahual_Table extends Component {
     }
   }
 
-  openModal(event) {
+  openModal() {
     this.setState({ openModal: true });
-    console.log(event.target.value);
   }
+
   render() {
     return (
       <div>
@@ -118,9 +118,9 @@ export default class Nahual_Table extends Component {
 
                   <Table.Cell colSpan="3" className="table-border">
                     <Button className="view-button">
-                      <i class="edit icon"></i>
-                      <label className="icon-text">Editar</label> </Button>
-
+                      <i className="edit icon"></i>
+                      <label className="icon-text">Editar</label>
+                    </Button>
 
                     <Modal graduate={value} open={this.state.openModal} />
                   </Table.Cell>

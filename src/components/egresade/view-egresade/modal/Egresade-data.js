@@ -14,7 +14,7 @@ function EgresadeData({ graduate }) {
             <p> <Icon name='level up alternate'/><b>Nivel de inglés: </b>{graduate.graduate.englishLevel}</p>
             <p> <Icon name='home'/><b>Sede: </b>{graduate.graduate.campus}</p>
             <p> <Icon name='map outline'/><b>Nodo: </b>{graduate.graduate.nodeName}</p>
-            <p> <Icon name='linkedin'/><b>Linkedin: </b><a href={graduate.graduate.linkedin} target="_blank">{graduate.graduate.linkedin} </a></p>
+            {/* <p> <Icon name='linkedin'/><b>Linkedin: </b><a href={graduate.graduate.linkedin} target="_blank">{graduate.graduate.linkedin} </a></p> */}
             
           </Item.Description>
         </Item.Content>
