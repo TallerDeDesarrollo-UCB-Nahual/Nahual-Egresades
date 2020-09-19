@@ -28,7 +28,7 @@ export default class Nahual_Table extends Component {
           "linkedin": "https://www.linkedin.com/clodomiro",
           "campus": "buenos aires",
           "isEmployed": true,
-          "moduleCompleted": "Testing funcional"
+          "module": "Testing funcional"
         },
         {
           "fullName": "Test 2",
@@ -44,7 +44,7 @@ export default class Nahual_Table extends Component {
           "linkedin": "https://www.linkedin.com/clodomiro",
           "campus": "buenos aires",
           "isEmployed": true,
-          "moduleCompleted": "Testing funcional"
+          "module": "Testing funcional"
         },
         {
           "fullName": "Test 3",
@@ -60,7 +60,7 @@ export default class Nahual_Table extends Component {
           "linkedin": "https://www.linkedin.com/clodomiro",
           "campus": "buenos aires",
           "isEmployed": true,
-          "moduleCompleted": "Testing Automation"
+          "module": "Testing Automation"
         }
       ]
     }
