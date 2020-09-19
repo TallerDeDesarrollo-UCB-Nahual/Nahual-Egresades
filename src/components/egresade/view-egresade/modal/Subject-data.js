@@ -5,7 +5,7 @@ function SubjectData({ graduate }) {
   return (
     <Grid.Row>
       <Grid.Column>
-        <Header as='h3'> <Icon name='graduation' />Cursos Realizados</Header>
+        <Header as='h3'> <Icon name='graduation' />Módulo Cursado</Header>
         <Grid columns='equal'>
           <Grid.Column />
           <Grid.Column floated="right" width={11}>
