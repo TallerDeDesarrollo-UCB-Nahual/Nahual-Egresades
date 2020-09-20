@@ -59,10 +59,21 @@ constructor(){
         "isEmployed": true,
         "module": "Testing Automation"
       }
-    ]
+    ],
+    api: []
   }
-  
- 
+}
+
+componentDidMount(){
+  fetch(`https://shielded-sands-50510.herokuapp.com/api/graduates`)
+  .then( res => {
+    return res.json()
+  })
+  .then( res => {
+    let dat = res;
+    console.log(dat);
+    this.setState({api: dat.resultSet})  
+  })
 }
 render() {
   return (
@@ -98,7 +109,7 @@ render() {
         </Table.Header>
 
         <Table.Body>
-        {this.state.egresades.map((value) => (
+        {this.state.api.map((value) => (
           <Table.Row>
             <Table.Cell className="table-border">
               <Label className="name">{value.fullName}</Label><br></br>

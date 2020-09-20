@@ -121,6 +121,7 @@ table{
     border: 1px solid #6D5BD0 !important;   
     border-radius: 10px;
     padding: 8px;
+    padding-left: 36px;
     width: 300px;
     background-color: #F4F2FF;
 }
