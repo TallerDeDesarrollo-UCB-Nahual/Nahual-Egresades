@@ -65,14 +65,14 @@ constructor(){
 }
 
 componentDidMount(){
-  fetch(`https://shielded-sands-50510.herokuapp.com/api/graduates`)
+  fetch(`https://mighty-anchorage-20911.herokuapp.com/api/students/`)
   .then( res => {
     return res.json()
   })
   .then( res => {
     let dat = res;
     console.log(dat);
-    this.setState({api: dat.resultSet})  
+    this.setState({api: dat.response})  
   })
 }
 render() {
