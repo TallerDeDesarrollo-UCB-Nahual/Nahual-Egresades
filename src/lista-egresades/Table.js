@@ -122,7 +122,7 @@ export default class Nahual_Table extends Component {
                       <label className="icon-text">Editar</label>
                     </Button>
 
-                    <Modal graduate={value} open={this.state.openModal} />
+                    <Modal graduate={value.id} open={this.state.openModal} />
                   </Table.Cell>
                 </Table.Row>
               ))}

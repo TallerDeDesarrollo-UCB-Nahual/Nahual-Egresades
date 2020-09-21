@@ -1,25 +1,54 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Button, Image, Modal, Grid, GridRow, Icon, Header } from 'semantic-ui-react';
 import './Modal.css';
 import LogoNahual from '../../../../images/proyecto-nahual.webp';
-import EgresadeData from "./Egresade-data";
-import SubjectData from "./Subject-data";
+import EgresadeData from "./EgresadeData";
+import SubjectData from "./SubjectData";
 
-function ModalExampleModal(graduate) {
-  const [open, setOpen] = React.useState(false)
-  console.log(graduate);
+class ModalExampleModal extends Component {
+  constructor(graduateId) {
+    super(graduateId);
+    this.state = {
+      open: false
+    };
+  }
+
+  getGraduateAPI() {
+    const API_URL = `https://mighty-anchorage-20911.herokuapp.com/api/students/`;
+    fetch(`${API_URL}${this.graduateId}`)
+      .then(response => {
+        this.setState({
+          graduate: response.data.response
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  setOpen(state){
+    this.setState({
+      open: state
+    });
+  }
+
+
+  render() {
+    console.log(this);
+    console.log(this.graduateId);
   return (
     <Modal
-      open={open}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      open={this.state.open}
+      onClose={() => this.setOpen(false)}
+      onOpen={() => this.setOpen(true)}
       size="small"
       closeIcon
       trigger={
-        <Button>
+        <Button onClick={() => (this.getGraduateAPI(this.graduateId))}>
           <i className="eye icon"></i>
           <label className="icon-text">Ver</label>
         </Button>}
+        
     >
       <Modal.Header>
         <Grid columns='equal'>
@@ -27,7 +56,7 @@ function ModalExampleModal(graduate) {
             <Image src={LogoNahual} size='small' />
           </Grid.Column>
           <Grid.Column width={11}>
-            <h1>{graduate.graduate.fullName}</h1>
+            {/* <h1>{this.state.graduate.fullName}</h1>  */}
           </Grid.Column>
         </Grid>
       </Modal.Header>
@@ -41,12 +70,12 @@ function ModalExampleModal(graduate) {
             <Grid.Column width={1}>
             </Grid.Column>
             <Grid.Column width={9}>
-              <EgresadeData graduate={graduate} />
+              {/* <EgresadeData graduate={this.state.graduate} /> */}
             </Grid.Column>
           </Grid.Row>
           <Grid.Row>
             <Grid.Column>
-              <SubjectData graduate={graduate} />
+              {/* <SubjectData graduate={this.state.graduate} /> */}
             </Grid.Column>
           </Grid.Row>
           <GridRow>
@@ -54,10 +83,8 @@ function ModalExampleModal(graduate) {
               <Header as='h3'> <Icon name='linkedin' />Linkedin</Header>
               <Grid columns='equal'>
                 <Grid.Column></Grid.Column>
-                <Grid.Column width={15}><a className="card-lightBlue" href={graduate.graduate.linkedin} target="_blank">• {graduate.graduate.linkedin} </a></Grid.Column>
+                {/* <Grid.Column width={15}><a className="card-lightBlue" href={this.state.graduate} target="_blank">• {this.state.graduate.linkedin} </a></Grid.Column> */}
               </Grid>
-
-
 
             </Grid.Column>
           </GridRow>
@@ -65,15 +92,16 @@ function ModalExampleModal(graduate) {
       </Modal.Content>
 
       <Modal.Actions>
-        <Button color='grey' onClick={() => setOpen(false)}>
+        <Button color='grey' onClick={() => this.setOpen(false)}>
           Atras
         </Button>
-        <Button color='green' onClick={() => setOpen(false)}>
+        <Button color='green' onClick={() => this.setOpen(false)}>
           Enviar correo
           </Button>
       </Modal.Actions>
     </Modal>
   )
+}
 }
 
 export default ModalExampleModal
