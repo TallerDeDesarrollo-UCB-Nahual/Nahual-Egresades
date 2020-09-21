@@ -6,6 +6,7 @@ import filter from '../../public/images/filter.png';
 import imp from '../../public/images/imp.png';
 import search from '../../public/images/search.png'
 import { Link } from 'react-router-dom'
+import ImportModal from '../ImportButton/ImportModal'
 
 export default class Nahual_Table extends Component {
 
@@ -49,10 +50,9 @@ export default class Nahual_Table extends Component {
             </div>
             <div className="register" style={{color: "black"}}>
               <Link to={'/'}>
-                <Button basic style={{color: "black",border:'1px solid #6D5BD0'}}> 
                 <Icon name='upload' color='green'/>
-                  Importar
-                </Button>
+                <ImportModal/>
+                
               </Link>
             </div>
             <div className= "register" style={{color: "black"}}>
