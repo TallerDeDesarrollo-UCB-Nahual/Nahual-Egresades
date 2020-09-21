@@ -232,7 +232,7 @@ export class RegisterGraduates extends Component {
                   <Grid.Column>
                     <span className="labels">
                       <label for="graduationYear">Año de Graduación<br/></label>
-                      <Input type="number"
+                      <Input type="text"
                           name="graduationYear"
                           min={1950}
                           max={2100}
@@ -242,7 +242,7 @@ export class RegisterGraduates extends Component {
                           placeholder="Año"
                           value={this.state.graduationYear}
                           validators={['required','matchRegexp:^[0-9]+$']} 
-                            errorMessages={['Este campo es requerido', 'El campo no acepta sólo numéricos']} 
+                          errorMessages={['Este campo es requerido', 'El campo no acepta sólo numéricos']} 
                           style={{margin: "0px 15%"}}
                           onChange={this.onChange}
                       />
