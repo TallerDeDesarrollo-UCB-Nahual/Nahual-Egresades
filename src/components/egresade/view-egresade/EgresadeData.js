@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Input, Icon, Item } from "semantic-ui-react";
-import './Modal.css';
+import '../../../public/stylesheets/Modal.css';
 
 function EgresadeData({ graduate }) {
   return (
