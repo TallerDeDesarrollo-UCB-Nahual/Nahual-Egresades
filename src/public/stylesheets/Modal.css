@@ -14,10 +14,6 @@
     width: max-content;
 }
 
-/* #form-data{
-    vertical-align: top !important;
-} */
-
 .ui.form .inline.field:not(.wide) .ui.input {
   width: 50%;
   vertical-align: top !important;

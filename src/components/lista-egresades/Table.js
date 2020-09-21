@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Icon, Label, Button, Menu, Table } from 'semantic-ui-react'
-import Modal from '../egresade/view-egresade/modal/Modal'
+import Modal from '../egresade/view-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import filter from '../../public/images/filter.png';
-import imp from '../../public/images/imp.png';
 import search from '../../public/images/search.png'
 import { Link } from 'react-router-dom'
 import ImportModal from '../ImportButton/ImportModal'
@@ -24,7 +23,6 @@ export default class Nahual_Table extends Component {
       })
       .then(res => {
         let dat = res;
-        console.log(dat);
         this.setState({ api: dat.response })
       })
   }

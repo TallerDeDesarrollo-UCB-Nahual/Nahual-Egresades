@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Button, Image, Modal, Grid, GridRow, Icon, Header, Segment, Loader, Dimmer} from 'semantic-ui-react';
-import './Modal.css';
-import LogoNahual from '../../../../public/images/logo-proyecto-nahual.webp';
+import '../../../public/stylesheets/Modal.css';
+import LogoNahual from '../../../public/images/logo-proyecto-nahual.webp';
 import EgresadeData from "./EgresadeData";
 import SubjectData from "./SubjectData";
 import axios from "axios";
