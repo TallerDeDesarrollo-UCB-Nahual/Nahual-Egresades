@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Navbar from './lista-egresades/Navbar';
-import Nahual_Table from './lista-egresades/Table';
+import Navbar from './components/lista-egresades/Navbar';
+import Nahual_Table from './components/lista-egresades/Table';
 
 function App() {
   return (

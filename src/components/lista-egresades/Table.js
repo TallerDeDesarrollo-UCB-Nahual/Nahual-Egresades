@@ -1,65 +1,18 @@
 import React, { Component } from 'react'
 import { Icon, Label, Menu, Table } from 'semantic-ui-react'
-import Navbar from './Navbar';
-import './Table.css';
-import edit from '../images/edit.png';
-import see from '../images/see.png';
-import filter from '../images/filter.png';
-import imp from '../images/imp.png';
-import search from '../images/search.png'
+import Navbar from '../../components/lista-egresades/Navbar';
+import '../../public/stylesheets/Table.css';
+import edit from '../../public/images/edit.png'
+import see from '../../public/images/see.png';
+import filter from '../../public/images/filter.png';
+import imp from '../../public/images/imp.png';
+import search from '../../public/images/search.png'
 
 export default class Nahual_Table extends Component{
 
 constructor(){
   super();
   this.state = {
-    egresades: [
-      {
-        "fullName": "clodomiro saavedra perez",
-        "statusName": "Egresade",
-        "birthDate": "1995-02-01",
-        "mail": "clodo.saavedra@gmail.com",
-        "cellphone": 79840584,
-        "nodeName": "CABA",
-        "graduationYear": 2020,
-        "quarter": 1,
-        "englishLevel": "Basico",
-        "firstJobName": "Tsoft",
-        "linkedin": "https://linkedin/clodomiro",
-        "isEmployed": true,
-        "module": "Testing funcional"
-      },
-      {
-        "fullName": "Test 2",
-        "statusName": "Egresade",
-        "birthDate": "1995-02-01",
-        "mail": "clodo.saavedra@gmail.com",
-        "cellphone": 79840584,
-        "nodeName": "CABA",
-        "graduationYear": 2020,
-        "quarter": 1,
-        "englishLevel": "Intermedio",
-        "firstJobName": "Tsoft",
-        "linkedin": "https://linkedin/clodomiro",
-        "isEmployed": true,
-        "module": "Testing funcional"
-      },
-      {
-        "fullName": "Test 3",
-        "statusName": "Egresade",
-        "birthDate": "1995-06-01",
-        "mail": "clodo.saavedra@gmail.com",
-        "cellphone": 79840584,
-        "nodeName": "CABA",
-        "graduationYear": 2020,
-        "quarter": 1,
-        "englishLevel": "Intermedio",
-        "firstJobName": "Tsoft",
-        "linkedin": "https://linkedin/clodomiro",
-        "isEmployed": true,
-        "module": "Testing Automation"
-      }
-    ],
     api: []
   }
 }
