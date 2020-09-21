@@ -88,8 +88,8 @@ export class RegisterGraduates extends Component {
                     <Grid.Row >
                       <Grid.Column className="centerColumns">
                         <span className="labels">
-                          <label for="name">Nombre<br/></label>
-                          <Input class="ui one column stackable center aligned page grid" type="text" 
+                          <label htmlFor="name">Nombre<br/></label>
+                          <Input className="ui one column stackable center aligned page grid" type="text" 
                             name="name"  
                             placeholder="Nombre" 
                             value={this.state.name} 
@@ -102,7 +102,7 @@ export class RegisterGraduates extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <span className="labels">
-                          <label for="lastName">Apellidos<br/></label>
+                          <label htmlFor="lastName">Apellidos<br/></label>
                           <Input type="text" 
                               name="lastName"                 
                               placeholder="Apellido" 
@@ -116,7 +116,7 @@ export class RegisterGraduates extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <span className="labels">
-                        <label for="birthDate">Fecha de Nacimiento<br/></label>
+                        <label htmlFor="birthDate">Fecha de Nacimiento<br/></label>
                         <Input type="date" 
                             name="birthDate" 
                             pattern="[0-9]*" 
@@ -131,7 +131,7 @@ export class RegisterGraduates extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <span className="labels">
-                          <label for="cellphone">Teléfono de Contacto<br/></label>
+                          <label htmlFor="cellphone">Teléfono de Contacto<br/></label>
                           <Input type="text" 
                             name="cellphone"
                             pattern="[0-9]*" 
@@ -146,7 +146,7 @@ export class RegisterGraduates extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <span className="labels">
-                        <label for="mail">Correo Electrónico<br/></label>
+                        <label htmlFor="mail">Correo Electrónico<br/></label>
                           <Input type="email" 
                             name="mail"
                             placeholder="Correo Electrónico"
@@ -159,18 +159,16 @@ export class RegisterGraduates extends Component {
                         </span>
                       </Grid.Column>
                     </Grid.Row>
-                <Grid.Row stackable columns={2}>
+                <Grid.Row columns={2}>
                   <Grid.Column className="centerColumns">
                     <span className="labels">
-                      <label for="nodeName">Nodo<br/></label>
+                      <label htmlFor="nodeName">Nodo<br/></label>
                       <Dropdown
                             name="nodeName" 
                             placeholder="Nodo"
-                            value={this.state.nodeName} 
                             selection
                             required 
                             onChange={(e,{value})=>{this.setState({nodeName:value})}} 
-                            errorMessages={['Este campo es requerido']}
                             style={{margin: "0px 11%"}}
                             options={NodeOptions}
                             defaultValue={NodeOptions[0].value}
@@ -179,12 +177,12 @@ export class RegisterGraduates extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <span className="labels">
-                      <label for="englishLevel">Nivel de Ingles<br/></label>
+                      <label htmlFor="englishLevel">Nivel de Ingles<br/></label>
                       <Dropdown type="text"
                             name="englishLevel"
                             label="Nivel de Inglés"
                             placeholder="Nivel de Ingles"
-                            value={this.state.englishLevel}
+                            // value={this.state.englishLevel}
                             onChange={(e,{value})=>{this.setState({englishLevel:value})}} 
                             options={EnglishLevelOptions}
                             defaultValue={EnglishLevelOptions[0].value}
@@ -196,12 +194,13 @@ export class RegisterGraduates extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <span className="labels">
-                      <label for="quarter">Cuatrimestre<br/></label>
+                      <label htmlFor="quarter">Cuatrimestre<br/></label>
                       <Dropdown type="text" 
                             name="quarter"
                             onChange={(e,{value})=>{this.setState({quarter:value})}} 
                             options={QuarterOptions}
-                            value={this.state.quarter}
+                            // value={this.state.quarter}
+                            defaultValue={QuarterOptions[0].value}
                             placeholder='Cuatrimestre'
                             style={{margin: "0px 11%"}}
                             selection
@@ -210,14 +209,13 @@ export class RegisterGraduates extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <span className="labels">
-                    <label for="module">Tipo de Curso<br/></label>
+                    <label htmlFor="module">Tipo de Curso<br/></label>
                       <Dropdown type="text"
                           name="module"
                           placeholder="Tipo de Curso"
-                          value={this.state.module}
+                          // value={this.state.module}
                           onChange={(e,{value})=>{this.setState({module:value})}} 
                           validators={['required']} 
-                          errorMessages={['Este campo es requerido']} 
                           options={CourseTypeOptions}
                           defaultValue={CourseTypeOptions[0].value}
                           style={{margin: "0px 11%"}}
@@ -226,10 +224,10 @@ export class RegisterGraduates extends Component {
                     </span>
                   </Grid.Column>
                 </Grid.Row>
-                <Grid.Row stackable columns={2}>
+                <Grid.Row columns={2}>
                   <Grid.Column>
                     <span className="labels">
-                      <label for="graduationYear">Año de Graduación<br/></label>
+                      <label htmlFor="graduationYear">Año de Graduación<br/></label>
                       <Input type="text"
                           name="graduationYear"
                           pattern="[0-9]*"
@@ -244,7 +242,7 @@ export class RegisterGraduates extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <span className="labels">
-                      <label for="linkedin">Enlace de CV en LinkedIn<br/></label>
+                      <label htmlFor="linkedin">Enlace de CV en LinkedIn<br/></label>
                       <Input type="url"
                           name="linkedin"
                           placeholder="LinkedIn"

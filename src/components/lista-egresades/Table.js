@@ -77,7 +77,7 @@ export default class Nahual_Table extends Component {
 
             <Table.Body>
               {this.state.api.map((value) => (
-                <Table.Row>
+                <Table.Row key={value.id} >
                   <Table.Cell className="table-border">
                     <Label className="name">{value.fullName}</Label><br></br>
                     <Label className="mail">{value.mail}</Label>
