@@ -90,12 +90,13 @@ export class RegisterGraduates extends Component {
                         <span className="labels">
                           <label for="name">Nombre<br/></label>
                           <Input class="ui one column stackable center aligned page grid" type="text" 
-                            name="name"  
+                            name="name"
+                            maxLength="20"  
                             placeholder="Nombre" 
                             value={this.state.name} 
-                            validators={['required']} 
-                              errorMessages={['Este campo es requerido']} 
-                              style={{margin: "0px 15%"}}
+                            validators={['required','matchRegexp:^[A-Za-z]+$']} 
+                            errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
+                            style={{margin: "0px 15%"}}
                             onChange={this.onChange}
                           />
                         </span>
@@ -104,12 +105,13 @@ export class RegisterGraduates extends Component {
                         <span className="labels">
                           <label for="lastName">Apellidos<br/></label>
                           <Input type="text" 
-                              name="lastName"                 
+                              name="lastName"
+                              maxLength="30"                 
                               placeholder="Apellido" 
                               value={this.state.lastName} 
-                              validators={['required']} 
-                                errorMessages={['Este campo es requerido']} 
-                                style={{margin: "0px 15%"}}
+                              validators={['required','matchRegexp:^[A-Za-z]+$']} 
+                              errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
+                              style={{margin: "0px 15%"}}
                               onChange={this.onChange}
                           />
                         </span>
@@ -125,6 +127,8 @@ export class RegisterGraduates extends Component {
                             validators={['required']} 
                             errorMessages={['Este campo es requerido']} 
                             style={{margin: "0px 15%"}}
+                            min="1960-01-01"
+                            max="2020-01-01"
                             onChange={this.onChange}
                           />
                         </span>
@@ -133,12 +137,12 @@ export class RegisterGraduates extends Component {
                         <span className="labels">
                           <label for="cellphone">Teléfono de Contacto<br/></label>
                           <Input type="text" 
-                            name="cellphone"
-                            pattern="[0-9]*" 
+                            maxLength="10"
+                            name="cellphone" 
                             placeholder="Celular" 
                             value={this.state.cellphone} 
-                            validators={['required']} 
-                            errorMessages={['Este campo es requerido']} 
+                            validators={['required','matchRegexp:^[0-9]+$']} 
+                            errorMessages={['Este campo es requerido', 'El campo no acepta sólo numéricos']} 
                             style={{margin: "0px 15%"}}
                             onChange={this.onChange}
                           />
@@ -230,13 +234,17 @@ export class RegisterGraduates extends Component {
                   <Grid.Column>
                     <span className="labels">
                       <label for="graduationYear">Año de Graduación<br/></label>
-                      <Input type="text"
+                      <Input type="number"
                           name="graduationYear"
+                          min={1950}
+                          max={2100}
                           pattern="[0-9]*"
+                          maxLength="4"  
+                          minLength="4"  
                           placeholder="Año"
                           value={this.state.graduationYear}
-                          validators={['required']} 
-                          errorMessages={['Este campo es requerido']} 
+                          validators={['required','matchRegexp:^[0-9]+$']} 
+                            errorMessages={['Este campo es requerido', 'El campo no acepta sólo numéricos']} 
                           style={{margin: "0px 15%"}}
                           onChange={this.onChange}
                       />
