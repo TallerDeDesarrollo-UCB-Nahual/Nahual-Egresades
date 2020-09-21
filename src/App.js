@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-         NAHUAL
+         NAHUAL EgresadesS
         </p>
         
       </header>
