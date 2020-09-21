@@ -142,7 +142,7 @@ export class RegisterGraduates extends Component {
                             placeholder="Celular" 
                             value={this.state.cellphone} 
                             validators={['required','matchRegexp:^[0-9]+$']} 
-                            errorMessages={['Este campo es requerido', 'El campo no acepta sólo numéricos']} 
+                            errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
                             style={{margin: "0px 15%"}}
                             onChange={this.onChange}
                           />
@@ -244,7 +244,7 @@ export class RegisterGraduates extends Component {
                           placeholder="Año"
                           value={this.state.graduationYear}
                           validators={['required','matchRegexp:^[0-9]+$']} 
-                          errorMessages={['Este campo es requerido', 'El campo no acepta sólo numéricos']} 
+                          errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
                           style={{margin: "0px 15%"}}
                           onChange={this.onChange}
                       />
