@@ -4,14 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-<<<<<<< HEAD
-ReactDOM.render(<App />, document.getElementById('root'));
-=======
+
 ReactDOM.render(
 <App />
 , document.getElementById('root')
 );
->>>>>>> 9f794048b29ca9c5eddf285be76022cc52e1c123
+
 
 const styleLink = document.createElement("link");
 styleLink.rel = "stylesheet";
