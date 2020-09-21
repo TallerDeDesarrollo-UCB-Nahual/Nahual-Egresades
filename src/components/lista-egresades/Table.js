@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Icon, Label, Button, Menu, Table } from 'semantic-ui-react'
 import Modal from '../egresade/view-egresade/modal/Modal'
-import Navbar from '../../components/lista-egresades/Navbar';
 import '../../public/stylesheets/Table.css';
 import filter from '../../public/images/filter.png';
 import imp from '../../public/images/imp.png';
 import search from '../../public/images/search.png'
+import { Link } from 'react-router-dom'
 
 export default class Nahual_Table extends Component {
 
@@ -34,7 +34,6 @@ export default class Nahual_Table extends Component {
   render() {
     return (
       <div>
-        <Navbar></Navbar>
         <div className="table">
           <p className="title">Lista de Egresades</p>
           <div className="line"></div>
@@ -48,9 +47,21 @@ export default class Nahual_Table extends Component {
               <img src={search} className="search-icon"></img>
               <input className="search-input"></input>
             </div>
-            <div className="import">
-              <img src={imp} className="menu-icon"></img>
-              <label className="import2"> Importar</label>
+            <div className="register" style={{color: "black"}}>
+              <Link to={'/'}>
+                <Button basic style={{color: "black",border:'1px solid #6D5BD0'}}> 
+                <Icon name='upload' color='green'/>
+                  Importar
+                </Button>
+              </Link>
+            </div>
+            <div className= "register" style={{color: "black"}}>
+              <Link to={'/registrar'}>
+                <Button basic style={{color: "black",border:'1px solid #6D5BD0'}}> 
+                <Icon name='plus square' color='green'/>
+                  Registrar 
+                </Button>
+              </Link>
             </div>
           </div>
           <br /><br />

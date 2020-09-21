@@ -117,6 +117,12 @@ table{
     border-radius: 10px;
 }
 
+.register{
+    width: auto  !important;
+    float: right !important;
+    margin-top: auto;
+}
+
 .search-input{
     border: 1px solid #6D5BD0 !important;   
     border-radius: 10px;
