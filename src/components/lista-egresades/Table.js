@@ -1,71 +1,32 @@
 import React, { Component } from 'react'
-import { Icon, Label, Button, Menu, Table } from 'semantic-ui-react';
-import Modal from '../components/egresade/view-egresade/modal/Modal';
-import Navbar from './Navbar';
-import './Table.css';
-import filter from '../images/filter.png';
-import imp from '../images/imp.png';
-import search from '../images/search.png'
+import { Icon, Label, Button, Menu, Table } from 'semantic-ui-react'
+import Modal from '../egresade/view-egresade/modal/Modal'
+import Navbar from '../../components/lista-egresades/Navbar';
+import '../../public/stylesheets/Table.css';
+import filter from '../../public/images/filter.png';
+import imp from '../../public/images/imp.png';
+import search from '../../public/images/search.png'
 
 export default class Nahual_Table extends Component {
 
   constructor() {
     super();
     this.state = {
-      openModal: false,
-      egresades: [
-        {
-          "fullName": "clodomiro saavedra perez",
-          "statusName": "Egresade",
-          "birthDate": "1995-02-01",
-          "mail": "clodo.saavedra@gmail.com",
-          "cellphone": 79840584,
-          "nodeName": "CABA",
-          "graduationYear": 2020,
-          "quarter": 1,
-          "englishLevel": "Basico",
-          "firstJobName": "Tsoft",
-          "linkedin": "https://www.linkedin.com/clodomiro",
-          "campus": "buenos aires",
-          "isEmployed": true,
-          "module": "Testing funcional"
-        },
-        {
-          "fullName": "Test 2",
-          "statusName": "Egresade",
-          "birthDate": "1995-02-01",
-          "mail": "clodo.saavedra@gmail.com",
-          "cellphone": 79840584,
-          "nodeName": "CABA",
-          "graduationYear": 2020,
-          "quarter": 1,
-          "englishLevel": "Intermedio",
-          "firstJobName": "Tsoft",
-          "linkedin": "https://www.linkedin.com/clodomiro",
-          "campus": "buenos aires",
-          "isEmployed": true,
-          "module": "Testing funcional"
-        },
-        {
-          "fullName": "Test 3",
-          "statusName": "Egresade",
-          "birthDate": "1995-06-01",
-          "mail": "clodo.saavedra@gmail.com",
-          "cellphone": 79840584,
-          "nodeName": "CABA",
-          "graduationYear": 2020,
-          "quarter": 1,
-          "englishLevel": "Intermedio",
-          "firstJobName": "Tsoft",
-          "linkedin": "https://www.linkedin.com/clodomiro",
-          "campus": "buenos aires",
-          "isEmployed": true,
-          "module": "Testing Automation"
-        }
-      ]
+      api: []
     }
   }
 
+  componentDidMount() {
+    fetch(`https://mighty-anchorage-20911.herokuapp.com/api/students/`)
+      .then(res => {
+        return res.json()
+      })
+      .then(res => {
+        let dat = res;
+        console.log(dat);
+        this.setState({ api: dat.response })
+      })
+  }
   openModal() {
     this.setState({ openModal: true });
   }
@@ -104,10 +65,10 @@ export default class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.egresades.map((value, i) => (
+              {this.state.api.map((value) => (
                 <Table.Row>
                   <Table.Cell className="table-border">
-                    <Label className="name" >{value.fullName}</Label><br></br>
+                    <Label className="name">{value.fullName}</Label><br></br>
                     <Label className="mail">{value.mail}</Label>
                   </Table.Cell >
                   <Table.Cell className="table-border">
@@ -115,18 +76,18 @@ export default class Nahual_Table extends Component {
                   </Table.Cell>
                   <Table.Cell className="table-border">
                     <Label className="card-green">• {value.module}</Label></Table.Cell>
-
                   <Table.Cell colSpan="3" className="table-border">
                     <Button className="view-button">
                       <i className="edit icon"></i>
                       <label className="icon-text">Editar</label>
                     </Button>
 
-                    <Modal graduate={value.id} open={this.state.openModal} />
+                    <Modal graduateId={value.id} open={this.state.openModal} />
                   </Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>
+
             <Table.Footer>
               <Table.Row>
                 <Table.HeaderCell colSpan='4' className="no-border">
@@ -148,5 +109,7 @@ export default class Nahual_Table extends Component {
           </Table>
         </div>
       </div>)
+
   }
+
 }
