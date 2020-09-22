@@ -24,7 +24,7 @@ export default class LoadedList extends Component{
      
          <Table.Body>
          {this.props.json.map(item => (
-           <Table.Row>
+           <Table.Row  key={item.fullName}>
             <Table.Cell >{item["fullName"]}</Table.Cell>
             <Table.Cell>{item["birthDate"]}</Table.Cell>
             <Table.Cell>{item["mail"]}</Table.Cell>

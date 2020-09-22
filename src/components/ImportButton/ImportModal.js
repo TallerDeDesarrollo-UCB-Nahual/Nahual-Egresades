@@ -1,41 +1,52 @@
 import React, { Component } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import { CSVReader } from 'react-papaparse'
-import { Button, Modal, Icon } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 import LoadedList from './LoadedList';
-const studentssURL = 'https://mighty-anchorage-20911.herokuapp.com/api/graduates'
+const studentsURL = 'https://mighty-anchorage-20911.herokuapp.com/api/graduates'
 
 class ImportModal extends Component{
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      isLoading: true,
       showComponent: false,
       graduates: [],
       graduatesCount: 0 
     };
-    this._onButtonClick = this._onButtonClick.bind(this);
-    this.onClickConfirmButton = this.onClickConfirmButton.bind(this);
+    this.showTable = this.showTable.bind(this);
+    this.setOpen = this.setOpen.bind(this);
   }
-  _onButtonClick = (data)=> {
+  showTable = (data)=> {
     this.setState({
       showComponent: true,
     });
   }
 
-  onClickConfirmButton = ()=>{
+  async onSubmit(successfulRegistration){
     let lista = this.state.graduates
-    console.log(lista)
-    fetch(studentssURL,{
+    await fetch(studentsURL,{
       method: 'POST',
-      headers: {'Content-type':'application/json'},
+      contentType: 'application/json; charset=utf-8',
+      
       body:JSON.stringify(lista)
     }).then(r=>r.json()).then(res=>{
+      this.setState({isLoading: false})
+      console.log(res)
       if(res){
-        console.log(res)
+        successfulRegistration(this.state.graduatesCount)
+        this.setOpen(false)
+      }
+      else{
       }
     })
+    .catch(err =>{
+      console.log("error reading data "+err)
+    })
+    
   }
+
   handleOnDrop = (data) => {
     data.forEach(row => {
       var aux = {
@@ -54,8 +65,13 @@ class ImportModal extends Component{
         "module": row.data["Tipo de curso del cual egresó"]
       }
       this.state.graduates.push(aux)
+      this.addCount()
     });
-    this._onButtonClick()
+    this.showTable()
+  }
+
+  addCount () {
+    this.setState({graduatesCount: this.state.graduatesCount + 1})
   }
 
   handleOnError = (err, file, inputElem, reason) => {
@@ -67,18 +83,21 @@ class ImportModal extends Component{
   }
   setOpen(state) {
     this.setState({
-      open:state
+      open:state,
+      showComponent:false,
+      graduates:[],
+      graduatesCount:0
     });
   }
   
   render(){
           return (
-            <Modal
+            <div><Modal
               centered={true}
-              open={this.open}
+              open={this.state.open}
               onClose={()=>this.setOpen(false)}
               onOpen={()=>this.setOpen(true)}
-              trigger={<Button color="green"><Icon name='upload' color='white'/>Importar</Button>}>
+              trigger={<Button color="green"><i className='white upload icon'/>Importar</Button>}>
               
               <Modal.Header>Importar</Modal.Header>
               <Modal.Content color="white">
@@ -101,10 +120,11 @@ class ImportModal extends Component{
                   <LoadedList json = {this.state.graduates}/>
                   :
                   <h1 align="center">No se cargo ningun archivo</h1>}
-                <Button color="green" onClick={this.onClickConfirmButton()}>Ok</Button>
+                <Button color="green" onClick={()=>this.onSubmit(this.props.onClick)}>Ok</Button>
                 <Button color="red" onClick={()=>this.setOpen(false)}>Cancel</Button>               
               </Modal.Actions>
             </Modal>
+            </div>
           )}
 }
 export default ImportModal;
