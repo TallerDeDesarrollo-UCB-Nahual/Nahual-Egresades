@@ -65,20 +65,19 @@ class ImportModal extends Component{
   handleOnRemoveFile = (data) => {
     this.setState({showComponent:false, graduates:[]});
   }
-  setClose=()=>{
+  setOpen(state) {
     this.setState({
-      open:false
-    })
+      open:state
+    });
   }
   
-
   render(){
           return (
             <Modal
               centered={true}
               open={this.open}
-              onClose={()=>this.setState({open:false})}
-              onOpen={()=>this.setState({open:true})}
+              onClose={()=>this.setOpen(false)}
+              onOpen={()=>this.setOpen(true)}
               trigger={<Button color="green"><Icon name='upload' color='white'/>Importar</Button>}>
               
               <Modal.Header>Importar</Modal.Header>
@@ -103,9 +102,7 @@ class ImportModal extends Component{
                   :
                   <h1 align="center">No se cargo ningun archivo</h1>}
                 <Button color="green" onClick={this.onClickConfirmButton()}>Ok</Button>
-                <Button color="red" onClick={()=>{this.setClose()}} >Cancel</Button>
-                
-                
+                <Button color="red" onClick={()=>this.setOpen(false)}>Cancel</Button>               
               </Modal.Actions>
             </Modal>
           )}

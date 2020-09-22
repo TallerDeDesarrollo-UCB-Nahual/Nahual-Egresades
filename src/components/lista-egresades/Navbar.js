@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react'
 import logo from '../../public/images/logo.png';
 import '../../public/stylesheets/Navbar.css';
 

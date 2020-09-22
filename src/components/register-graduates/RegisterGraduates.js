@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.css';
-import {Dropdown, Button, Grid, Message} from 'semantic-ui-react';
+import {Dropdown, Button, Grid} from 'semantic-ui-react';
 import {Form, Input } from 'semantic-ui-react-form-validator';
 import '../../public/stylesheets/Register.css';
 import 'semantic-ui-css/semantic.min.css';

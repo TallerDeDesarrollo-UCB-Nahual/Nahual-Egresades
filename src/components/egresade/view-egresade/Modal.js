@@ -84,7 +84,7 @@ class ModalExampleModal extends Component {
                       <Header as='h3'> <Icon name='linkedin' />Linkedin</Header>
                       <Grid columns='equal'>
                         <Grid.Column></Grid.Column>
-                        <Grid.Column width={15}><a className="card-lightBlue" href={this.state.graduate} target="_blank">• {this.state.graduate.linkedin} </a></Grid.Column>
+                        <Grid.Column width={15}><a className="card-lightBlue" href={this.state.graduate} target="_blank" rel="noopener noreferrer">• {this.state.graduate.linkedin} </a></Grid.Column>
                       </Grid>
 
                     </Grid.Column>
