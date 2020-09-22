@@ -24,27 +24,18 @@ class ImportModal extends Component{
     });
   }
 
-  async onSubmit(successfulRegistration){
+  
+  onClickConfirmButton = ()=>{
     let lista = this.state.graduates
-    await fetch(studentsURL,{
+    fetch(studentsURL,{
       method: 'POST',
-      contentType: 'application/json; charset=utf-8',
-      
+      headers: {'Content-type':'application/json'},
       body:JSON.stringify(lista)
     }).then(r=>r.json()).then(res=>{
-      this.setState({isLoading: false})
-      console.log(res)
       if(res){
-        successfulRegistration(this.state.graduatesCount)
-        this.setOpen(false)
-      }
-      else{
+        console.log(res)
       }
     })
-    .catch(err =>{
-      console.log("error reading data "+err)
-    })
-    
   }
 
   handleOnDrop = (data) => {
@@ -120,7 +111,7 @@ class ImportModal extends Component{
                   <LoadedList json = {this.state.graduates}/>
                   :
                   <h1 align="center">No se cargo ningun archivo</h1>}
-                <Button color="green" onClick={()=>this.onSubmit(this.props.onClick)}>Ok</Button>
+                <Button color="green" onClick={this.onClickConfirmButton()}>Ok</Button>
                 <Button color="red" onClick={()=>this.setOpen(false)}>Cancel</Button>               
               </Modal.Actions>
             </Modal>
