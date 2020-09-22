@@ -3,6 +3,8 @@ import 'semantic-ui-css/semantic.min.css'
 import { CSVReader } from 'react-papaparse'
 import { Button, Modal } from 'semantic-ui-react'
 import LoadedList from './LoadedList';
+import axios  from 'axios';
+
 const studentsURL = 'https://mighty-anchorage-20911.herokuapp.com/api/graduates'
 
 class ImportModal extends Component{
@@ -24,19 +26,28 @@ class ImportModal extends Component{
     });
   }
 
-  
-  onClickConfirmButton = ()=>{
+  onSubmit(successfulRegistration){
     let lista = this.state.graduates
+    console.log(JSON.stringify(lista))
     fetch(studentsURL,{
       method: 'POST',
-      headers: {'Content-type':'application/json'},
+      headers:{
+        'Content-Type': 'application/json',
+        'Content-Length': JSON.stringify(lista).length.toString(),
+        'Host':'localhost:443'
+      },
       body:JSON.stringify(lista)
-    }).then(r=>r.json()).then(res=>{
+    }).then(res=>{
+      console.log(res)
       if(res){
         console.log(res)
       }
     })
+    .catch(err =>{
+      console.log("error reading data "+err)
+    })
   }
+
 
   handleOnDrop = (data) => {
     data.forEach(row => {
