@@ -48,9 +48,7 @@ export default class Nahual_Table extends Component {
             </div>
             <div className="register" style={{color: "black"}}>
               <Link to={'/'}>
-                <Icon name='upload' color='green'/>
                 <ImportModal/>
-                
               </Link>
             </div>
             <div className= "register" style={{color: "black"}}>

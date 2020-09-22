@@ -32,11 +32,6 @@ function EgresadeData({ graduate }) {
                 </Form.Field>
 
                 <Form.Field inline>
-                  <label><Icon name='home' /><span className="title-data"> Sede:</span></label>
-                  <Input> {graduate.campus} </Input>
-                </Form.Field>
-
-                <Form.Field inline>
                   <label><Icon name='map outline' /><span className="title-data"> Nodo:</span></label>
                   <Input> {graduate.nodeName} </Input>
                 </Form.Field>

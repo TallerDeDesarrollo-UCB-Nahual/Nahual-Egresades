@@ -101,7 +101,7 @@ class ModalExampleModal extends Component {
         }
         <Modal.Actions>
           <Button color='grey' onClick={() => this.setOpen(false)}>
-            Atras
+            Cerrar
         </Button>
           <Button color='green' onClick={() => this.setOpen(false)}>
             Enviar correo
