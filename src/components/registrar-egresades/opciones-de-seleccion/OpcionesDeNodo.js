@@ -1,5 +1,5 @@
 
-export const NodeOptions = [
+export const OpcionesDeNodo = [
     {
         key: 'Banfield',
         text: 'Banfield',

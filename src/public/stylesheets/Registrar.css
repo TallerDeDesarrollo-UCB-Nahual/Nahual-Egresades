@@ -1,4 +1,4 @@
-.titleRegister{
+.tituloRegistrar{
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -8,7 +8,7 @@
     color: #808080;
 }
 
-.backform{
+.contenedor{
     max-width: 1000px;
     background-color: white;
     color: black;
@@ -19,12 +19,12 @@
     border-bottom-right-radius: 0.5rem;  
     box-shadow: 10px 10px 50px #9E9E9E;
 }
-.centerColumns{
+.centrarColumnas{
     margin:0 0 0 0px;
     align-items: center;
     justify-content: center;
 }
-.labels{
+.etiquetas{
     font-family: Inter;
     font-style: normal;
     font-weight: 500;

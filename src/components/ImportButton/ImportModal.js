@@ -122,7 +122,7 @@ class ImportModal extends Component{
                   <LoadedList json = {this.state.graduates}/>
                   :
                   <h1 align="center">No se cargo ningun archivo</h1>}
-                <Button color="green" onClick={this.onClickConfirmButton()}>Ok</Button>
+                <Button color="green" onClick={this.onSubmit()}>Ok</Button>
                 <Button color="red" onClick={()=>this.setOpen(false)}>Cancel</Button>               
               </Modal.Actions>
             </Modal>
