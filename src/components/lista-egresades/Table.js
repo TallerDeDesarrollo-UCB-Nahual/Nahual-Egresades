@@ -79,14 +79,6 @@ class Nahual_Table extends Component {
                 <ImportModal onClick={this.onSuccessfulRegistration} />
               </Link>
             </div>
-            <div className="register" style={{ color: "black" }}>
-              <Link to={'/registrar'}>
-                <Button basic style={{ color: "black", border: '1px solid #6D5BD0' }}>
-                  <Icon name='plus square' color='green' />
-                  Registrar
-                </Button>
-              </Link>
-            </div>
           </div>
           <br /><br />
           <Table celled className="table-card">
@@ -112,10 +104,11 @@ class Nahual_Table extends Component {
                   <Table.Cell className="table-border">
                     <Label className="card-green">• {value.module}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="table-border">
-                    {/* <Button className="view-button">
+                    {<Link to={`/editar/${value.id}`}><Button className="view-button">
                       <i className="edit icon"></i>
                       <label className="icon-text">Editar</label>
-                    </Button> */}
+                    </Button></Link>
+                    }
 
                     <Modal graduateId={value.id} open={this.state.openModal} />
                   </Table.Cell>

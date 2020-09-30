@@ -12,10 +12,10 @@ function App() {
       <Navbar/>
       <Switch>
         <Route exact path="/" component={Nahual_Table} />
-        <Route exact path="/registrar" render={ props =>(
+        <Route exact path="/editar/:id" render={ (props) =>(
           <React.Fragment>   
-          <EncabezadoDeRegistrar />
-          <RegistrarEgresades/>
+          <EncabezadoDeRegistrar/> 
+          <RegistrarEgresades {...props} />
           </React.Fragment>
         )}/>
       </Switch>

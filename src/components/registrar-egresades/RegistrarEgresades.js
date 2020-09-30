@@ -10,6 +10,7 @@ import {OpcionesDeNodo} from './opciones-de-seleccion/OpcionesDeNodo.js';
 import {OpcionesDeTipoDeCurso} from './opciones-de-seleccion/OpcionesDeTipoDeCurso.js';
 import {OpcionesDeCuatrimestre} from './opciones-de-seleccion/OpcionesDeCuatrimestre.js';
 import {OpcionesDeNivelDeIngles} from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
+import {OpcionesDeEstadoLaboral} from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import {MensajeResultante} from './tipo-de-mensaje/MensajeResultante.js';
 
 const estadoInicial ={
@@ -49,20 +50,40 @@ function prepararDatosAEnviar(estadoActual){
 }
 
 export class RegistrarEgresades extends Component {
-    state = {
-        exito: null
-    };
-    constructor(props) {
-        super(props);
-        this.state = estadoInicial;
+  state = {
+    exito: null,
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      egresade: {
+        cellphone: ''
       }
+    };
     
-    enCambio = (event) =>{
-        let nombre = event.target.name;
-        let valor = event.target.value;
-        this.setState({[nombre]: valor});
-    }
-    
+  }
+
+  componentDidMount()
+  {
+    const API_URL = `https://mighty-anchorage-20911.herokuapp.com/api/students/`;
+      axios
+        .get(`${API_URL}${this.props.match.params.id}`)
+        .then(response => {
+          this.setState({
+            egresade: response.data.response
+          });
+          console.log(this.state.egresade);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });  
+  } 
+
+  enCambio = (event) =>{
+      let nombre = event.target.name;
+      let valor = event.target.value;
+      this.setState({[nombre]: valor});
+  }
 
     enConfirmacion = (evento) =>{
         evento.preventDefault();
@@ -138,7 +159,7 @@ export class RegistrarEgresades extends Component {
                             maxLength="10"
                             name="telefono" 
                             placeholder="Celular" 
-                            value={this.state.telefono} 
+                            defaultValue={this.state.egresade.cellphone} 
                             validators={['required','matchRegexp:^[0-9]+$']} 
                             errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
                             style={{margin: "0px 15%"}}
@@ -227,6 +248,36 @@ export class RegistrarEgresades extends Component {
                   </Grid.Column>
                 </Grid.Row>
                 <Grid.Row columns={2}>
+                <Grid.Column className="centrarColumnas">
+                    <span className="etiquetas">
+                      <label htmlFor="estadoLaboral">Estado Laboral<br/></label>
+                      <Dropdown
+                            name="estadoLaboral" 
+                            placeholder="Estado Laboral"
+                            selection
+                            required 
+                            //onChange={(evento,{valor})=>{this.setState({nodo:valor})}} 
+                            style={{margin: "0px 11%"}}
+                            options={OpcionesDeEstadoLaboral}
+                            defaultValue={OpcionesDeEstadoLaboral[0].value}
+                      />
+                    </span>
+                  </Grid.Column>
+                  <Grid.Column>
+                        <span className="etiquetas">
+                          <label htmlFor="nombrePrimerEmpleo">Nombre Primer Empleo<br/></label>
+                          <Input type="text" 
+                              name="nombrePrimerEmpleo"
+                              maxLength="40"                 
+                              placeholder="Nombre Primer Empleo" 
+                              value={this.state.apellido} 
+                              validators={['required','matchRegexp:^[A-Za-z]+$']} 
+                              errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
+                              style={{margin: "0px 15%"}}
+                              //onChange={this.enCambio}
+                          />
+                        </span>
+                  </Grid.Column>
                   <Grid.Column>
                     <span className="etiquetas">
                       <label for="anioDeGraduacion">Año de Graduación<br/></label>
