@@ -26,20 +26,30 @@ class ImportModal extends Component{
     });
   }
 
-  onSubmit(successfulRegistration){
+  setOpen = (state)=> {
+    this.setState({	    
+      open:state,
+      showComponent:false,
+      graduates:[],
+      graduatesCount:0
+    });	 
+  }	  
+
+  onSubmit=(successfulRegistration)=>{
     let lista = this.state.graduates
     console.log(JSON.stringify(lista))
     fetch(studentsURL,{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
-        'Content-Length': JSON.stringify(lista).length.toString(),
-        'Host':'localhost:443'
+        'Content-Length': JSON.stringify(lista).length.toString()
       },
       body:JSON.stringify(lista)
     }).then(res=>{
       console.log(res)
       if(res){
+        successfulRegistration(this.state.graduatesCount)
+        this.setOpen(false)
         console.log(res)
       }
     })
@@ -122,7 +132,7 @@ class ImportModal extends Component{
                   <LoadedList json = {this.state.graduates}/>
                   :
                   <h1 align="center">No se cargo ningun archivo</h1>}
-                <Button color="green" onClick={this.onClickConfirmButton()}>Ok</Button>
+                <Button color="green" onClick={()=>this.onSubmit(this.props.onClick)}>Ok</Button>
                 <Button color="red" onClick={()=>this.setOpen(false)}>Cancel</Button>               
               </Modal.Actions>
             </Modal>
