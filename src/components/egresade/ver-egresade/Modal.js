@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react';
 import { Button, Image, Modal, Grid, GridRow, Icon, Header, Segment, Loader, Dimmer} from 'semantic-ui-react';
 import '../../../public/stylesheets/Modal.css';
 import LogoNahual from '../../../public/images/logo-proyecto-nahual.webp';
-import EgresadeData from "./EgresadeData";
-import SubjectData from "./SubjectData";
+import InformacionDelEgresade from "./InformacionDelEgresade";
+import InformacionDelCurso from "./InformacionDelCurso";
 import axios from "axios";
 
 class ModalExampleModal extends Component {
@@ -14,13 +14,13 @@ class ModalExampleModal extends Component {
     };
   }
 
-  getGraduateAPI() {
+  obtenerEgresadeDeAPI() {
     const API_URL = `https://mighty-anchorage-20911.herokuapp.com/api/students/`;
     axios
-      .get(`${API_URL}${this.props.graduateId}`)
+      .get(`${API_URL}${this.props.egresadeId}`)
       .then(response => {
         this.setState({
-          graduate: response.data.response
+          egresade: response.data.response
         });
       })
       .catch(function (error) {
@@ -28,9 +28,9 @@ class ModalExampleModal extends Component {
       });
   }
 
-  setOpen(state) {
+  abrirModal(estado) {
     this.setState({
-      open: state
+      open: estado
     });
   }
 
@@ -38,18 +38,18 @@ class ModalExampleModal extends Component {
     return (
       <Modal
         open={this.state.open}
-        onClose={() => this.setOpen(false)}
-        onOpen={() => this.setOpen(true)}
+        onClose={() => this.abrirModal(false)}
+        onOpen={() => this.abrirModal(true)}
         size="small"
         closeIcon
         trigger={
-          <Button onClick={() => (this.getGraduateAPI(this.props.graduateId))}>
+          <Button onClick={() => (this.obtenerEgresadeDeAPI(this.props.egresadeId))}>
             <i className="eye icon"></i>
             <label className="icon-text">Ver</label>
           </Button>}
       >
         {
-          this.state.graduate ?
+          this.state.egresade ?
             <Fragment>
               <Modal.Header>
                 <Grid columns='equal'>
@@ -57,7 +57,7 @@ class ModalExampleModal extends Component {
                     <Image src={LogoNahual} size='small' />
                   </Grid.Column>
                   <Grid.Column width={11}>
-                    <h1>{this.state.graduate.fullName}</h1>
+                    <h1>{this.state.egresade.fullName}</h1>
                   </Grid.Column>
                 </Grid>
               </Modal.Header>
@@ -71,12 +71,12 @@ class ModalExampleModal extends Component {
                     <Grid.Column width={1}>
                     </Grid.Column>
                     <Grid.Column width={9}>
-                      <EgresadeData graduate={this.state.graduate} />
+                      <InformacionDelEgresade egresade={this.state.egresade} />
                     </Grid.Column>
                   </Grid.Row>
                   <Grid.Row>
                     <Grid.Column>
-                      <SubjectData graduate={this.state.graduate} />
+                      <InformacionDelCurso egresade={this.state.egresade} />
                     </Grid.Column>
                   </Grid.Row>
                   <GridRow>
@@ -84,7 +84,7 @@ class ModalExampleModal extends Component {
                       <Header as='h3'> <Icon name='linkedin' />Linkedin</Header>
                       <Grid columns='equal'>
                         <Grid.Column></Grid.Column>
-                        <Grid.Column width={15}><a className="card-lightBlue" href={this.state.graduate} target="_blank" rel="noopener noreferrer">• {this.state.graduate.linkedin} </a></Grid.Column>
+                        <Grid.Column width={15}><a className="card-lightBlue" href={this.state.egresade} target="_blank" rel="noopener noreferrer">• {this.state.egresade.linkedin} </a></Grid.Column>
                       </Grid>
 
                     </Grid.Column>
@@ -100,12 +100,9 @@ class ModalExampleModal extends Component {
             </Segment>
         }
         <Modal.Actions>
-          <Button color='grey' onClick={() => this.setOpen(false)}>
+          <Button color='grey' onClick={() => this.abrirModal(false)}>
             Cerrar
         </Button>
-          {/* <Button color='green' onClick={() => this.setOpen(false)}>
-            Enviar correo
-          </Button> */}
         </Modal.Actions>
       </Modal>
     )

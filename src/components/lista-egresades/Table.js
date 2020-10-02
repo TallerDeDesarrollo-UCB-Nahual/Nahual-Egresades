@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Icon, Label, Button, Message, Table } from 'semantic-ui-react'
-import Modal from '../egresade/view-egresade/Modal'
+import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import filter from '../../public/images/filter.png';
 import search from '../../public/images/search.png'
@@ -117,7 +117,7 @@ class Nahual_Table extends Component {
                       <label className="icon-text">Editar</label>
                     </Button> */}
 
-                    <Modal graduateId={value.id} open={this.state.openModal} />
+                    <Modal egresadeId={value.id} open={this.state.openModal} />
                   </Table.Cell>
                 </Table.Row>
               ))}
