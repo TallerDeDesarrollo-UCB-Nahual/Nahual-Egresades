@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Icon, Label, Button, Message, Table } from 'semantic-ui-react'
+import { Icon, Label, Button, Message, Table, Confirm } from 'semantic-ui-react'
 import Modal from '../egresade/view-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import filter from '../../public/images/filter.png';
 import search from '../../public/images/search.png'
 import { Link } from 'react-router-dom'
 import ImportModal from '../ImportButton/ImportModal'
+import axios from "axios";
 
 
 class Nahual_Table extends Component {
@@ -14,10 +15,20 @@ class Nahual_Table extends Component {
     this.state = {
       api: [],
       mensajeDeEstado: "",
-      mostrarMensajeDeEstado: false
+      mostrarMensajeDeEstado: false,
+      open: false
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
+
+  mostrarMensajeConfirmacion = () =>(  
+      this.setState({ 
+      open: true})
+  )
+
+  // open = () => this.setState({ 
+  //   open: true})
+  close = () => this.setState({ open: false })
 
   enRegistroExitoso(contador) {
     if (contador > 0) {
@@ -26,6 +37,18 @@ class Nahual_Table extends Component {
         mostrarMensajeDeEstado: true
       });
     }
+  }
+
+  eliminarEgresadeDeAPI(id) {
+    const API_URL = `https://mighty-anchorage-20911.herokuapp.com/api/students/`;
+    axios
+      .delete(`${API_URL}${id}`)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   componentDidMount() {
@@ -116,8 +139,16 @@ class Nahual_Table extends Component {
                       <i className="edit icon"></i>
                       <label className="icono-texto">Editar</label>
                     </Button> */}
-
                     <Modal graduateId={value.id} open={this.state.mostrarModal} />
+                    <Button onClick={this.mostrarMensajeConfirmacion()}>
+                      <i className="user delete icon"></i>
+                      <label className="icon-delete">Eliminar</label>
+                    </Button>
+                    <Confirm
+                        open={this.state.open}
+                        onCancel={this.close}
+                        onConfirm={this.eliminarEgresadeDeAPI(value.id)}
+                      />
                   </Table.Cell>
                 </Table.Row>
               ))}
