@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Button, Image, Modal, Grid, GridRow, Icon, Header, Segment, Loader, Dimmer} from 'semantic-ui-react';
 import '../../../public/stylesheets/Modal.css';
 import LogoNahual from '../../../public/images/logo-proyecto-nahual.webp';
+import userIcon from '../../../public/images/user-icon.jpeg';
 import EgresadeData from "./EgresadeData";
 import SubjectData from "./SubjectData";
 import axios from "axios";
@@ -66,10 +67,9 @@ class ModalExampleModal extends Component {
                 <Grid columns='equal'>
                   <Grid.Row>
                     <Grid.Column>
-                      <Image src='https://react.semantic-ui.com/images/avatar/large/rachel.png' wrapped />
+                      <img src={userIcon}></img> 
                     </Grid.Column>
-                    <Grid.Column width={1}>
-                    </Grid.Column>
+                    
                     <Grid.Column width={9}>
                       <EgresadeData graduate={this.state.graduate} />
                     </Grid.Column>
