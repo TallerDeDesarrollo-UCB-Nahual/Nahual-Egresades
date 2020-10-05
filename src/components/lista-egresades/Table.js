@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { Icon, Label, Button, Message, Table } from 'semantic-ui-react'
+import { Icon, Label, Button, Message, Table, Search } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import filter from '../../public/images/filter.png';
 import search from '../../public/images/search.png'
 import { Link } from 'react-router-dom'
 import ImportModal from '../ImportButton/ImportModal'
+import SearchExampleStandardCustom from './filtrar'
 
 
 class Nahual_Table extends Component {
@@ -14,7 +15,7 @@ class Nahual_Table extends Component {
     this.state = {
       api: [],
       statusMessage: "",
-      showStatusMessage: false
+      showStatusMessage: false,
     }
     this.onSuccessfulRegistration = this.onSuccessfulRegistration.bind(this)
   }
@@ -66,14 +67,15 @@ class Nahual_Table extends Component {
           </div>
 
           <div className="table-menu">
-            {/* <div className="filter">
+            <div className="filter">
               <img src={filter}></img>
               <label className="filter1"> Filtrar</label>
-            </div> 
-            <div className="search">
-              <img src={search} className="search-icon"></img>
-              <input className="search-input"></input>
-            </div>*/}
+            </div>
+
+            
+            <SearchExampleStandardCustom listaEgresades = {this.state.api} />
+        
+
             <div className="register" style={{ color: "black" }}>
               <Link to={'/'}>
                 <ImportModal onClick={this.onSuccessfulRegistration} />
