@@ -1,8 +1,18 @@
 import _ from 'lodash'
-import faker from 'faker'
 import React from 'react'
 import { Search, Grid, Header, Segment, Label } from 'semantic-ui-react'
 
+
+const source = getEgresades()
+
+function getEgresades(){
+  fetch(`https://mighty-anchorage-20911.herokuapp.com/api/students/`)
+  .then(res => {
+    let dat = res;
+    console.log(dat.json())
+    return dat.response
+  })
+}
 
 const initialState = {
   loading: false,
@@ -27,12 +37,11 @@ function exampleReducer(state, action) {
 }
 
 const resultRenderer = ({ fullName }) => <Label content={fullName} />
-// const [source, setSource] = React.useState([]);
 
 function SearchExampleStandardCustom({ listaEgresades }) {
   const [state, dispatch] = React.useReducer(exampleReducer, initialState)
   const { loading, results, value } = state
-  
+
 
   const timeoutRef = React.useRef()
   const handleSearchChange = React.useCallback((e, data) => {
@@ -45,12 +54,15 @@ function SearchExampleStandardCustom({ listaEgresades }) {
         return
       }
 
-      const re = new RegExp(_.escapeRegExp(data.value), 'i')
-      const isMatch = (result) => re.test(result.title)
+      const re = new RegExp(_.escapeRegExp(data.value))
+      const isMatch = (result) => {
+        re.test(result.fullName)
+        console.log(result)
+      }
 
       dispatch({
         type: 'FINISH_SEARCH',
-        results: _.filter(listaEgresades, isMatch),
+        results: _.filter(source, isMatch)
       })
     }, 300)
   }, [])
@@ -59,11 +71,12 @@ function SearchExampleStandardCustom({ listaEgresades }) {
       clearTimeout(timeoutRef.current)
     }
   }, [])
-  //listaEgresades != []?setSource(listaEgresades):console.log('listaEgresades vacia')
 
+  console.log({ loading, results, value })
+  console.log(source)
   return (
     <div>
-      <Search 
+      <Search
         loading={loading}
         onResultSelect={(e, data) =>
           dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
@@ -74,8 +87,7 @@ function SearchExampleStandardCustom({ listaEgresades }) {
         value={value}
       >
       </Search>
-      {/* {console.log(listaEgresades)} */}
-      {/* {listaEgresades != []?setSource(listaEgresades):console.log('listaEgresades vacia')} */}
+      {/* {console.log("SOURCE" + source)} */}
 
     </div>
   )

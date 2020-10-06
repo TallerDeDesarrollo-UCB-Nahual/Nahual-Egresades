@@ -28,7 +28,6 @@ class ImportModal extends Component{
 
   onSubmit(successfulRegistration){
     let lista = this.state.graduates
-    console.log(JSON.stringify(lista))
     fetch(studentsURL,{
       method: 'POST',
       headers:{
@@ -38,9 +37,8 @@ class ImportModal extends Component{
       },
       body:JSON.stringify(lista)
     }).then(res=>{
-      console.log(res)
       if(res){
-        console.log(res)
+        
       }
     })
     .catch(err =>{
