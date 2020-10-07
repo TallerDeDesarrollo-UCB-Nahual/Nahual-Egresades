@@ -1,13 +1,13 @@
 export const OpcionesDeEstadoLaboral = [
     {
         key: '1',
-        text: 'Empleado',
-        value: 'Empleado'
+        text: 'Desempleado',
+        value: 'Desempleado'
     },
     {
       key: '2',
-      text: 'Desempleado',
-      value: 'Desempleado'
+      text: 'Empleado',
+      value: 'Empleado'
     },
       
   ]

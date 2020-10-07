@@ -13,19 +13,6 @@ import {OpcionesDeNivelDeIngles} from './opciones-de-seleccion/OpcionesDeNivelDe
 import {OpcionesDeEstadoLaboral} from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import {MensajeResultante} from './tipo-de-mensaje/MensajeResultante.js';
 
-const estadoInicial ={
-  nombre: '',
-  apellido: '',
-  fechaDeNacimiento: '',
-  telefono: '',
-  correoElectronico: '',
-  nodo: OpcionesDeNodo[0].value,
-  anioDeGraduacion: '', 
-  cuatrimestre: OpcionesDeCuatrimestre[0].value, 
-  curso: OpcionesDeTipoDeCurso[0].value,
-  nivelDeIngles: OpcionesDeNivelDeIngles[0].value,
-  enlaceLinkedIn: ''
-}
 
 const rutaEstudiantes = 'https://mighty-anchorage-20911.herokuapp.com/api/students'
 
@@ -49,7 +36,7 @@ function prepararDatosAEnviar(estadoActual){
   return nuevoEstado;
 }
 
-export class RegistrarEgresades extends Component {
+export class EditarEgresades extends Component {
   state = {
     exito: null,
   };
@@ -96,7 +83,6 @@ export class RegistrarEgresades extends Component {
           this.setState({exito: false});
         }.bind(this))
         setTimeout(() => { this.setState({ exito: null }); }, 5000);   
-        this.setState(estadoInicial);
     }
 
     render() {
@@ -137,12 +123,12 @@ export class RegistrarEgresades extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <span className="etiquetas">
-                        <label htmlFor="fechaDeNacimiento">Fecha de Nacimiento<br/></label>
+                        <label htmlFor="fechaNacimiento">Fecha de Nacimiento<br/></label>
                         <Input type="date" 
-                            name="fechaDeNacimiento" 
+                            name="fechaNacimiento" 
                             pattern="[0-9]*" 
                             placeholder="Fecha de Nacimiento" 
-                            value={this.state.fechaDeNacimiento} 
+                            value={this.state.fechaNacimiento} 
                             validators={['required']} 
                             errorMessages={['Este campo es requerido']} 
                             style={{margin: "0px 15%"}}
@@ -157,9 +143,9 @@ export class RegistrarEgresades extends Component {
                           <label htmlFor="telefono">Teléfono de Contacto<br/></label>
                           <Input type="text" 
                             maxLength="10"
-                            name="telefono" 
+                            name="celular" 
                             placeholder="Celular" 
-                            defaultValue={this.state.egresade.cellphone} 
+                            defaultValue={this.state.egresade.cellphone} //celular
                             validators={['required','matchRegexp:^[0-9]+$']} 
                             errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
                             style={{margin: "0px 15%"}}
@@ -169,11 +155,11 @@ export class RegistrarEgresades extends Component {
                       </Grid.Column>
                       <Grid.Column>
                         <span className="etiquetas">
-                        <label htmlFor="correoElectronico">Correo Electrónico<br/></label>
+                        <label htmlFor="correo">Correo Electrónico<br/></label>
                           <Input type="email" 
-                            name="correoElectronico"
+                            name="correo"
                             placeholder="Correo Electrónico"
-                            value={this.state.correoElectronico}
+                            value={this.state.egresade.correo}
                             validators={['required']} 
                             errorMessages={['Este campo es requerido']} 
                             style={{margin: "0px 15%"}}
@@ -185,30 +171,30 @@ export class RegistrarEgresades extends Component {
                 <Grid.Row columns={2}>
                   <Grid.Column className="centrarColumnas">
                     <span className="etiquetas">
-                      <label htmlFor="nodo">Nodo<br/></label>
+                      <label htmlFor="nombreNodo">Nodo<br/></label>
                       <Dropdown
-                            name="nodo" 
+                            name="nombreNodo" 
                             placeholder="Nodo"
                             selection
                             required 
-                            onChange={(evento,{valor})=>{this.setState({nodo:valor})}} 
+                            onChange={(evento,{valor})=>{this.setState({nombreNodo:valor})}} 
                             style={{margin: "0px 11%"}}
                             options={OpcionesDeNodo}
-                            defaultValue={OpcionesDeNodo[0].value}
+                            defaultValue={this.state.egresade.nombreNodo}
                       />
                     </span>
                   </Grid.Column>
                   <Grid.Column>
                     <span className="etiquetas">
-                      <label htmlFor="nivelDeIngles">Nivel de Ingles<br/></label>
+                      <label htmlFor="nivelIngles">Nivel de Ingles<br/></label>
                       <Dropdown type="text"
-                            name="nivelDeIngles"
+                            name="nivelIngles"
                             label="Nivel de Inglés"
                             placeholder="Nivel de Ingles"
-                            value={this.state.nivelDeIngles}
+                            value={this.state.nivelIngles}
                             onChange={(evento,{valor})=>{this.setState({nivelDeIngles:valor})}} 
                             options={OpcionesDeNivelDeIngles}
-                            defaultValue={OpcionesDeNivelDeIngles[0].value}
+                            defaultValue={this.state.egresade.nivelIngles}
                             style={{margin: "0px 11%"}}
                             selection
                             required
@@ -223,7 +209,7 @@ export class RegistrarEgresades extends Component {
                             onChange={(evento,{valor})=>{this.setState({cuatrimestre:valor})}} 
                             options={OpcionesDeCuatrimestre}
                             value={this.state.cuatrimestre}
-                            defaultValue={OpcionesDeCuatrimestre[0].value}
+                            defaultValue={this.state.egresade.cuatrimestre}
                             placeholder='Cuatrimestre'
                             style={{margin: "0px 11%"}}
                             selection
@@ -232,15 +218,15 @@ export class RegistrarEgresades extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <span className="etiquetas">
-                    <label htmlFor="curso">Tipo de Curso<br/></label>
+                    <label htmlFor="modulo">Tipo de Curso<br/></label>
                       <Dropdown type="text"
-                          name="curso"
+                          name="modulo"
                           placeholder="Tipo de Curso"
-                          value={this.state.curso}
-                          onChange={(evento,{valor})=>{this.setState({curso:valor})}} 
+                          value={this.state.modulo}
+                          onChange={(evento,{valor})=>{this.setState({modulo:valor})}} 
                           validators={['required']} 
                           options={OpcionesDeTipoDeCurso}
-                          defaultValue={OpcionesDeTipoDeCurso[0].value}
+                          defaultValue={this.state.egresade.modulo}
                           style={{margin: "0px 11%"}}
                           selection
                       />
@@ -250,31 +236,31 @@ export class RegistrarEgresades extends Component {
                 <Grid.Row columns={2}>
                 <Grid.Column className="centrarColumnas">
                     <span className="etiquetas">
-                      <label htmlFor="estadoLaboral">Estado Laboral<br/></label>
+                      <label htmlFor="esEmpleado">Estado Laboral<br/></label>
                       <Dropdown
-                            name="estadoLaboral" 
+                            name="esEmpleado" 
                             placeholder="Estado Laboral"
                             selection
                             required 
-                            //onChange={(evento,{valor})=>{this.setState({nodo:valor})}} 
+                            onChange={(evento,{valor})=>{this.setState({esEmpleado:valor})}} 
                             style={{margin: "0px 11%"}}
                             options={OpcionesDeEstadoLaboral}
-                            defaultValue={OpcionesDeEstadoLaboral[0].value}
+                            defaultValue={this.state.egresade.esEmpleado}
                       />
                     </span>
                   </Grid.Column>
                   <Grid.Column>
                         <span className="etiquetas">
-                          <label htmlFor="nombrePrimerEmpleo">Nombre Primer Empleo<br/></label>
+                          <label htmlFor="nombrePrimerTrabajo">Nombre Primer Empleo<br/></label>
                           <Input type="text" 
-                              name="nombrePrimerEmpleo"
+                              name="nombrePrimerTrabajo"
                               maxLength="40"                 
                               placeholder="Nombre Primer Empleo" 
-                              value={this.state.apellido} 
+                              value={this.state.egresade.nombrePrimerTrabajo} 
                               validators={['required','matchRegexp:^[A-Za-z]+$']} 
                               errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
                               style={{margin: "0px 15%"}}
-                              //onChange={this.enCambio}
+                              onChange={(evento,{valor})=>{this.setState({nombrePrimerTrabajo:valor})}} 
                           />
                         </span>
                   </Grid.Column>
@@ -299,11 +285,11 @@ export class RegistrarEgresades extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <span className="etiquetas">
-                      <label htmlFor="enlaceLinkedIn">Enlace de CV en LinkedIn<br/></label>
+                      <label htmlFor="linkedin">Enlace de CV en LinkedIn<br/></label>
                       <Input type="url"
-                          name="enlaceLinkedIn"
+                          name="linkedin"
                           placeholder="LinkedIn"
-                          value={this.state.enlaceLinkedIn}
+                          value={this.state.linkedin}
                           validators={['required']} 
                           errorMessages={['Este campo es requerido']} 
                           style={{margin: "0px 15%"}}
@@ -332,4 +318,4 @@ export class RegistrarEgresades extends Component {
 }
 
 
-export default RegistrarEgresades
+export default EditarEgresades
