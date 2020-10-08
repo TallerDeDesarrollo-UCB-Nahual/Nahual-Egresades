@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
-import { Search, Grid, Header, Segment, Label } from 'semantic-ui-react'
+import { Search, Label } from 'semantic-ui-react'
 
 
 const source = getEgresades()
