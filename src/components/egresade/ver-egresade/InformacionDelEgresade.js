@@ -13,27 +13,27 @@ function InformacionDelEgresade({ egresade }) {
               
                 <Form.Field inline>
                   <label><Icon name='mail outline' /><span className="title-data">Correo:</span></label>
-                  <Input> {egresade.mail} </Input>
+                  <Input> {egresade.correo} </Input>
                 </Form.Field>
 
                 <Form.Field inline>
                 <label><Icon name='call' /><span className="title-data">Telefono:</span></label>
-                  <Input > {egresade.cellphone} </Input>
+                  <Input > {egresade.celular} </Input>
                 </Form.Field>
 
                 <Form.Field inline>
                   <label><Icon name='calendar outline' /><span className="title-data">Fecha de nacimiento:</span></label>
-                  <Input> {new Date(egresade.birthDate).toLocaleDateString('es')} </Input>
+                  <Input> {new Date(egresade.fechaNacimiento).toLocaleDateString('es')} </Input>
                 </Form.Field>
 
                 <Form.Field inline>
                   <label><Icon name='level up alternate' /><span className="title-data">Nivel de ingles:</span></label>
-                  <Input> {egresade.englishLevel} </Input>
+                  <Input> {egresade.nivelIngles} </Input>
                 </Form.Field>
 
                 <Form.Field inline>
                   <label><Icon name='map outline' /><span className="title-data"> Nodo:</span></label>
-                  <Input> {egresade.nodeName} </Input>
+                  <Input> {egresade.nombreNodo} </Input>
                 </Form.Field>
 
             </Form>

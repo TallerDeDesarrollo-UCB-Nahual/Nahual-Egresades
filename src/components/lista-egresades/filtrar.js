@@ -6,7 +6,7 @@ import { Search, Label } from 'semantic-ui-react'
 const source = getEgresades()
 
 function getEgresades(){
-  fetch(`https://mighty-anchorage-20911.herokuapp.com/api/students/`)
+  fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
   .then(res => {
     let dat = res;
     console.log(dat.json())
@@ -36,7 +36,7 @@ function exampleReducer(state, action) {
   }
 }
 
-const resultRenderer = ({ fullName }) => <Label content={fullName} />
+const resultRenderer = ({ nombreCompleto }) => <Label content={nombreCompleto} />
 
 function SearchExampleStandardCustom({ listaEgresades }) {
   const [state, dispatch] = React.useReducer(exampleReducer, initialState)
@@ -56,7 +56,7 @@ function SearchExampleStandardCustom({ listaEgresades }) {
 
       const re = new RegExp(_.escapeRegExp(data.value))
       const isMatch = (result) => {
-        re.test(result.fullName)
+        re.test(result.nombreCompleto)
         console.log(result)
       }
 
@@ -79,7 +79,7 @@ function SearchExampleStandardCustom({ listaEgresades }) {
       <Search
         loading={loading}
         onResultSelect={(e, data) =>
-          dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
+          dispatch({ type: 'UPDATE_SELECTION', selection: data.result.nombreCompleto })
         }
         onSearchChange={handleSearchChange}
         resultRenderer={resultRenderer}

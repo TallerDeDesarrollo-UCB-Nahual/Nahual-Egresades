@@ -30,7 +30,7 @@ class Nahual_Table extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://mighty-anchorage-20911.herokuapp.com/api/students/`)
+    fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
       .then(res => {
         return res.json()
       })
@@ -105,14 +105,14 @@ class Nahual_Table extends Component {
               {this.state.api.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="table-border">
-                    <Label className="name">{value.fullName}</Label><br></br>
-                    <Label className="mail">{value.mail}</Label>
+                    <Label className="name">{value.nombreCompleto}</Label><br></br>
+                    <Label className="mail">{value.correo}</Label>
                   </Table.Cell >
                   <Table.Cell className="table-border">
-                    <Label className="card-blue">• {value.nodeName}</Label>
+                    <Label className="card-blue">• {value.nombreNodo}</Label>
                   </Table.Cell>
                   <Table.Cell className="table-border">
-                    <Label className="card-green">• {value.module}</Label></Table.Cell>
+                    <Label className="card-green">• {value.modulo}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="table-border">
                     {/* <Button className="view-button">
                       <i className="edit icon"></i>

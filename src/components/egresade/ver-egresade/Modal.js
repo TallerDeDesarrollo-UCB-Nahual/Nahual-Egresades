@@ -57,7 +57,7 @@ class ModalExampleModal extends Component {
                     <Image src={LogoNahual} size='small' />
                   </Grid.Column>
                   <Grid.Column width={11}>
-                    <h1>{this.state.egresade.fullName}</h1>
+                    <h1>{this.state.egresade.nombreCompleto}</h1>
                   </Grid.Column>
                 </Grid>
               </Modal.Header>
