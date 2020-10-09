@@ -131,3 +131,7 @@ table{
     width: 300px;
     background-color: #F4F2FF;
 }
+.ui_icon_input{
+    width: auto !important;
+    color: #007F00;
+}

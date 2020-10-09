@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Icon, Label, Button, Message, Table } from 'semantic-ui-react';
+import { Icon, Label, Button, Message, Table, Search } from 'semantic-ui-react';
 import Modal from '../egresade/ver-egresade/Modal';
 import '../../public/stylesheets/Table.css';
-import filter from '../../public/images/filter.png';
 import { Link } from 'react-router-dom';
 import ImportModal from '../ImportButton/ImportModal';
 
@@ -92,17 +91,17 @@ class Nahual_Table extends Component {
               <p></p>
             }
           </div>
-
           <div className="table-menu">
-            <div className="filter">
-              <img src={filter}></img>
-              <label className="filter1"> Filtrar</label>
-            </div>
-
-            <div class="ui icon input">
+            <Search
+              showNoResults={false}
+              onSearchChange={this.buscarPorNombre.bind(this)}
+              className="ui_icon_input"
+              >
+            </Search>
+            {/* <div class="ui icon input" width={"auto"}>
               <input type="text" placeholder="Search..." onChange={this.buscarPorNombre.bind(this)} ></input>
               <i class="circular search link icon"></i>
-            </div>
+            </div> */}
 
             <div className="register" style={{ color: "black" }}>
               <Link to={'/'}>
