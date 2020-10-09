@@ -1,12 +1,10 @@
-import React, { Component } from 'react'
-import { Icon, Label, Button, Message, Table, Search } from 'semantic-ui-react'
-import Modal from '../egresade/ver-egresade/Modal'
+import React, { Component } from 'react';
+import { Icon, Label, Button, Message, Table } from 'semantic-ui-react';
+import Modal from '../egresade/ver-egresade/Modal';
 import '../../public/stylesheets/Table.css';
 import filter from '../../public/images/filter.png';
-import search from '../../public/images/search.png'
-import { Link } from 'react-router-dom'
-import ImportModal from '../ImportButton/ImportModal'
-import SearchExampleStandardCustom from './filtrar'
+import { Link } from 'react-router-dom';
+import ImportModal from '../ImportButton/ImportModal';
 
 
 class Nahual_Table extends Component {
@@ -16,8 +14,7 @@ class Nahual_Table extends Component {
       api: [],
       statusMessage: "",
       showStatusMessage: false,
-      rows: [],
-      foundedRows: Array(0)
+      filasEncontradas: Array(0)
     }
     this.onSuccessfulRegistration = this.onSuccessfulRegistration.bind(this)
   }
@@ -31,7 +28,7 @@ class Nahual_Table extends Component {
     }
   }
 
-  getEgresades() {
+  obtenerEgresades() {
     fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
       .then(res => {
         return res.json()
@@ -40,13 +37,13 @@ class Nahual_Table extends Component {
         let dat = res;
         this.setState({
           api: dat.response,
-          foundedRows: dat.response
+          filasEncontradas: dat.response
         });
       })
   }
 
   componentDidMount() {
-    this.getEgresades();
+    this.obtenerEgresades();
   }
 
   openModal() {
@@ -57,23 +54,23 @@ class Nahual_Table extends Component {
     this.setState({ showStatusMessage: false })
   }
 
-  find(nombre) {
-    let z = nombre.target.value;
-    let array = this.state.api;
-    let founded = Array(0);
-    console.log(nombre);
+  buscarPorNombre(nombre) {
+    let buscado = nombre.target.value;
+    let listaEgresades = this.state.api;
+    let resultados = Array(0);
+
     if (nombre.target.value.trim() === "") {
       this.setState({
-        foundedRows: this.state.api
+        filasEncontradas: this.state.api
       });
     }
-    for (let contador = 0; contador < array.length; contador++) {
-      if (array[contador].nombreCompleto.toLowerCase().includes(z.toLowerCase())) {
-        founded.push(array[contador]);
+    for (let contador = 0; contador < listaEgresades.length; contador++) {
+      if (listaEgresades[contador].nombreCompleto.toLowerCase().includes(buscado.toLowerCase())) {
+        resultados.push(listaEgresades[contador]);
       }
     }
     this.setState({
-      foundedRows: founded
+      filasEncontradas: resultados
     });
   }
 
@@ -103,10 +100,10 @@ class Nahual_Table extends Component {
             </div>
 
             <div class="ui icon input">
-              <input type="text" placeholder="Search..." onChange={this.find.bind(this)} ></input>
+              <input type="text" placeholder="Search..." onChange={this.buscarPorNombre.bind(this)} ></input>
               <i class="circular search link icon"></i>
             </div>
-            
+
             <div className="register" style={{ color: "black" }}>
               <Link to={'/'}>
                 <ImportModal onClick={this.onSuccessfulRegistration} />
@@ -133,7 +130,7 @@ class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.foundedRows.map((value) => (
+              {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="table-border">
                     <Label className="name">{value.nombreCompleto}</Label><br></br>

@@ -3,7 +3,6 @@ import 'semantic-ui-css/semantic.min.css'
 import { CSVReader } from 'react-papaparse'
 import { Button, Modal } from 'semantic-ui-react'
 import LoadedList from './LoadedList';
-import axios  from 'axios';
 
 const studentsURL = 'https://mighty-anchorage-20911.herokuapp.com/api/graduates'
 
