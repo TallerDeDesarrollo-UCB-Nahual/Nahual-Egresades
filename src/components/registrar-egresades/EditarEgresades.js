@@ -44,11 +44,9 @@ export class EditarEgresades extends Component {
     super(props);
     this.state = {
       egresade: {
-        
+        nombre:'',
+        apellido:''
       },
-      nombre: '',
-      apellido: '',
-      fechaNacimiento:''
     };
     
   }
@@ -63,11 +61,13 @@ export class EditarEgresades extends Component {
             egresade: response.data.response
           });
           var [head, ...rest] = this.state.egresade.nombreCompleto.split(" ");
-          this.setState({nombre: head});
-          var apellidoRecuperado = rest.reduce(function (acc, char){ return acc.concat(char, " "); }, "").trim();
-          this.setState({apellido: apellidoRecuperado});
-          var fechaRecuperada = this.state.egresade.fechaNacimiento.split("T", 1);
-          this.setState({fechaNacimiento: fechaRecuperada});
+          var nombre = head;
+          var apellido = rest.reduce(function (acc, char){ return acc.concat(char, " "); }, "").trim();
+          var fechaNacimiento = this.state.egresade.fechaNacimiento.split("T", 1).reduce((acc, fec)=>acc.concat(fec), "");
+          let estadoDepurado = this.state.egresade;
+          delete estadoDepurado.fechaNacimiento;
+          var completeEgresade = {...estadoDepurado, nombre, apellido, fechaNacimiento};
+          this.setState({egresade:completeEgresade});
         })
         .catch(function (error) {
           console.log(error);
@@ -77,20 +77,25 @@ export class EditarEgresades extends Component {
   enCambio = (event) =>{
       let nombre = event.target.name;
       let valor = event.target.value;
-      this.setState({[nombre]: valor});
+      let estadoDepurado = this.state.egresade;
+      delete estadoDepurado[`${nombre}`];
+      let nuevoEstado = {...estadoDepurado, [`${nombre}`]: valor};
+      this.setState({egresade: nuevoEstado});
   }
 
     enConfirmacion = (evento) =>{
         evento.preventDefault();
-        var estadoAEnviar = prepararDatosAEnviar(this.state);
-        axios.post(rutaEstudiantes, estadoAEnviar)
-        .then(function (respuesta){
-          this.setState({exito: true});  
-        }.bind(this))
-        .catch(function (error){
-          this.setState({exito: false});
-        }.bind(this))
-        setTimeout(() => { this.setState({ exito: null }); }, 5000);   
+        var nombreConcatenado = this.state.egresade.nombre + " " + this.state.egresade.apellido;
+        this.state.egresade.nombreCompleto = nombreConcatenado;
+        console.log(this.state);
+        // axios.post(rutaEstudiantes, estadoAEnviar)
+        // .then(function (respuesta){
+        //   this.setState({exito: true});  
+        // }.bind(this))
+        // .catch(function (error){
+        //   this.setState({exito: false});
+        // }.bind(this))
+        // setTimeout(() => { this.setState({ exito: null }); }, 5000);   
     }
 
     render() {
@@ -106,7 +111,7 @@ export class EditarEgresades extends Component {
                             name="nombre"
                             maxLength="20"  
                             placeholder="Nombre" 
-                            value={this.state.nombre} 
+                            value={this.state.egresade.nombre} 
                             validators={['required','matchRegexp:^[A-Za-z ]+$']} 
                             errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
                             style={{margin: "0px 15%"}}
@@ -120,8 +125,8 @@ export class EditarEgresades extends Component {
                           <Input type="text" 
                               name="apellido"
                               maxLength="30"                 
-                              placeholder="Apellido" 
-                              value={this.state.apellido} 
+                              placeholder="Apellido"  
+                              value={this.state.egresade.apellido} 
                               validators={['required','matchRegexp:^[A-Za-z ]+$']} 
                               errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
                               style={{margin: "0px 15%"}}
@@ -136,7 +141,7 @@ export class EditarEgresades extends Component {
                             name="fechaNacimiento" 
                             pattern="[0-9]*" 
                             placeholder="Fecha de Nacimiento" 
-                            value={this.state.fechaNacimiento} 
+                            value={this.state.egresade.fechaNacimiento} 
                             validators={['required']} 
                             errorMessages={['Este campo es requerido']} 
                             style={{margin: "0px 15%"}}
@@ -185,7 +190,7 @@ export class EditarEgresades extends Component {
                             placeholder="Nodo"
                             selection
                             required 
-                            onChange={(evento,{valor})=>{this.setState({nombreNodo:valor})}} 
+                            onChange={this.enCambio} 
                             style={{margin: "0px 11%"}}
                             options={OpcionesDeNodo}
                             value={this.state.egresade.nombreNodo}
@@ -245,8 +250,7 @@ export class EditarEgresades extends Component {
                       <Dropdown
                             name="esEmpleado" 
                             placeholder="Estado Laboral"
-                            selection
-                            required 
+                            selection 
                             onChange={(evento,{valor})=>{this.setState({esEmpleado:valor})}} 
                             style={{margin: "0px 11%"}}
                             options={OpcionesDeEstadoLaboral}
@@ -262,10 +266,10 @@ export class EditarEgresades extends Component {
                               maxLength="40"                 
                               placeholder="Nombre Primer Empleo" 
                               value={this.state.egresade.nombrePrimerTrabajo} 
-                              validators={['required','matchRegexp:^[A-Za-z]+$']} 
-                              errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
+                              validators={['matchRegexp:^[A-Za-z]+$']} 
+                              errorMessages={['El campo no acepta valores numéricos']} 
                               style={{margin: "0px 15%"}}
-                              onChange={(evento,{valor})=>{this.setState({nombrePrimerTrabajo:valor})}} 
+                              onChange={this.enCambio} 
                           />
                         </span>
                   </Grid.Column>
