@@ -3,15 +3,18 @@ import React from 'react'
 import { Search, Label } from 'semantic-ui-react'
 
 
-const source = getEgresades()
+const source = getEgresades();
+console.log("++++++"+source);
 
 function getEgresades(){
   fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
-  .then(res => {
-    let dat = res;
-    console.log(dat.json())
-    return dat.response
-  })
+    .then(res => {
+      return res.json()
+    })
+    .then(res => {
+      let dat = res;
+        return dat.response
+    })
 }
 
 const initialState = {

@@ -16,6 +16,8 @@ class Nahual_Table extends Component {
       api: [],
       statusMessage: "",
       showStatusMessage: false,
+      rows: [],
+      foundedRows: Array(0)
     }
     this.onSuccessfulRegistration = this.onSuccessfulRegistration.bind(this)
   }
@@ -29,22 +31,50 @@ class Nahual_Table extends Component {
     }
   }
 
-  componentDidMount() {
+  getEgresades() {
     fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
       .then(res => {
         return res.json()
       })
       .then(res => {
         let dat = res;
-        this.setState({ api: dat.response })
+        this.setState({
+          api: dat.response,
+          foundedRows: dat.response
+        });
       })
   }
+
+  componentDidMount() {
+    this.getEgresades();
+  }
+
   openModal() {
     this.setState({ openModal: true });
   }
 
   handleDismiss = () => {
     this.setState({ showStatusMessage: false })
+  }
+
+  find(nombre) {
+    let z = nombre.target.value;
+    let array = this.state.api;
+    let founded = Array(0);
+    console.log(nombre);
+    if (nombre.target.value.trim() === "") {
+      this.setState({
+        foundedRows: this.state.api
+      });
+    }
+    for (let contador = 0; contador < array.length; contador++) {
+      if (array[contador].nombreCompleto.toLowerCase().startsWith(z.toLowerCase())) {
+        founded.push(array[contador]);
+      }
+    }
+    this.setState({
+      foundedRows: founded
+    });
   }
 
   render() {
@@ -72,9 +102,17 @@ class Nahual_Table extends Component {
               <label className="filter1"> Filtrar</label>
             </div>
 
-            
+            {/* <div className="search">
+              <Search
+                loading={loading}
+                className="search-input"
+                onSearchChange={this.find.bind(this)}
+                results={this.state.api.nombreCompleto}
+              ></Search>
+            </div> */}
+
             <SearchExampleStandardCustom listaEgresades = {this.state.api} />
-        
+
 
             <div className="register" style={{ color: "black" }}>
               <Link to={'/'}>
