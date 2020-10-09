@@ -23,13 +23,13 @@ export default class LoadedList extends Component{
          </Table.Header>
      
          <Table.Body>
-         {this.props.json.map(item => (
-           <Table.Row  key={item.fullName}>
-            <Table.Cell >{item["fullName"]}</Table.Cell>
-            <Table.Cell>{item["birthDate"]}</Table.Cell>
-            <Table.Cell>{item["mail"]}</Table.Cell>
-            <Table.Cell>{item["cellphone"]}</Table.Cell>
-            <Table.Cell>{item["nodeName"]}</Table.Cell>
+         {this.props.json.map(fila => (
+           <Table.Row  key={fila.fullName}>
+            <Table.Cell >{fila["fullName"]}</Table.Cell>
+            <Table.Cell>{fila["birthDate"]}</Table.Cell>
+            <Table.Cell>{fila["mail"]}</Table.Cell>
+            <Table.Cell>{fila["cellphone"]}</Table.Cell>
+            <Table.Cell>{fila["nodeName"]}</Table.Cell>
 
            </Table.Row>
            ))}

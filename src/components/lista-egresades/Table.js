@@ -13,17 +13,17 @@ class Nahual_Table extends Component {
     super();
     this.state = {
       api: [],
-      statusMessage: "",
-      showStatusMessage: false
+      mensajeDeEstado: "",
+      mostrarMensajeDeEstado: false
     }
-    this.onSuccessfulRegistration = this.onSuccessfulRegistration.bind(this)
+    this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
 
-  onSuccessfulRegistration(count) {
-    if (count > 0) {
+  enRegistroExitoso(contador) {
+    if (contador > 0) {
       this.setState({
-        statusMessage: "Se realizo el registro de " + count + " egresados exitosamente.",
-        showStatusMessage: true
+        mensajeDeEstado: "Se realizo el registro de " + contador + " egresados exitosamente.",
+        mostrarMensajeDeEstado: true
       });
     }
   }
@@ -34,83 +34,90 @@ class Nahual_Table extends Component {
         return res.json()
       })
       .then(res => {
-        let dat = res;
-        this.setState({ api: dat.response })
+        let data = res;
+        this.setState({ api: data.response })
       })
   }
-  openModal() {
-    this.setState({ openModal: true });
+  mostrarModal() {
+    this.setState({ mostrarModal: true });
   }
 
-  handleDismiss = () => {
-    this.setState({ showStatusMessage: false })
+  manejarProblemas = () => {
+    this.setState({ mostrarMensajeDeEstado: false })
   }
 
   render() {
     return (
       <div>
-        <div className="table">
-          <p className="title">Lista de Egresades</p>
-          <div className="line"></div>
+        <div className="tabla">
+          <p className="titulo">Lista de Egresades</p>
+          <div className="linea"></div>
           <div>
-            {this.state.showStatusMessage ?
+            {this.state.mostrarMensajeDeEstado ?
               <Message
                 positive
-                onDismiss={this.handleDismiss}
+                onDismiss={this.manejarProblemas}
                 header='Registro exitoso!'
-                content={this.state.statusMessage}
+                montent={this.state.MensajeDeEstado}
               ></Message>
               :
               <p></p>
             }
           </div>
 
-          <div className="table-menu">
-            {/* <div className="filter">
+          <div className="tabla-menu">
+            {/* <div className="filtrar">
               <img src={filter}></img>
               <label className="filter1"> Filtrar</label>
             </div> 
-            <div className="search">
-              <img src={search} className="search-icon"></img>
-              <input className="search-input"></input>
+            <div className="buscar">
+              <img src={search} className="icono-buscar"></img>
+              <input className="input-buscar"></input>
             </div>*/}
-            <div className="register" style={{ color: "black" }}>
+            <div className="registrar" style={{ color: "black" }}>
               <Link to={'/'}>
-                <ImportModal onClick={this.onSuccessfulRegistration} />
+                <ImportModal onClick={this.enRegistroExitoso} />
+              </Link>
+            </div>
+            <div className="registrar" style={{ color: "black" }}>
+              <Link to={'/registrar'}>
+                <Button basic style={{ color: "black", border: '1px solid #6D5BD0' }}>
+                  <Icon name='plus square' color='green' />
+                  Registrar
+                </Button>
               </Link>
             </div>
           </div>
           <br /><br />
-          <Table celled className="table-card">
+          <Table celled className="tarjeta-tabla">
             <Table.Header>
               <Table.Row >
-                <Table.HeaderCell className="table-header">Nombre y Apellido</Table.HeaderCell>
-                <Table.HeaderCell className="table-header">Nodo</Table.HeaderCell>
-                <Table.HeaderCell className="table-header">Modulo Cursado</Table.HeaderCell>
-                <Table.HeaderCell className="table-header">Acción</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Nombre y Apellido</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Nodo</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Modulo Cursado</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Acción</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
             <Table.Body>
               {this.state.api.map((value) => (
                 <Table.Row key={value.id} >
-                  <Table.Cell className="table-border">
-                    <Label className="name">{value.fullName}</Label><br></br>
-                    <Label className="mail">{value.mail}</Label>
+                  <Table.Cell className="bordes-tabla">
+                    <Label className="nombre">{value.fullName}</Label><br></br>
+                    <Label className="email">{value.mail}</Label>
                   </Table.Cell >
-                  <Table.Cell className="table-border">
-                    <Label className="card-blue">• {value.nodeName}</Label>
+                  <Table.Cell className="bordes-tabla">
+                    <Label className="tarjeta-azul">• {value.nodeName}</Label>
                   </Table.Cell>
-                  <Table.Cell className="table-border">
-                    <Label className="card-green">• {value.module}</Label></Table.Cell>
-                  <Table.Cell colSpan="3" className="table-border">
-                    {<Link to={`/editar/${value.id}`}><Button className="view-button">
+                  <Table.Cell className="bordes-tabla">
+                    <Label className="tarjeta-verde">• {value.module}</Label></Table.Cell>
+                  <Table.Cell colSpan="3" className="bordes-tabla">
+                    {/* <Button className="view-button">
                       <i className="edit icon"></i>
-                      <label className="icon-text">Editar</label>
-                    </Button></Link>
-                    }
+                      <label className="icono-texto">Editar</label>
+                    </Button> */}
 
-                    <Modal graduateId={value.id} open={this.state.openModal} />
+                    <Modal graduateId={value.id} open={this.state.mostrarModal} />
                   </Table.Cell>
                 </Table.Row>
               ))}
