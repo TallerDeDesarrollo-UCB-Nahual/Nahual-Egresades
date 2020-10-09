@@ -44,22 +44,30 @@ export class EditarEgresades extends Component {
     super(props);
     this.state = {
       egresade: {
-        cellphone: ''
-      }
+        
+      },
+      nombre: '',
+      apellido: '',
+      fechaNacimiento:''
     };
     
   }
 
   componentDidMount()
   {
-    const API_URL = `https://mighty-anchorage-20911.herokuapp.com/api/students/`;
+    const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/egresades/`;
       axios
         .get(`${API_URL}${this.props.match.params.id}`)
         .then(response => {
           this.setState({
             egresade: response.data.response
           });
-          console.log(this.state.egresade);
+          var [head, ...rest] = this.state.egresade.nombreCompleto.split(" ");
+          this.setState({nombre: head});
+          var apellidoRecuperado = rest.reduce(function (acc, char){ return acc.concat(char, " "); }, "").trim();
+          this.setState({apellido: apellidoRecuperado});
+          var fechaRecuperada = this.state.egresade.fechaNacimiento.split("T", 1);
+          this.setState({fechaNacimiento: fechaRecuperada});
         })
         .catch(function (error) {
           console.log(error);
@@ -99,7 +107,7 @@ export class EditarEgresades extends Component {
                             maxLength="20"  
                             placeholder="Nombre" 
                             value={this.state.nombre} 
-                            validators={['required','matchRegexp:^[A-Za-z]+$']} 
+                            validators={['required','matchRegexp:^[A-Za-z ]+$']} 
                             errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
                             style={{margin: "0px 15%"}}
                             onChange={this.enCambio}
@@ -114,7 +122,7 @@ export class EditarEgresades extends Component {
                               maxLength="30"                 
                               placeholder="Apellido" 
                               value={this.state.apellido} 
-                              validators={['required','matchRegexp:^[A-Za-z]+$']} 
+                              validators={['required','matchRegexp:^[A-Za-z ]+$']} 
                               errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
                               style={{margin: "0px 15%"}}
                               onChange={this.enCambio}
@@ -145,7 +153,7 @@ export class EditarEgresades extends Component {
                             maxLength="10"
                             name="celular" 
                             placeholder="Celular" 
-                            defaultValue={this.state.egresade.cellphone} //celular
+                            value={this.state.egresade.celular}
                             validators={['required','matchRegexp:^[0-9]+$']} 
                             errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
                             style={{margin: "0px 15%"}}
@@ -180,7 +188,7 @@ export class EditarEgresades extends Component {
                             onChange={(evento,{valor})=>{this.setState({nombreNodo:valor})}} 
                             style={{margin: "0px 11%"}}
                             options={OpcionesDeNodo}
-                            defaultValue={this.state.egresade.nombreNodo}
+                            value={this.state.egresade.nombreNodo}
                       />
                     </span>
                   </Grid.Column>
@@ -189,12 +197,10 @@ export class EditarEgresades extends Component {
                       <label htmlFor="nivelIngles">Nivel de Ingles<br/></label>
                       <Dropdown type="text"
                             name="nivelIngles"
-                            label="Nivel de Inglés"
                             placeholder="Nivel de Ingles"
-                            value={this.state.nivelIngles}
-                            onChange={(evento,{valor})=>{this.setState({nivelDeIngles:valor})}} 
+                            value={this.state.egresade.nivelIngles}
+                            onChange={(evento,{valor})=>{this.setState({nivelIngles:valor})}} 
                             options={OpcionesDeNivelDeIngles}
-                            defaultValue={this.state.egresade.nivelIngles}
                             style={{margin: "0px 11%"}}
                             selection
                             required
@@ -208,8 +214,7 @@ export class EditarEgresades extends Component {
                             name="cuatrimestre"
                             onChange={(evento,{valor})=>{this.setState({cuatrimestre:valor})}} 
                             options={OpcionesDeCuatrimestre}
-                            value={this.state.cuatrimestre}
-                            defaultValue={this.state.egresade.cuatrimestre}
+                            value={this.state.egresade.cuatrimestre}
                             placeholder='Cuatrimestre'
                             style={{margin: "0px 11%"}}
                             selection
@@ -226,7 +231,7 @@ export class EditarEgresades extends Component {
                           onChange={(evento,{valor})=>{this.setState({modulo:valor})}} 
                           validators={['required']} 
                           options={OpcionesDeTipoDeCurso}
-                          defaultValue={this.state.egresade.modulo}
+                          value={this.state.egresade.modulo}
                           style={{margin: "0px 11%"}}
                           selection
                       />
@@ -245,7 +250,7 @@ export class EditarEgresades extends Component {
                             onChange={(evento,{valor})=>{this.setState({esEmpleado:valor})}} 
                             style={{margin: "0px 11%"}}
                             options={OpcionesDeEstadoLaboral}
-                            defaultValue={this.state.egresade.esEmpleado}
+                            value={OpcionesDeEstadoLaboral[this.state.egresade.esEmpleado? 1:0].value}
                       />
                     </span>
                   </Grid.Column>
@@ -266,16 +271,16 @@ export class EditarEgresades extends Component {
                   </Grid.Column>
                   <Grid.Column>
                     <span className="etiquetas">
-                      <label for="anioDeGraduacion">Año de Graduación<br/></label>
+                      <label for="añoGraduacion">Año de Graduación<br/></label>
                       <Input type="text"
-                          name="anioDeGraduacion"
+                          name="añoGraduacion"
                           min={1950}
                           max={2100}
                           pattern="[0-9]*"
                           maxLength="4"  
                           minLength="4"  
                           placeholder="Año"
-                          value={this.state.anioDeGraduacion}
+                          value={this.state.egresade.añoGraduacion}
                           validators={['required','matchRegexp:^[0-9]+$']} 
                           errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
                           style={{margin: "0px 15%"}}
@@ -289,7 +294,7 @@ export class EditarEgresades extends Component {
                       <Input type="url"
                           name="linkedin"
                           placeholder="LinkedIn"
-                          value={this.state.linkedin}
+                          value={this.state.egresade.linkedin}
                           validators={['required']} 
                           errorMessages={['Este campo es requerido']} 
                           style={{margin: "0px 15%"}}

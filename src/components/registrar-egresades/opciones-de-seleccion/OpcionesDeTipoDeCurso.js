@@ -1,9 +1,9 @@
 
 export const OpcionesDeTipoDeCurso=[
     {
-        key: 'Testing Funcional',
-        text: 'Testing Funcional',
-        value: 'Testing Funcional'
+        key: 'Testing funcional',
+        text: 'Testing funcional',
+        value: 'Testing funcional'
     },
     {
         key: 'Testing Automation',
@@ -11,9 +11,9 @@ export const OpcionesDeTipoDeCurso=[
         value: 'Testing Automation'
     },
     {
-        key: 'Introduccion a la Programación',
-        text: 'Introduccion a la Programación',
-        value: 'Introduccion a la Programación'
+        key: 'Introduccion a la Programacion',
+        text: 'Introduccion a la Programacion',
+        value: 'Introduccion a la Programacion'
     },
     {
         key: 'Alfabetización Digital',
