@@ -13,7 +13,7 @@ function getEgresades(){
     })
     .then(res => {
       let dat = res;
-        return dat.response
+      return dat.response
     })
 }
 

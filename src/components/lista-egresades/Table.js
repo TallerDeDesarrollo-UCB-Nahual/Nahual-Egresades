@@ -68,7 +68,7 @@ class Nahual_Table extends Component {
       });
     }
     for (let contador = 0; contador < array.length; contador++) {
-      if (array[contador].nombreCompleto.toLowerCase().startsWith(z.toLowerCase())) {
+      if (array[contador].nombreCompleto.toLowerCase().includes(z.toLowerCase())) {
         founded.push(array[contador]);
       }
     }
@@ -102,18 +102,11 @@ class Nahual_Table extends Component {
               <label className="filter1"> Filtrar</label>
             </div>
 
-            {/* <div className="search">
-              <Search
-                loading={loading}
-                className="search-input"
-                onSearchChange={this.find.bind(this)}
-                results={this.state.api.nombreCompleto}
-              ></Search>
-            </div> */}
-
-            <SearchExampleStandardCustom listaEgresades = {this.state.api} />
-
-
+            <div class="ui icon input">
+              <input type="text" placeholder="Search..." onChange={this.find.bind(this)} ></input>
+              <i class="circular search link icon"></i>
+            </div>
+            
             <div className="register" style={{ color: "black" }}>
               <Link to={'/'}>
                 <ImportModal onClick={this.onSuccessfulRegistration} />
@@ -122,7 +115,7 @@ class Nahual_Table extends Component {
             <div className="register" style={{ color: "black" }}>
               <Link to={'/registrar'}>
                 <Button basic style={{ color: "black", border: '1px solid #6D5BD0' }}>
-                  <Icon name='plus square' color='green' />
+                  <Icon className='plus square' color='green' />
                   Registrar
                 </Button>
               </Link>
@@ -140,7 +133,7 @@ class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.api.map((value) => (
+              {this.state.foundedRows.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="table-border">
                     <Label className="name">{value.nombreCompleto}</Label><br></br>
