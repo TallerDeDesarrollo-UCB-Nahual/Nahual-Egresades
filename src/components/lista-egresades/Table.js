@@ -95,14 +95,14 @@ class Nahual_Table extends Component {
               {this.state.api.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="nombre">{value.fullName}</Label><br></br>
-                    <Label className="email">{value.mail}</Label>
+                    <Label className="nombre">{value.nombreCompleto}</Label><br></br>
+                    <Label className="email">{value.correo}</Label>
                   </Table.Cell >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="tarjeta-azul">• {value.nodeName}</Label>
+                    <Label className="tarjeta-azul">• {value.nombreNodo}</Label>
                   </Table.Cell>
                   <Table.Cell className="bordes-tabla">
-                    <Label className="tarjeta-verde">• {value.module}</Label></Table.Cell>
+                    <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="bordes-tabla">
                   {<Link to={`/editar/${value.id}`}><Button className="view-button">
                       <i className="edit icon"></i>

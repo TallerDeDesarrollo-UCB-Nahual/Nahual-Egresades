@@ -12,9 +12,9 @@ import {OpcionesDeCuatrimestre} from './opciones-de-seleccion/OpcionesDeCuatrime
 import {OpcionesDeNivelDeIngles} from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
 import {OpcionesDeEstadoLaboral} from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import {MensajeResultante} from './tipo-de-mensaje/MensajeResultante.js';
-import ConfirmarModal from './ConfirmarModal'
+import ConfirmarModal from './ConfirmarModal';
 
-const rutaEstudiantes = 'https://mighty-anchorage-20911.herokuapp.com/api/students'
+const rutaEstudiantes = 'https://mighty-anchorage-20911.herokuapp.com/api/students';
 
 function obtenerEstadoDepurado(estadoActual){
   var estadoDepurado = estadoActual;
@@ -64,9 +64,11 @@ export class EditarEgresades extends Component {
           var nombre = head;
           var apellido = rest.reduce(function (acc, char){ return acc.concat(char, " "); }, "").trim();
           var fechaNacimiento = this.state.egresade.fechaNacimiento.split("T", 1).reduce((acc, fec)=>acc.concat(fec), "");
+          var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (this.state.egresade.esEmpleado? 1:0)).text;
           let estadoDepurado = this.state.egresade;
           delete estadoDepurado.fechaNacimiento;
-          var completeEgresade = {...estadoDepurado, nombre, apellido, fechaNacimiento};
+          delete estadoDepurado.esEmpleado;
+          var completeEgresade = {...estadoDepurado, nombre, apellido, fechaNacimiento, esEmpleado};
           this.setState({egresade:completeEgresade});
         })
         .catch(function (error) {
@@ -83,30 +85,48 @@ export class EditarEgresades extends Component {
       this.setState({egresade: nuevoEstado});
   }
 
-    enConfirmacion = (evento) =>{
-        evento.preventDefault();
-        var nombreConcatenado = this.state.egresade.nombre + " " + this.state.egresade.apellido;
-        this.state.egresade.nombreCompleto = nombreConcatenado;
-        console.log(this.state);
-        // axios.post(rutaEstudiantes, estadoAEnviar)
-        // .then(function (respuesta){
-        //   this.setState({exito: true});  
-        // }.bind(this))
-        // .catch(function (error){
-        //   this.setState({exito: false});
-        // }.bind(this))
-        // setTimeout(() => { this.setState({ exito: null }); }, 5000);   
-    }
+  enConfirmacion = (evento) =>{
+      evento.preventDefault();
+      var nombreConcatenado = this.state.egresade.nombre + " " + this.state.egresade.apellido;
+      this.state.egresade.nombreCompleto = nombreConcatenado;
+      this.setState({abrirModal: true})
+      console.log(this.state);
   }
+
+  guardarEgresade(){
+    var egresadeAEnviar = this.state.egresade;
+    egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
+    delete egresadeAEnviar.nombre;
+    delete egresadeAEnviar.apellido;
+    console.log(egresadeAEnviar);
+    axios.put(`http://fathomless-falls-62194.herokuapp.com/api/egresades/${egresadeAEnviar.id}`, egresadeAEnviar)
+    .then(function (respuesta){
+      window.open("/", "_self");
+    })
+    .catch(function(error){
+      this.setState({exito: false});
+    }.bind(this));
+    setTimeout(() => { this.setState({ exito: null }); }, 5000); 
+  }
+
+  handleButtonClick = () => this.setState({abrirModal: true})
 
   handleCancel = () => this.setState({ abrirModal: false })
 
   handleConfirm = () => {
     this.setState({ abrirModal: false })
-    window.open("/", "_self");
+    this.guardarEgresade();
   }
 
-    render() {
+  onChangeDropdown = (e, { value, name }) => {
+    console.log(name);
+    let valor = this.state.egresade[name];
+    this.setState({selectedType: valor})
+    valor = value;
+    this.state.egresade[name] = valor;
+  }
+
+  render() {
         return (
            <div className="contenedor">
                 <Form id="myForm" onSubmit={this.enConfirmacion} className="ui form">
@@ -114,7 +134,7 @@ export class EditarEgresades extends Component {
                     <Grid.Row >
                       <Grid.Column className="centrarColumnas">
                         <span className="etiquetas">
-                          <label for="nombre">Nombre<br/></label>
+                          <label htmlFor="nombre">Nombre<br/></label>
                           <Input class="ui one column stackable center aligned page grid" type="text" 
                             name="nombre"
                             maxLength="20"  
@@ -195,13 +215,14 @@ export class EditarEgresades extends Component {
                       <label htmlFor="nombreNodo">Nodo<br/></label>
                       <Dropdown
                             name="nombreNodo" 
+                            id="nombreNodo"
                             placeholder="Nodo"
                             selection
                             required 
-                            onChange={this.enCambio} 
                             style={{margin: "0px 11%"}}
                             options={OpcionesDeNodo}
                             value={this.state.egresade.nombreNodo}
+                            onChange={this.onChangeDropdown}
                       />
                     </span>
                   </Grid.Column>
@@ -212,7 +233,7 @@ export class EditarEgresades extends Component {
                             name="nivelIngles"
                             placeholder="Nivel de Ingles"
                             value={this.state.egresade.nivelIngles}
-                            onChange={(evento,{valor})=>{this.setState({nivelIngles:valor})}} 
+                            onChange={this.onChangeDropdown} 
                             options={OpcionesDeNivelDeIngles}
                             style={{margin: "0px 11%"}}
                             selection
@@ -225,7 +246,7 @@ export class EditarEgresades extends Component {
                       <label htmlFor="cuatrimestre">Cuatrimestre<br/></label>
                       <Dropdown type="text" 
                             name="cuatrimestre"
-                            onChange={(evento,{valor})=>{this.setState({cuatrimestre:valor})}} 
+                            onChange={this.onChangeDropdown} 
                             options={OpcionesDeCuatrimestre}
                             value={this.state.egresade.cuatrimestre}
                             placeholder='Cuatrimestre'
@@ -241,7 +262,7 @@ export class EditarEgresades extends Component {
                           name="modulo"
                           placeholder="Tipo de Curso"
                           value={this.state.modulo}
-                          onChange={(evento,{valor})=>{this.setState({modulo:valor})}} 
+                          onChange={this.onChangeDropdown} 
                           validators={['required']} 
                           options={OpcionesDeTipoDeCurso}
                           value={this.state.egresade.modulo}
@@ -259,10 +280,10 @@ export class EditarEgresades extends Component {
                             name="esEmpleado" 
                             placeholder="Estado Laboral"
                             selection 
-                            onChange={(evento,{valor})=>{this.setState({esEmpleado:valor})}} 
+                            onChange={this.onChangeDropdown} 
                             style={{margin: "0px 11%"}}
                             options={OpcionesDeEstadoLaboral}
-                            value={OpcionesDeEstadoLaboral[this.state.egresade.esEmpleado? 1:0].value}
+                            value={this.state.egresade.esEmpleado}
                       />
                     </span>
                   </Grid.Column>
@@ -315,163 +336,30 @@ export class EditarEgresades extends Component {
                       </span>
                     </Grid.Column>
                   </Grid.Row>
-              <Grid.Row columns={2}>
-                <Grid.Column className="centrarColumnas">
-                  <span className="etiquetas">
-                    <label htmlFor="nombreNodo">Nodo<br/></label>
-                    <Dropdown
-                          name="nombreNodo" 
-                          placeholder="Nodo"
-                          selection
-                          required 
-                          onChange={(evento,{valor})=>{this.setState({nombreNodo:valor})}} 
-                          style={{margin: "0px 11%"}}
-                          options={OpcionesDeNodo}
-                          defaultValue={this.state.egresade.nombreNodo}
-                    />
-                  </span>
-                </Grid.Column>
-                <Grid.Column>
-                  <span className="etiquetas">
-                    <label htmlFor="nivelIngles">Nivel de Ingles<br/></label>
-                    <Dropdown type="text"
-                          name="nivelIngles"
-                          label="Nivel de Inglés"
-                          placeholder="Nivel de Ingles"
-                          value={this.state.nivelIngles}
-                          onChange={(evento,{valor})=>{this.setState({nivelDeIngles:valor})}} 
-                          options={OpcionesDeNivelDeIngles}
-                          defaultValue={this.state.egresade.nivelIngles}
-                          style={{margin: "0px 11%"}}
-                          selection
-                          required
-                    />
-                  </span>
-                </Grid.Column>
-                <Grid.Column>
-                  <span className="etiquetas">
-                    <label htmlFor="cuatrimestre">Cuatrimestre<br/></label>
-                    <Dropdown type="text" 
-                          name="cuatrimestre"
-                          onChange={(evento,{valor})=>{this.setState({cuatrimestre:valor})}} 
-                          options={OpcionesDeCuatrimestre}
-                          value={this.state.cuatrimestre}
-                          defaultValue={this.state.egresade.cuatrimestre}
-                          placeholder='Cuatrimestre'
-                          style={{margin: "0px 11%"}}
-                          selection
-                    />
-                  </span>
-                </Grid.Column>
-                <Grid.Column>
-                  <span className="etiquetas">
-                  <label htmlFor="modulo">Tipo de Curso<br/></label>
-                    <Dropdown type="text"
-                        name="modulo"
-                        placeholder="Tipo de Curso"
-                        value={this.state.modulo}
-                        onChange={(evento,{valor})=>{this.setState({modulo:valor})}} 
-                        validators={['required']} 
-                        options={OpcionesDeTipoDeCurso}
-                        defaultValue={this.state.egresade.modulo}
-                        style={{margin: "0px 11%"}}
-                        selection
-                    />
-                  </span>
-                </Grid.Column>
-              </Grid.Row>
-              <Grid.Row columns={2}>
-              <Grid.Column className="centrarColumnas">
-                  <span className="etiquetas">
-                    <label htmlFor="esEmpleado">Estado Laboral<br/></label>
-                    <Dropdown
-                          name="esEmpleado" 
-                          placeholder="Estado Laboral"
-                          selection
-                          required 
-                          onChange={(evento,{valor})=>{this.setState({esEmpleado:valor})}} 
-                          style={{margin: "0px 11%"}}
-                          options={OpcionesDeEstadoLaboral}
-                          defaultValue={this.state.egresade.esEmpleado}
-                    />
-                  </span>
-                </Grid.Column>
-                <Grid.Column>
-                      <span className="etiquetas">
-                        <label htmlFor="nombrePrimerTrabajo">Nombre Primer Empleo<br/></label>
-                        <Input type="text" 
-                            name="nombrePrimerTrabajo"
-                            maxLength="40"                 
-                            placeholder="Nombre Primer Empleo" 
-                            value={this.state.egresade.nombrePrimerTrabajo} 
-                            validators={['required','matchRegexp:^[A-Za-z]+$']} 
-                            errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
-                            style={{margin: "0px 15%"}}
-                            onChange={(evento,{valor})=>{this.setState({nombrePrimerTrabajo:valor})}} 
-                        />
-                      </span>
-                </Grid.Column>
-                <Grid.Column>
-                  <span className="etiquetas">
-                    <label htmlFor="anioDeGraduacion">Año de Graduación<br/></label>
-                    <Input type="text"
-                        name="anioDeGraduacion"
-                        min={1950}
-                        max={2100}
-                        pattern="[0-9]*"
-                        maxLength="4"  
-                        minLength="4"  
-                        placeholder="Año"
-                        value={this.state.anioDeGraduacion}
-                        validators={['required','matchRegexp:^[0-9]+$']} 
-                        errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
-                        style={{margin: "0px 15%"}}
-                        onChange={this.enCambio}
-                    />
-                  </span>
-                </Grid.Column>
-                <Grid.Column>
-                  <span className="etiquetas">
-                    <label htmlFor="linkedin">Enlace de CV en LinkedIn<br/></label>
-                    <Input type="url"
-                        name="linkedin"
-                        placeholder="LinkedIn"
-                        value={this.state.linkedin}
-                        validators={['required']} 
-                        errorMessages={['Este campo es requerido']} 
-                        style={{margin: "0px 15%"}}
-                        onChange={this.enCambio}
-                    />
-                  </span>
-                </Grid.Column>
-              </Grid.Row>
               </Grid>
               <Grid centered rows={1} columns={1}>
                 <GridRow>
                 <Button className="ui basic positive button" style={{margin: "0px 50px 10px 50px", background: "rgb(129,206,50)"}}>Aceptar</Button>
-                <Button onClick={this.handleButtonClick}>Aceptar</Button>
                 <Confirm
-                  header='This is a large confirm'
+                  header='¿Está seguro que desea guardar los cambios?'
+                  content="Si confirma el guardado, será redirigido a la lista principal"
                   open={this.state.abrirModal}
+                  cancelButton='Cancelar'
+                  confirmButton='Confirmar'
                   onCancel={this.handleCancel}
                   onConfirm={this.handleConfirm}
                 />
-                  {/* <ConfirmarModal egresade={this.state.egresade} open={this.state.abrirModal} style={{margin: "0px 50px 10px 50px", background: "rgb(129,206,50)"}}/> */}
                   <Link to={'/'}><Button className="ui basic negative button" style={{margin: "0px 50px 10px 50px"}}>Cancelar</Button></Link>
                 </GridRow>
             
-              </Grid>
-              
-              {/* <Button className="ui basic positive button" style={{margin: "0px 50px 10px 50px", background: "rgb(129,206,50)"}}>Aceptar</Button>
-              {(this.state.exito === true) && (
-                <MensajeResultante encabezadoDelMensaje= "Registro exitoso" cuerpoDelMensaje="Puede volver a registrar" colorDeFondo="green"/>)} */}
+              </Grid>            
           </Form>
           {(this.state.exito === false) && (
-                <MensajeResultante encabezadoDelMensaje= "Guardado no exitoso" cuerpoDelMensaje="Tienes que llenar todos los campos" colorDeFondo="red"/>)}
+                <MensajeResultante encabezadoDelMensaje= "Guardado no exitoso" cuerpoDelMensaje="Hubo un error al momento de guardar, intenta de nuevo más tarde" colorDeFondo="red"/>)}
           </div>
-      )
+      );
+          }
   }
-}
 
 
 export default EditarEgresades
