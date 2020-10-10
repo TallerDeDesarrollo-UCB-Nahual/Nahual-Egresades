@@ -95,7 +95,7 @@ class Nahual_Table extends Component {
             <Search
               showNoResults={false}
               onSearchChange={this.buscarPorNombre.bind(this)}
-              className="ui_icon_input"
+              style={{width:"auto"}}
               >
             </Search>
             {/* <div class="ui icon input" width={"auto"}>
