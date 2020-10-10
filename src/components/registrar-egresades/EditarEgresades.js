@@ -99,7 +99,7 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.nombre;
     delete egresadeAEnviar.apellido;
     console.log(egresadeAEnviar);
-    axios.put(`http://fathomless-falls-62194.herokuapp.com/api/egresades/${egresadeAEnviar.id}`, egresadeAEnviar)
+    axios.put(`http://fathomless-falls-62194.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
     .then(function (respuesta){
       window.open("/", "_self");
     })
