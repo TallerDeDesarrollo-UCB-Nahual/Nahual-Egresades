@@ -24,6 +24,7 @@ class ImportModal extends Component{
     });
   }
 
+
   setAbierto = (state)=> {
     this.setState({	    
       abierto:state,
@@ -44,7 +45,6 @@ class ImportModal extends Component{
       },
       body:JSON.stringify(lista)
     }).then(res=>{
-      console.log(res)
       if(res){
         onRegistrarCorrectamente(this.state.contadorEgresades)
         this.setAbierto(false)

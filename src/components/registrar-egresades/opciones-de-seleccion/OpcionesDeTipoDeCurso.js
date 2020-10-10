@@ -1,5 +1,5 @@
 
-export const CourseTypeOptions=[
+export const OpcionesDeTipoDeCurso=[
     {
         key: 'Testing Funcional',
         text: 'Testing Funcional',
