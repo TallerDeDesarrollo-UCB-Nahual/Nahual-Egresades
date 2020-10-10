@@ -20,7 +20,7 @@ class Nahual_Table extends Component {
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
-
+ 
   mostrarMensajeConfirmacion = () =>(  
       this.setState({ 
       open: true})
@@ -40,7 +40,7 @@ class Nahual_Table extends Component {
   }
 
   eliminarEgresadeDeAPI(id) {
-    const API_URL = `https://mighty-anchorage-20911.herokuapp.com/api/students/`;
+    const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/estudiantes`;
     axios
       .delete(`${API_URL}${id}`)
       .then(response => {
@@ -52,7 +52,7 @@ class Nahual_Table extends Component {
   }
 
   componentDidMount() {
-    fetch(`https://mighty-anchorage-20911.herokuapp.com/api/students/`)
+    fetch(`http://fathomless-falls-62194.herokuapp.com/api/estudiantes`)
       .then(res => {
         return res.json()
       })
@@ -126,14 +126,14 @@ class Nahual_Table extends Component {
               {this.state.api.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="nombre">{value.fullName}</Label><br></br>
-                    <Label className="email">{value.mail}</Label>
+                    <Label className="nombre">{value.nombreCompleto}</Label><br></br>
+                    <Label className="email">{value.correo}</Label>
                   </Table.Cell >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="tarjeta-azul">• {value.nodeName}</Label>
+                    <Label className="tarjeta-azul">• {value.nombreNodo}</Label>
                   </Table.Cell>
                   <Table.Cell className="bordes-tabla">
-                    <Label className="tarjeta-verde">• {value.module}</Label></Table.Cell>
+                    <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="bordes-tabla">
                     {/* <Button className="view-button">
                       <i className="edit icon"></i>
