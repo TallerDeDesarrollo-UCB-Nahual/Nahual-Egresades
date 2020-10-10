@@ -1,23 +1,23 @@
-.table{
+.tabla{
     margin: 40px;
 }
 
-.title{
+.titulo{
     font-size: 24px;
     color: #808080;
 }
 
-.line{
+.linea{
     width: 100%;
     border-bottom: 1px solid #BDBDBD;
     color: #808080;
 }
 
-table{
+tabla{
     border: 0px !important;
 }
 
-.table-header{
+.cabeceras-tabla{
     background-color: #f4f2ff !important;
     border: 1px solid #D9D5EC !important;
     border-right: 0px !important;
@@ -27,41 +27,41 @@ table{
     border-radius: 0px !important;
 }
 
-.table-border{
+.bordes-tabla{
     border-bottom: 1px solid #D9D5EC !important;
     border-right: 0px !important;
     border-left: 0px !important;
 }
 
-.right-margin{
+/* .right-margin{
     border-right: 1px solid #D9D5EC !important;
-}
+} */
 
-.table-card{
+.tarjeta-tabla{
     box-shadow: 0px 2px 5px #0000004d;
     border-radius: 0px !important;
 }
 
-.card-blue{
+.tarjeta-azul{
     background-color: #E6E6F2 !important;
     border-radius: 40px !important;
     padding: 5px 10px !important;
     color: #4A4AFF !important;
 }
 
-.card-green{
+.tarjeta-verde{
     background-color: #CDFFCD !important;
     border-radius: 40px !important;
     padding: 5px 10px !important;
     color: #007F00 !important;
 }
 
-.name{
+.nombre{
     color: #25213B !important;
     background-color: white !important;
 }
 
-.mail{
+.email{
     color: #6E6893 !important;
     background-color: white !important;
     font-weight: 100 !important; 
@@ -71,24 +71,25 @@ table{
     border: 0px !important;
 }
 
+
 .menu-icon{
     width: 20px;
-}
+} 
 
-.icon-text{
+.icono-texto{
     cursor: pointer;
 }
 
-.search-icon{
+.icono-buscar{
     position: absolute;
     transform: translate(8px, 5px);
 }
 
-.table-menu{
+.tabla-menu{
     margin: 10px;
 }
 
-.filter{
+.filtrar{
     width: auto !important;
     padding: 5px 10px;
     float: left !important;
@@ -97,21 +98,26 @@ table{
     margin-right: 20px;
 }
 
+.buscar{
+    width: 50% !important;
+    float: left !important;
+}
+/* 
 .import{
     width: auto  !important;
     padding: 5px;
     float: right !important;
     border: 1px solid #6D5BD0 !important;
     border-radius: 10px;
-}
+} */
 
-.register{
+.registrar{
     width: auto  !important;
     float: right !important;
     margin-top: auto;
 }
 
-.search-input{
+.input-buscar{
     border: 1px solid #6D5BD0 !important;   
     border-radius: 10px;
     padding: 8px;
