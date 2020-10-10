@@ -44,9 +44,9 @@ export class EditarEgresades extends Component {
     super(props);
     this.state = {
       egresade: {
-        cellphone: ''
+        nombre:'',
+        apellido:''
       },
-      confirmar: false
     };
     
   }
@@ -60,7 +60,14 @@ export class EditarEgresades extends Component {
           this.setState({
             egresade: response.data.response
           });
-          console.log(this.state.egresade);
+          var [head, ...rest] = this.state.egresade.nombreCompleto.split(" ");
+          var nombre = head;
+          var apellido = rest.reduce(function (acc, char){ return acc.concat(char, " "); }, "").trim();
+          var fechaNacimiento = this.state.egresade.fechaNacimiento.split("T", 1).reduce((acc, fec)=>acc.concat(fec), "");
+          let estadoDepurado = this.state.egresade;
+          delete estadoDepurado.fechaNacimiento;
+          var completeEgresade = {...estadoDepurado, nombre, apellido, fechaNacimiento};
+          this.setState({egresade:completeEgresade});
         })
         .catch(function (error) {
           console.log(error);
@@ -70,42 +77,25 @@ export class EditarEgresades extends Component {
   enCambio = (event) =>{
       let nombre = event.target.name;
       let valor = event.target.value;
-      this.setState({[nombre]: valor});
+      let estadoDepurado = this.state.egresade;
+      delete estadoDepurado[`${nombre}`];
+      let nuevoEstado = {...estadoDepurado, [`${nombre}`]: valor};
+      this.setState({egresade: nuevoEstado});
   }
 
-  enConfirmacion = (evento) =>{
-      evento.preventDefault();
-      var estadoAEnviar = prepararDatosAEnviar(this.state);
-      axios.post(rutaEstudiantes, estadoAEnviar)
-      .then(function (respuesta){
-        this.setState({exito: true});  
-      }.bind(this))
-      .catch(function (error){
-        this.setState({exito: false});
-      }.bind(this))
-      setTimeout(() => { this.setState({ exito: null }); }, 5000);   
-  }
-
-  validarEgresade(){
-    var egresade = this.state.egresade;
-    var result = true;
-    const that = this;
-    Object.keys(egresade).forEach(function(key,index) {
-      if(egresade[key] == null){
-        console.log(key);
-        result = false;
-        that.setState({exito: false});
-      }
-      // if(Object.keys(elem.clothes).filter(item => item == key).length > 0){
-      //   elem.clothes[key] = item[key] ? item[key] : undefined;
-      // }
-    });
-    return result;
-  }
-
-  handleButtonClick = () => {
-    if(this.validarEgresade()){
-      this.setState({ abrirModal: true })
+    enConfirmacion = (evento) =>{
+        evento.preventDefault();
+        var nombreConcatenado = this.state.egresade.nombre + " " + this.state.egresade.apellido;
+        this.state.egresade.nombreCompleto = nombreConcatenado;
+        console.log(this.state);
+        // axios.post(rutaEstudiantes, estadoAEnviar)
+        // .then(function (respuesta){
+        //   this.setState({exito: true});  
+        // }.bind(this))
+        // .catch(function (error){
+        //   this.setState({exito: false});
+        // }.bind(this))
+        // setTimeout(() => { this.setState({ exito: null }); }, 5000);   
     }
   }
 
@@ -116,81 +106,207 @@ export class EditarEgresades extends Component {
     window.open("/", "_self");
   }
 
-  render() {
-      return (
-          <div className="contenedor">
-              <Form id="myForm" onSubmit={this.enConfirmacion} className="ui form">
-                <Grid divided='vertically' stackable columns={2}>
-                  <Grid.Row >
-                    <Grid.Column className="centrarColumnas">
-                      <span className="etiquetas">
-                        <label htmlFor="nombre">Nombre<br/></label>
-                        <Input className="ui one column stackable center aligned page grid" type="text" 
-                          name="nombre"
-                          maxLength="20"  
-                          placeholder="Nombre" 
-                          value={this.state.nombre} 
-                          validators={['required','matchRegexp:^[A-Za-z]+$']} 
-                          errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
-                          style={{margin: "0px 15%"}}
-                          onChange={this.enCambio}
-                        />
-                      </span>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <span className="etiquetas">
-                        <label htmlFor="apellido">Apellidos<br/></label>
-                        <Input type="text" 
-                            name="apellido"
-                            maxLength="30"                 
-                            placeholder="Apellido" 
-                            value={this.state.apellido} 
-                            validators={['required','matchRegexp:^[A-Za-z]+$']} 
+    render() {
+        return (
+           <div className="contenedor">
+                <Form id="myForm" onSubmit={this.enConfirmacion} className="ui form">
+                  <Grid divided='vertically' stackable columns={2}>
+                    <Grid.Row >
+                      <Grid.Column className="centrarColumnas">
+                        <span className="etiquetas">
+                          <label for="nombre">Nombre<br/></label>
+                          <Input class="ui one column stackable center aligned page grid" type="text" 
+                            name="nombre"
+                            maxLength="20"  
+                            placeholder="Nombre" 
+                            value={this.state.egresade.nombre} 
+                            validators={['required','matchRegexp:^[A-Za-z ]+$']} 
                             errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
                             style={{margin: "0px 15%"}}
                             onChange={this.enCambio}
-                        />
-                      </span>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <span className="etiquetas">
-                      <label htmlFor="fechaNacimiento">Fecha de Nacimiento<br/></label>
-                      <Input type="date" 
-                          name="fechaNacimiento" 
-                          pattern="[0-9]*" 
-                          placeholder="Fecha de Nacimiento" 
-                          value={this.state.egresade.fechaNacimiento} 
+                          />
+                        </span>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <span className="etiquetas">
+                          <label htmlFor="apellido">Apellidos<br/></label>
+                          <Input type="text" 
+                              name="apellido"
+                              maxLength="30"                 
+                              placeholder="Apellido"  
+                              value={this.state.egresade.apellido} 
+                              validators={['required','matchRegexp:^[A-Za-z ]+$']} 
+                              errorMessages={['Este campo es requerido', 'El campo no acepta valores numéricos']} 
+                              style={{margin: "0px 15%"}}
+                              onChange={this.enCambio}
+                          />
+                        </span>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <span className="etiquetas">
+                        <label htmlFor="fechaNacimiento">Fecha de Nacimiento<br/></label>
+                        <Input type="date" 
+                            name="fechaNacimiento" 
+                            pattern="[0-9]*" 
+                            placeholder="Fecha de Nacimiento" 
+                            value={this.state.egresade.fechaNacimiento} 
+                            validators={['required']} 
+                            errorMessages={['Este campo es requerido']} 
+                            style={{margin: "0px 15%"}}
+                            min="1960-01-01"
+                            max="2020-01-01"
+                            onChange={this.enCambio}
+                          />
+                        </span>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <span className="etiquetas">
+                          <label htmlFor="telefono">Teléfono de Contacto<br/></label>
+                          <Input type="text" 
+                            maxLength="10"
+                            name="celular" 
+                            placeholder="Celular" 
+                            value={this.state.egresade.celular}
+                            validators={['required','matchRegexp:^[0-9]+$']} 
+                            errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
+                            style={{margin: "0px 15%"}}
+                            onChange={this.enCambio}
+                          />
+                        </span>
+                      </Grid.Column>
+                      <Grid.Column>
+                        <span className="etiquetas">
+                        <label htmlFor="correo">Correo Electrónico<br/></label>
+                          <Input type="email" 
+                            name="correo"
+                            placeholder="Correo Electrónico"
+                            value={this.state.egresade.correo}
+                            validators={['required']} 
+                            errorMessages={['Este campo es requerido']} 
+                            style={{margin: "0px 15%"}}
+                            onChange={this.enCambio}
+                          />
+                        </span>
+                      </Grid.Column>
+                    </Grid.Row>
+                <Grid.Row columns={2}>
+                  <Grid.Column className="centrarColumnas">
+                    <span className="etiquetas">
+                      <label htmlFor="nombreNodo">Nodo<br/></label>
+                      <Dropdown
+                            name="nombreNodo" 
+                            placeholder="Nodo"
+                            selection
+                            required 
+                            onChange={this.enCambio} 
+                            style={{margin: "0px 11%"}}
+                            options={OpcionesDeNodo}
+                            value={this.state.egresade.nombreNodo}
+                      />
+                    </span>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <span className="etiquetas">
+                      <label htmlFor="nivelIngles">Nivel de Ingles<br/></label>
+                      <Dropdown type="text"
+                            name="nivelIngles"
+                            placeholder="Nivel de Ingles"
+                            value={this.state.egresade.nivelIngles}
+                            onChange={(evento,{valor})=>{this.setState({nivelIngles:valor})}} 
+                            options={OpcionesDeNivelDeIngles}
+                            style={{margin: "0px 11%"}}
+                            selection
+                            required
+                      />
+                    </span>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <span className="etiquetas">
+                      <label htmlFor="cuatrimestre">Cuatrimestre<br/></label>
+                      <Dropdown type="text" 
+                            name="cuatrimestre"
+                            onChange={(evento,{valor})=>{this.setState({cuatrimestre:valor})}} 
+                            options={OpcionesDeCuatrimestre}
+                            value={this.state.egresade.cuatrimestre}
+                            placeholder='Cuatrimestre'
+                            style={{margin: "0px 11%"}}
+                            selection
+                      />
+                    </span>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <span className="etiquetas">
+                    <label htmlFor="modulo">Tipo de Curso<br/></label>
+                      <Dropdown type="text"
+                          name="modulo"
+                          placeholder="Tipo de Curso"
+                          value={this.state.modulo}
+                          onChange={(evento,{valor})=>{this.setState({modulo:valor})}} 
                           validators={['required']} 
-                          errorMessages={['Este campo es requerido']} 
-                          style={{margin: "0px 15%"}}
-                          min="1960-01-01"
-                          max="2020-01-01"
-                          onChange={this.enCambio}
-                        />
-                      </span>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <span className="etiquetas">
-                        <label htmlFor="telefono">Teléfono de Contacto<br/></label>
-                        <Input type="text" 
-                          maxLength="10"
-                          name="celular" 
-                          placeholder="Celular" 
-                          defaultValue={this.state.egresade.celular} //celular
+                          options={OpcionesDeTipoDeCurso}
+                          value={this.state.egresade.modulo}
+                          style={{margin: "0px 11%"}}
+                          selection
+                      />
+                    </span>
+                  </Grid.Column>
+                </Grid.Row>
+                <Grid.Row columns={2}>
+                <Grid.Column className="centrarColumnas">
+                    <span className="etiquetas">
+                      <label htmlFor="esEmpleado">Estado Laboral<br/></label>
+                      <Dropdown
+                            name="esEmpleado" 
+                            placeholder="Estado Laboral"
+                            selection 
+                            onChange={(evento,{valor})=>{this.setState({esEmpleado:valor})}} 
+                            style={{margin: "0px 11%"}}
+                            options={OpcionesDeEstadoLaboral}
+                            value={OpcionesDeEstadoLaboral[this.state.egresade.esEmpleado? 1:0].value}
+                      />
+                    </span>
+                  </Grid.Column>
+                  <Grid.Column>
+                        <span className="etiquetas">
+                          <label htmlFor="nombrePrimerTrabajo">Nombre Primer Empleo<br/></label>
+                          <Input type="text" 
+                              name="nombrePrimerTrabajo"
+                              maxLength="40"                 
+                              placeholder="Nombre Primer Empleo" 
+                              value={this.state.egresade.nombrePrimerTrabajo} 
+                              validators={['matchRegexp:^[A-Za-z]+$']} 
+                              errorMessages={['El campo no acepta valores numéricos']} 
+                              style={{margin: "0px 15%"}}
+                              onChange={this.enCambio} 
+                          />
+                        </span>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <span className="etiquetas">
+                      <label for="añoGraduacion">Año de Graduación<br/></label>
+                      <Input type="text"
+                          name="añoGraduacion"
+                          min={1950}
+                          max={2100}
+                          pattern="[0-9]*"
+                          maxLength="4"  
+                          minLength="4"  
+                          placeholder="Año"
+                          value={this.state.egresade.añoGraduacion}
                           validators={['required','matchRegexp:^[0-9]+$']} 
                           errorMessages={['Este campo es requerido', 'El campo sólo acepta números']} 
                           style={{margin: "0px 15%"}}
                           onChange={this.enCambio}
-                        />
-                      </span>
-                    </Grid.Column>
-                    <Grid.Column>
-                      <span className="etiquetas">
-                      <label htmlFor="correo">Correo Electrónico<br/></label>
-                        <Input type="email" 
-                          name="correo"
-                          placeholder="Correo Electrónico"
-                          value={this.state.egresade.correo}
+                      />
+                    </span>
+                  </Grid.Column>
+                  <Grid.Column>
+                    <span className="etiquetas">
+                      <label htmlFor="linkedin">Enlace de CV en LinkedIn<br/></label>
+                      <Input type="url"
+                          name="linkedin"
+                          placeholder="LinkedIn"
+                          value={this.state.egresade.linkedin}
                           validators={['required']} 
                           errorMessages={['Este campo es requerido']} 
                           style={{margin: "0px 15%"}}
