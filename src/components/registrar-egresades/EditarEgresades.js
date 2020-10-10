@@ -18,22 +18,19 @@ const rutaEstudiantes = 'https://mighty-anchorage-20911.herokuapp.com/api/studen
 
 function obtenerEstadoDepurado(estadoActual){
   var estadoDepurado = estadoActual;
-  delete estadoDepurado.nombre; 
-  delete estadoDepurado.apellido;
+  delete estadoDepurado.fechaNacimiento; 
+  delete estadoDepurado.esEmpleado;
   return estadoDepurado;
 }
 
-function prepararDatosAEnviar(estadoActual){
-  var nombreConcatenado = estadoActual['name'] + " " + estadoActual['lastName'];
-  var estadoDepurado = obtenerEstadoDepurado(estadoActual);
-  var nuevoEstado = {
-                    nombreCompleto: nombreConcatenado,
-                    ...estadoDepurado,
-                    nombreDelPrimerTrabajo: null,
-                    estaEmpleado: false,
-                    nombreDeEstado: 'Egresade'
-                  }
-  return nuevoEstado;
+function prepararDatosARecuperar(estadoActual){
+  var [head, ...rest] = estadoActual.nombreCompleto.split(" ");
+  var nombre = head;
+  var apellido = rest.reduce(function (acc, char){ return acc.concat(char, " "); }, "").trim();
+  var fechaNacimiento = estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec)=>acc.concat(fec), "");
+  var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (estadoActual.esEmpleado? 1:0)).text;
+  let estadoDepurado = obtenerEstadoDepurado(estadoActual);
+  return {...estadoDepurado, nombre, apellido, fechaNacimiento, esEmpleado};
 }
 
 export class EditarEgresades extends Component {
@@ -60,16 +57,8 @@ export class EditarEgresades extends Component {
           this.setState({
             egresade: response.data.response
           });
-          var [head, ...rest] = this.state.egresade.nombreCompleto.split(" ");
-          var nombre = head;
-          var apellido = rest.reduce(function (acc, char){ return acc.concat(char, " "); }, "").trim();
-          var fechaNacimiento = this.state.egresade.fechaNacimiento.split("T", 1).reduce((acc, fec)=>acc.concat(fec), "");
-          var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (this.state.egresade.esEmpleado? 1:0)).text;
-          let estadoDepurado = this.state.egresade;
-          delete estadoDepurado.fechaNacimiento;
-          delete estadoDepurado.esEmpleado;
-          var completeEgresade = {...estadoDepurado, nombre, apellido, fechaNacimiento, esEmpleado};
-          this.setState({egresade:completeEgresade});
+          let egresadeCompleto = prepararDatosARecuperar(this.state.egresade);
+          this.setState({egresade:egresadeCompleto});
         })
         .catch(function (error) {
           console.log(error);
