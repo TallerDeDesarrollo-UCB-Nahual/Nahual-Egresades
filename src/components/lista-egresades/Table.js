@@ -140,14 +140,14 @@ class Nahual_Table extends Component {
                       <label className="icono-texto">Editar</label>
                     </Button> */}
                     <Modal graduateId={value.id} open={this.state.mostrarModal} />
-                    <Button onClick={this.mostrarMensajeConfirmacion()}>
+                    <Button onClick={()=>this.mostrarMensajeConfirmacion()}>
                       <i className="user delete icon"></i>
                       <label className="icon-delete">Eliminar</label>
                     </Button>
                     <Confirm
                         open={this.state.open}
                         onCancel={this.close}
-                        onConfirm={this.eliminarEgresadeDeAPI(value.id)}
+                        onConfirm={this.eliminarEgresadeDeAPI(value.id), this.close}
                       />
                   </Table.Cell>
                 </Table.Row>
