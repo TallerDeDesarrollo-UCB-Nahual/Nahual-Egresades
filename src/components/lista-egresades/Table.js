@@ -40,7 +40,7 @@ class Nahual_Table extends Component {
   }
 
   eliminarEgresadeDeAPI(id) {
-    const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/estudiantes`;
+    const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/estudiantes/`;
     axios
       .delete(`${API_URL}${id}`)
       .then(response => {
@@ -146,6 +146,7 @@ class Nahual_Table extends Component {
                     </Button>
                     <Confirm
                         open={this.state.open}
+                        content='Se eliminará permanentemente'
                         onCancel={this.close}
                         onConfirm={this.eliminarEgresadeDeAPI(value.id), this.close}
                       />
