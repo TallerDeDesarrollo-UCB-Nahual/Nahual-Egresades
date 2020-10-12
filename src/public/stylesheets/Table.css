@@ -71,15 +71,10 @@ tabla{
     border: 0px !important;
 }
 
-.icon{
-    width: 20px;
-    margin: -5px 10px;
-    cursor: pointer;
-}
 
-/* .menu-icon{
+.menu-icon{
     width: 20px;
-} */
+} 
 
 .icono-texto{
     cursor: pointer;
@@ -129,4 +124,12 @@ tabla{
     padding-left: 36px;
     width: 300px;
     background-color: #F4F2FF;
+}
+.icon {
+    width: auto;
+    margin: 0px 0px;
+    cursor: pointer;
+}
+.search {
+    float: left;
 }

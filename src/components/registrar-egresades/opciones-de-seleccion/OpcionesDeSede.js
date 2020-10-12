@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const CampusOptions=[
+export const OpcionesDeSede=[
     {
         key: 'Contra Viento y Marea',
         text: 'Contra Viento y Marea',

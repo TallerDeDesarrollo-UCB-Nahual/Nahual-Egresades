@@ -1,5 +1,5 @@
 
-export const EnglishLevelOptions = [
+export const OpcionesDeNivelDeIngles = [
     {
         key: 'Avanzado',
         text: 'Avanzado',

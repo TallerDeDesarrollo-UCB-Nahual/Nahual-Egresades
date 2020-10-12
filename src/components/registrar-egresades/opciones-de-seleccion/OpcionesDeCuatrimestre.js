@@ -1,4 +1,4 @@
-export const QuarterOptions = [
+export const OpcionesDeCuatrimestre = [
     {
         key: '1',
         text: 'Primer',

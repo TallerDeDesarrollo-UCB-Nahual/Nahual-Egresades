@@ -3,16 +3,15 @@ import { Icon, Label, Button, Message, Table, Confirm } from 'semantic-ui-react'
 import Modal from '../egresade/view-egresade/Modal'
 import Delete from '../egresade/delete-egresade/Delete'
 import '../../public/stylesheets/Table.css';
-import filter from '../../public/images/filter.png';
-import search from '../../public/images/search.png'
-import { Link } from 'react-router-dom'
-import ImportModal from '../ImportButton/ImportModal'
+import { Link } from 'react-router-dom';
+import ImportModal from '../ImportButton/ImportModal';
 
 class Nahual_Table extends Component {
   constructor() {
     super();
     this.state = {
       api: [],
+      filasEncontradas: Array(0)
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
       open: false
@@ -20,9 +19,6 @@ class Nahual_Table extends Component {
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
 
-  // open = () => this.setState({ 
-  //   open: true})
-  // close = () => this.setState({ open: false })
 
   enRegistroExitoso(contador) {
     if (contador > 0) {
@@ -34,26 +30,53 @@ class Nahual_Table extends Component {
   }
 
   eliminarEgresadesVista(id) {
-    // console.log(this.state.api, "Hola");
     this.setState({ api: this.state.api.filter(egresade => egresade.id !== id) })
   }
 
-  componentDidMount() {
+   obtenerEgresades() {
     fetch(`http://fathomless-falls-62194.herokuapp.com/api/estudiantes`)
       .then(res => {
         return res.json()
       })
       .then(res => {
-        let data = res;
-        this.setState({ api: data.response })
+        let dat = res;
+        this.setState({
+          api: dat.response,
+          filasEncontradas: dat.response
+        });
       })
   }
+
+  componentDidMount() {
+    this.obtenerEgresades();
+  }
+
   mostrarModal() {
-    this.setState({ mostrarModal: true });
+    this.setState({ : true });
   }
 
   manejarProblemas = () => {
     this.setState({ mostrarMensajeDeEstado: false })
+  }
+
+  buscarPorNombre(nombre) {
+    let buscado = nombre.target.value;
+    let listaEgresades = this.state.api;
+    let resultados = Array(0);
+
+    if (nombre.target.value.trim() === "") {
+      this.setState({
+        filasEncontradas: this.state.api
+      });
+    }
+    for (let contador = 0; contador < listaEgresades.length; contador++) {
+      if (listaEgresades[contador].nombreCompleto.toLowerCase().includes(buscado.toLowerCase())) {
+        resultados.push(listaEgresades[contador]);
+      }
+    }
+    this.setState({
+      filasEncontradas: resultados
+    });
   }
 
   render() {
@@ -76,14 +99,12 @@ class Nahual_Table extends Component {
           </div>
 
           <div className="tabla-menu">
-            {/* <div className="filtrar">
-              <img src={filter}></img>
-              <label className="filter1"> Filtrar</label>
-            </div> 
-            <div className="buscar">
-              <img src={search} className="icono-buscar"></img>
-              <input className="input-buscar"></input>
-            </div>*/}
+            <Search
+              showNoResults={false}
+              onSearchChange={this.buscarPorNombre.bind(this)}
+              style={{width:"auto"}}
+              >
+            </Search>
             <div className="registrar" style={{ color: "black" }}>
               <Link to={'/'}>
                 <ImportModal onClick={this.enRegistroExitoso} />
@@ -92,7 +113,7 @@ class Nahual_Table extends Component {
             <div className="registrar" style={{ color: "black" }}>
               <Link to={'/registrar'}>
                 <Button basic style={{ color: "black", border: '1px solid #6D5BD0' }}>
-                  <Icon name='plus square' color='green' />
+                  <Icon className='plus square' color='green' />
                   Registrar
                 </Button>
               </Link>
@@ -110,7 +131,7 @@ class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.api.map((value) => (
+              {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
                     <Label className="nombre">{value.nombreCompleto}</Label><br></br>
@@ -122,10 +143,6 @@ class Nahual_Table extends Component {
                   <Table.Cell className="bordes-tabla">
                     <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="bordes-tabla">
-                    {/* <Button className="view-button">
-                      <i className="edit icon"></i>
-                      <label className="icono-texto">Editar</label>
-                    </Button> */}
                     <Modal graduateId={value.id} open={this.state.mostrarModal} />
                     <Delete egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Delete>
                   </Table.Cell>
