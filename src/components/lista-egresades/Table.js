@@ -29,12 +29,8 @@ class Nahual_Table extends Component {
     }
   }
 
-  eliminarEgresadesVista(id) {
-    this.setState({ filasEncontradas: this.state.filasEncontradas.filter(egresade => egresade.id !== id) })
-  }
-
-   obtenerEgresades() {
-    fetch(`http://fathomless-falls-62194.herokuapp.com/api/estudiantes`)
+  componentDidMount() {
+    fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
       .then(res => {
         return res.json()
       })
@@ -110,14 +106,6 @@ class Nahual_Table extends Component {
                 <ImportModal onClick={this.enRegistroExitoso} />
               </Link>
             </div>
-            <div className="registrar" style={{ color: "black" }}>
-              <Link to={'/registrar'}>
-                <Button basic style={{ color: "black", border: '1px solid #6D5BD0' }}>
-                  <Icon className='plus square' color='green' />
-                  Registrar
-                </Button>
-              </Link>
-            </div>
           </div>
           <br /><br />
           <Table celled className="tarjeta-tabla">
@@ -143,8 +131,13 @@ class Nahual_Table extends Component {
                   <Table.Cell className="bordes-tabla">
                     <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="bordes-tabla">
-                    <Modal egresadeId={value.id} open={this.state.mostrarModal} />
-                    <Delete egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Delete>
+                  {<Link to={`/editar/${value.id}`}><Button className="view-button">
+                      <i className="edit icon"></i>
+                      <label className="icon-text">Editar</label>
+                    </Button></Link>
+                    }
+
+                    <Modal graduateId={value.id} open={this.state.mostrarModal} />
                   </Table.Cell>
                 </Table.Row>
               ))}

@@ -34,3 +34,15 @@
     color: #656565;
     margin: 0px 11%;
 }
+
+.ui.modal .actions>.ui.primary.button {
+    background-color: white;
+    color: #2ecc40;
+    border: 1px solid #2ecc40;
+}
+
+.ui.modal .actions>.ui.button {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+}

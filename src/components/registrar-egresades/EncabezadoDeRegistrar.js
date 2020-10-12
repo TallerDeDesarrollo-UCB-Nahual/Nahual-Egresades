@@ -5,7 +5,7 @@ import { Segment } from 'semantic-ui-react'
 export default function EncabezadoDeRegistrar() {
     return (
         <Segment basic textAlign='center'>
-            <h2 className="tituloRegistrar">Registrar Egresades</h2>
+            <h2 className="tituloRegistrar">Editar Egresade</h2>
             <hr  style={{
             color: '#BDBDBD',
             backgroundColor: '#BDBDBD',
