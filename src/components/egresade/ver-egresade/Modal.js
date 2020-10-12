@@ -66,10 +66,9 @@ class ModalExampleModal extends Component {
                 <Grid columns='equal'>
                   <Grid.Row>
                     <Grid.Column>
-                      <Image src='https://react.semantic-ui.com/images/avatar/large/rachel.png' wrapped />
+                      <img src={userIcon}></img> 
                     </Grid.Column>
-                    <Grid.Column width={1}>
-                    </Grid.Column>
+                    
                     <Grid.Column width={9}>
                       <InformacionDelEgresade egresade={this.state.egresade} />
                     </Grid.Column>

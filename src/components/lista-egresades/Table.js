@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Icon, Label, Button, Message, Table, Search } from 'semantic-ui-react';
-import Modal from '../egresade/ver-egresade/Modal';
+import React, { Component } from 'react'
+import { Icon, Label, Button, Message, Table, Confirm } from 'semantic-ui-react'
+import Modal from '../egresade/view-egresade/Modal'
+import Delete from '../egresade/delete-egresade/Delete'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ImportModal from '../ImportButton/ImportModal';
-
 
 class Nahual_Table extends Component {
   constructor() {
@@ -13,10 +13,12 @@ class Nahual_Table extends Component {
       api: [],
       filasEncontradas: Array(0)
       mensajeDeEstado: "",
-      mostrarMensajeDeEstado: false
+      mostrarMensajeDeEstado: false,
+      open: false
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
+
 
   enRegistroExitoso(contador) {
     if (contador > 0) {
@@ -27,8 +29,12 @@ class Nahual_Table extends Component {
     }
   }
 
-  obtenerEgresades() {
-    fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
+  eliminarEgresadesVista(id) {
+    this.setState({ api: this.state.api.filter(egresade => egresade.id !== id) })
+  }
+
+   obtenerEgresades() {
+    fetch(`http://fathomless-falls-62194.herokuapp.com/api/estudiantes`)
       .then(res => {
         return res.json()
       })
@@ -128,16 +134,17 @@ class Nahual_Table extends Component {
               {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="nombre">{value.fullName}</Label><br></br>
-                    <Label className="email">{value.mail}</Label>
+                    <Label className="nombre">{value.nombreCompleto}</Label><br></br>
+                    <Label className="email">{value.correo}</Label>
                   </Table.Cell >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="tarjeta-azul">• {value.nodeName}</Label>
+                    <Label className="tarjeta-azul">• {value.nombreNodo}</Label>
                   </Table.Cell>
                   <Table.Cell className="bordes-tabla">
-                    <Label className="tarjeta-verde">• {value.module}</Label></Table.Cell>
+                    <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="bordes-tabla">
-                    <Modal egresadeId={value.id} open={this.state.mostrarModal} />
+                    <Modal graduateId={value.id} open={this.state.mostrarModal} />
+                    <Delete egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Delete>
                   </Table.Cell>
                 </Table.Row>
               ))}
