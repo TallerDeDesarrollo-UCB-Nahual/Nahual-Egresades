@@ -29,7 +29,7 @@ class Nahual_Table extends Component {
     }
   }
 
-  componentDidMount() {
+  obtenerEgresades() {
     fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
       .then(res => {
         return res.json()
@@ -41,6 +41,10 @@ class Nahual_Table extends Component {
           filasEncontradas: dat.response
         });
       })
+  }
+
+  eliminarEgresadesVista(id) {
+    this.setState({ filasEncontradas: this.state.filasEncontradas.filter(egresade => egresade.id !== id) })
   }
 
   componentDidMount() {
@@ -137,7 +141,8 @@ class Nahual_Table extends Component {
                     </Button></Link>
                     }
 
-                    <Modal graduateId={value.id} open={this.state.mostrarModal} />
+                    <Modal egresadeId={value.id} open={this.state.mostrarModal} />
+                    <Delete egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Delete>
                   </Table.Cell>
                 </Table.Row>
               ))}
