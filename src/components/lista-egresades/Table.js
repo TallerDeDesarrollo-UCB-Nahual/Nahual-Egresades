@@ -30,10 +30,7 @@ class Nahual_Table extends Component {
   }
 
   eliminarEgresadesVista(id) {
-    console.log(this.state.api)
-    this.setState({ api: this.state.api.filter(egresade => egresade.id !== id) })
-    console.log(this.state.api)
-
+    this.setState({ filasEncontradas: this.state.filasEncontradas.filter(egresade => egresade.id !== id) })
   }
 
    obtenerEgresades() {
