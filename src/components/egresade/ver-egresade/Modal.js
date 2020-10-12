@@ -5,6 +5,7 @@ import LogoNahual from '../../../public/images/logo-proyecto-nahual.webp';
 import InformacionDelEgresade from "./InformacionDelEgresade";
 import InformacionDelCurso from "./InformacionDelCurso";
 import axios from "axios";
+import userIcon from '../../../public/images/user-icon.jpeg'
 
 class ModalExampleModal extends Component {
   constructor() {

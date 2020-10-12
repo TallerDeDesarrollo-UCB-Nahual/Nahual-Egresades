@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Icon, Label, Button, Message, Table, Confirm } from 'semantic-ui-react'
-import Modal from '../egresade/view-egresade/Modal'
+import { Icon, Label, Button, Message, Table, Search } from 'semantic-ui-react'
+import Modal from '../egresade/ver-egresade/Modal'
 import Delete from '../egresade/delete-egresade/Delete'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
@@ -11,7 +11,7 @@ class Nahual_Table extends Component {
     super();
     this.state = {
       api: [],
-      filasEncontradas: Array(0)
+      filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
       open: false
@@ -30,7 +30,10 @@ class Nahual_Table extends Component {
   }
 
   eliminarEgresadesVista(id) {
+    console.log(this.state.api)
     this.setState({ api: this.state.api.filter(egresade => egresade.id !== id) })
+    console.log(this.state.api)
+
   }
 
    obtenerEgresades() {
@@ -52,7 +55,7 @@ class Nahual_Table extends Component {
   }
 
   mostrarModal() {
-    this.setState({ : true });
+    this.setState({ mostrarModal : true });
   }
 
   manejarProblemas = () => {

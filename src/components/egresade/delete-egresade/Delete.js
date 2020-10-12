@@ -13,7 +13,7 @@ function DeleteEgresade({ egresadeId, eliminarVista }) {
         axios
             .delete(`${API_URL}${egresadeId}`)
             .then(response => {
-                // console.log(response);
+                console.log(response);
                 eliminarVista();
             })
             .catch(function (error) {
