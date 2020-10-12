@@ -143,7 +143,7 @@ class Nahual_Table extends Component {
                   <Table.Cell className="bordes-tabla">
                     <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="bordes-tabla">
-                    <Modal graduateId={value.id} open={this.state.mostrarModal} />
+                    <Modal egresadeId={value.id} open={this.state.mostrarModal} />
                     <Delete egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Delete>
                   </Table.Cell>
                 </Table.Row>
