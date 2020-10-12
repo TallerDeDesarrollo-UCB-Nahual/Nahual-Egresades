@@ -12,7 +12,6 @@ import {OpcionesDeCuatrimestre} from './opciones-de-seleccion/OpcionesDeCuatrime
 import {OpcionesDeNivelDeIngles} from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
 import {OpcionesDeEstadoLaboral} from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import {MensajeResultante} from './tipo-de-mensaje/MensajeResultante.js';
-import ConfirmarModal from './ConfirmarModal';
 
 const rutaEstudiantes = 'https://mighty-anchorage-20911.herokuapp.com/api/students';
 
