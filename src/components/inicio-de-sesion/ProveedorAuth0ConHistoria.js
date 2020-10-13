@@ -6,9 +6,9 @@ const ProveedorAuth0ConHistoria = ({ children }) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
   const history = useHistory();
-  const CALLBACK_PATH = 'http://localhost:3000/listaEgresades';
+  const CALLBACK_PATH = 'https://nahual-8298d.web.app/listaEgresades';
   const onRedirectCallback = (appState) => {
-    history.replace(appState?.returnTo || window.location.pathname);
+    history.push(appState?.returnTo || window.location.pathname);
   };
 
   return (
