@@ -45,7 +45,7 @@ class ImportModal extends Component {
       },
       body: JSON.stringify(lista)
     }).then(res => {
-      if (res == 200) {
+      if (res) {
         onRegistrarCorrectamente(this.state.contadorEgresades)
         this.setAbierto(false)
         console.log(res)
