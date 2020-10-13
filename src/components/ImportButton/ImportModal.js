@@ -132,7 +132,7 @@ class ImportModal extends Component {
             :
             <h1 align="center">No se cargo ningun archivo</h1>}
           <button className="ui basic negative button" onClick={() => this.setAbierto(false)}>Cancelar</button>
-          <button className="ui basic positive button" style={{border: "rgb(129,206,50)" }} onClick={() => this.onSubmit(this.props.onClick)}>Aceptar</button>
+          <button className="ui basic positive button" style={{border: "rgb(129,206,50)" }} onClick={() => this.onSubmit(this.props.onClick)}>Confirmar</button>
         </Modal.Actions>
       </Modal>
       </div>
