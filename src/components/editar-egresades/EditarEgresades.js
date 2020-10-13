@@ -12,6 +12,8 @@ import {OpcionesDeCuatrimestre} from './opciones-de-seleccion/OpcionesDeCuatrime
 import {OpcionesDeNivelDeIngles} from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
 import {OpcionesDeEstadoLaboral} from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import {MensajeResultante} from './tipo-de-mensaje/MensajeResultante.js';
+import Cargando from '../inicio-de-sesion/Cargando';
+import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 const rutaEstudiantes = 'https://mighty-anchorage-20911.herokuapp.com/api/students';
 
@@ -337,7 +339,7 @@ export class EditarEgresades extends Component {
                   onCancel={this.handleCancel}
                   onConfirm={this.handleConfirm}
                 />
-                  <Link to={'/'}><Button className="ui basic negative button" style={{margin: "0px 50px 10px 50px"}}>Cancelar</Button></Link>
+                  <Link to={'/listaEgresades'}><Button className="ui basic negative button" style={{margin: "0px 50px 10px 50px"}}>Cancelar</Button></Link>
                 </GridRow>
             
               </Grid>            
@@ -349,5 +351,6 @@ export class EditarEgresades extends Component {
           }
   }
 
-
-export default EditarEgresades
+  export default withAuthenticationRequired(EditarEgresades, {
+    onRedirecting: () => <Cargando />,
+  });
