@@ -1,4 +1,4 @@
-.titleRegister{
+.tituloRegistrar{
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -8,7 +8,7 @@
     color: #808080;
 }
 
-.backform{
+.contenedor{
     max-width: 1000px;
     background-color: white;
     color: black;
@@ -19,12 +19,12 @@
     border-bottom-right-radius: 0.5rem;  
     box-shadow: 10px 10px 50px #9E9E9E;
 }
-.centerColumns{
+.centrarColumnas{
     margin:0 0 0 0px;
     align-items: center;
     justify-content: center;
 }
-.labels{
+.etiquetas{
     font-family: Inter;
     font-style: normal;
     font-weight: 500;
@@ -34,3 +34,15 @@
     color: #656565;
     margin: 0px 11%;
 }
+
+.ui.modal .actions>.ui.primary.button {
+    background-color: white;
+    color: #2ecc40;
+    border: 1px solid #2ecc40;
+}
+
+ .ui.modal .actions>.button {
+    background-color: white;
+    color:#db2828;
+    border: 1px solid #db2828;
+} 

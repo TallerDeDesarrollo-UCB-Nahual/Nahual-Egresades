@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon, Grid, Header } from "semantic-ui-react";
 
-function SubjectData({ graduate }) {
+function InformacionDelCurso({ egresade }) {
   return (
     <Grid.Row>
       <Grid.Column>
@@ -9,11 +9,11 @@ function SubjectData({ graduate }) {
         <Grid columns='equal'>
           <Grid.Column />
           <Grid.Column floated="right" width={11}>
-            <Icon color='green' name='check' /> <span className="card-green">{graduate.module}</span> 
+            <Icon color='green' name='check' /> <span className="card-green">{egresade.modulo}</span> 
           </Grid.Column>
 
           <Grid.Column floated="left" width={4}>
-            <span className="card-green">{graduate.graduationYear}</span>
+            <span className="card-green">{egresade.añoGraduacion}</span>
           </Grid.Column>
         </Grid>
       </Grid.Column>
@@ -21,4 +21,4 @@ function SubjectData({ graduate }) {
   );
 }
 
-export default SubjectData;
+export default InformacionDelCurso;

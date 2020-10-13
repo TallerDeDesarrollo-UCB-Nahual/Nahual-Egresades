@@ -1,123 +1,151 @@
 import React, { Component } from 'react'
-import { Icon, Label, Button, Message, Table } from 'semantic-ui-react'
-import Modal from '../egresade/view-egresade/Modal'
+import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
+import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
-import filter from '../../public/images/filter.png';
-import search from '../../public/images/search.png'
-import { Link } from 'react-router-dom'
-import ImportModal from '../ImportButton/ImportModal'
-
+import { Link } from 'react-router-dom';
+import ImportModal from '../ImportButton/ImportModal';
+import Eliminar from '../egresade/eliminar-egresade/Eliminar';
+import Cargando from '../inicio-de-sesion/Cargando';
+import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 class Nahual_Table extends Component {
   constructor() {
     super();
     this.state = {
       api: [],
-      statusMessage: "",
-      showStatusMessage: false
+      filasEncontradas: Array(0),
+      mensajeDeEstado: "",
+      mostrarMensajeDeEstado: false,
+      open: false
     }
-    this.onSuccessfulRegistration = this.onSuccessfulRegistration.bind(this)
+    this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
 
-  onSuccessfulRegistration(count) {
-    if (count > 0) {
+
+  enRegistroExitoso(contador) {
+    console.log(contador)
+    if (contador > 0) {
       this.setState({
-        statusMessage: "Se realizo el registro de " + count + " egresados exitosamente.",
-        showStatusMessage: true
+        mensajeDeEstado: "Se realizo el registro de " + contador + " egresados exitosamente.",
+        mostrarMensajeDeEstado: true
       });
     }
+    this.obtenerEgresades();
   }
 
-  componentDidMount() {
-    fetch(`https://mighty-anchorage-20911.herokuapp.com/api/students/`)
+  obtenerEgresades() {
+    fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
       .then(res => {
         return res.json()
       })
       .then(res => {
         let dat = res;
-        this.setState({ api: dat.response })
+        this.setState({
+          api: dat.response,
+          filasEncontradas: dat.response
+        });
       })
   }
-  openModal() {
-    this.setState({ openModal: true });
+
+  eliminarEgresadesVista(id) {
+    this.obtenerEgresades();
   }
 
-  handleDismiss = () => {
-    this.setState({ showStatusMessage: false })
+  componentDidMount() {
+    this.obtenerEgresades();
+  }
+
+  mostrarModal() {
+    this.setState({ mostrarModal : true });
+  }
+
+  manejarProblemas = () => {
+    this.setState({ mostrarMensajeDeEstado: false })
+  }
+
+  buscarPorNombre(nombre) {
+    let buscado = nombre.target.value;
+    let listaEgresades = this.state.api;
+    let resultados = Array(0);
+
+    if (nombre.target.value.trim() === "") {
+      this.setState({
+        filasEncontradas: this.state.api
+      });
+    }
+    for (let contador = 0; contador < listaEgresades.length; contador++) {
+      if (listaEgresades[contador].nombreCompleto.toLowerCase().includes(buscado.toLowerCase())) {
+        resultados.push(listaEgresades[contador]);
+      }
+    }
+    this.setState({
+      filasEncontradas: resultados
+    });
   }
 
   render() {
     return (
       <div>
-        <div className="table">
-          <p className="title">Lista de Egresades</p>
-          <div className="line"></div>
+        <div className="tabla">
+          <p className="titulo">Lista de Egresades</p>
+          <div className="linea"></div>
           <div>
-            {this.state.showStatusMessage ?
+            {this.state.mostrarMensajeDeEstado ?
               <Message
                 positive
-                onDismiss={this.handleDismiss}
+                onDismiss={this.manejarProblemas}
                 header='Registro exitoso!'
-                content={this.state.statusMessage}
+                content={this.state.mensajeDeEstado}
               ></Message>
               :
               <p></p>
             }
           </div>
 
-          <div className="table-menu">
-            {/* <div className="filter">
-              <img src={filter}></img>
-              <label className="filter1"> Filtrar</label>
-            </div> 
-            <div className="search">
-              <img src={search} className="search-icon"></img>
-              <input className="search-input"></input>
-            </div>*/}
-            <div className="register" style={{ color: "black" }}>
-              <Link to={'/'}>
-                <ImportModal onClick={this.onSuccessfulRegistration} />
-              </Link>
-            </div>
-            <div className="register" style={{ color: "black" }}>
-              <Link to={'/registrar'}>
-                <Button basic style={{ color: "black", border: '1px solid #6D5BD0' }}>
-                  <Icon name='plus square' color='green' />
-                  Registrar
-                </Button>
-              </Link>
+          <div className="tabla-menu">
+            <Search
+              showNoResults={false}
+              onSearchChange={this.buscarPorNombre.bind(this)}
+              style={{width:"auto"}}
+              >
+            </Search>
+            <div className="registrar" style={{ color: "black" }}>
+              
+              <ImportModal onClick={this.enRegistroExitoso} />
             </div>
           </div>
           <br /><br />
-          <Table celled className="table-card">
+          <Table celled className="tarjeta-tabla">
             <Table.Header>
               <Table.Row >
-                <Table.HeaderCell className="table-header">Nombre y Apellido</Table.HeaderCell>
-                <Table.HeaderCell className="table-header">Nodo</Table.HeaderCell>
-                <Table.HeaderCell className="table-header">Modulo Cursado</Table.HeaderCell>
-                <Table.HeaderCell className="table-header">Acción</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Nombre y Apellido</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Nodo</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Modulo Cursado</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Acción</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
 
             <Table.Body>
-              {this.state.api.map((value) => (
+              {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
-                  <Table.Cell className="table-border">
-                    <Label className="name">{value.fullName}</Label><br></br>
-                    <Label className="mail">{value.mail}</Label>
+                  <Table.Cell className="bordes-tabla">
+                    <Label className="nombre">{value.nombreCompleto}</Label><br></br>
+                    <Label className="email">{value.correo}</Label>
                   </Table.Cell >
-                  <Table.Cell className="table-border">
-                    <Label className="card-blue">• {value.nodeName}</Label>
+                  <Table.Cell className="bordes-tabla">
+                    <Label className="tarjeta-azul">• {value.nombreNodo}</Label>
                   </Table.Cell>
-                  <Table.Cell className="table-border">
-                    <Label className="card-green">• {value.module}</Label></Table.Cell>
-                  <Table.Cell colSpan="3" className="table-border">
-                    {/* <Button className="view-button">
+                  <Table.Cell className="bordes-tabla">
+                    <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
+                  <Table.Cell colSpan="3" className="bordes-tabla">
+                  {<Link to={`/editar/${value.id}`}><Button className="view-button">
                       <i className="edit icon"></i>
                       <label className="icon-text">Editar</label>
-                    </Button> */}
+                    </Button></Link>
+                    }
 
-                    <Modal graduateId={value.id} open={this.state.openModal} />
+                    <Modal egresadeId={value.id} open={this.state.mostrarModal} />
+                    <Eliminar egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Eliminar>
                   </Table.Cell>
                 </Table.Row>
               ))}
@@ -149,4 +177,4 @@ class Nahual_Table extends Component {
   }
 
 }
-export default Nahual_Table;
+export default Nahual_Table

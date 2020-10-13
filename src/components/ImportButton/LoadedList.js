@@ -17,20 +17,16 @@ export default class LoadedList extends Component{
              <Table.HeaderCell>Mail</Table.HeaderCell>
              <Table.HeaderCell>Numero de Celular</Table.HeaderCell>
              <Table.HeaderCell>NODO</Table.HeaderCell>
-             <Table.HeaderCell>Linkedin</Table.HeaderCell>
-
            </Table.Row>
          </Table.Header>
-     
          <Table.Body>
-         {this.props.json.map(item => (
-           <Table.Row  key={item.fullName}>
-            <Table.Cell >{item["fullName"]}</Table.Cell>
-            <Table.Cell>{item["birthDate"]}</Table.Cell>
-            <Table.Cell>{item["mail"]}</Table.Cell>
-            <Table.Cell>{item["cellphone"]}</Table.Cell>
-            <Table.Cell>{item["nodeName"]}</Table.Cell>
-
+         {this.props.json.map((fila) => (
+           <Table.Row  key={fila.fullName}>
+            <Table.Cell >{fila["nombreCompleto"]}</Table.Cell>
+            <Table.Cell>{fila["fechaNacimiento"]}</Table.Cell>
+            <Table.Cell>{fila["correo"]}</Table.Cell>
+            <Table.Cell>{fila["celular"]}</Table.Cell>
+            <Table.Cell>{fila["nombreNodo"]}</Table.Cell>
            </Table.Row>
            ))}
          </Table.Body>
