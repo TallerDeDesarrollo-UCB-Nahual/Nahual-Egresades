@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter as Router} from 'react-router-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import ProveedorAuth0ConHistoria from "./components/inicio-de-sesion/ProveedorAuth0ConHistoria";
 
 
 ReactDOM.render(
-<App />
+<Router>
+    <ProveedorAuth0ConHistoria>
+      <App />
+    </ProveedorAuth0ConHistoria>
+  </Router>
 , document.getElementById('root')
 );
 
