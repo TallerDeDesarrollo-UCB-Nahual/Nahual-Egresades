@@ -91,7 +91,7 @@ export class EditarEgresades extends Component {
     console.log(egresadeAEnviar);
     axios.put(`http://fathomless-falls-62194.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
     .then(function (respuesta){
-      window.open("/", "_self");
+      window.open("/listaEgresades", "_self");
     })
     .catch(function(error){
       this.setState({exito: false});
@@ -351,6 +351,4 @@ export class EditarEgresades extends Component {
           }
   }
 
-  export default withAuthenticationRequired(EditarEgresades, {
-    onRedirecting: () => <Cargando />,
-  });
+  export default EditarEgresades;
