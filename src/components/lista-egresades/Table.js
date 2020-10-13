@@ -177,6 +177,4 @@ class Nahual_Table extends Component {
   }
 
 }
-export default withAuthenticationRequired(Nahual_Table, {
-  onRedirecting: () => <Cargando />,
-});
+export default Nahual_Table
