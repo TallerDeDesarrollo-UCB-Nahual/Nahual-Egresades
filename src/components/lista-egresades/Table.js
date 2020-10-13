@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Icon, Label, Button, Message, Table, Search } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
-import Delete from '../egresade/delete-egresade/Delete'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ImportModal from '../ImportButton/ImportModal';
+import Eliminar from '../egresade/eliminar-egresade/Eliminar';
 
 class Nahual_Table extends Component {
   constructor() {
@@ -142,7 +142,7 @@ class Nahual_Table extends Component {
                     }
 
                     <Modal egresadeId={value.id} open={this.state.mostrarModal} />
-                    <Delete egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Delete>
+                    <Eliminar egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Eliminar>
                   </Table.Cell>
                 </Table.Row>
               ))}
