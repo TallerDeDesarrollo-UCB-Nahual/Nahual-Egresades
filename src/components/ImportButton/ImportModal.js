@@ -131,8 +131,8 @@ class ImportModal extends Component {
             <LoadedList json={this.state.egresades} />
             :
             <h1 align="center">No se cargo ningun archivo</h1>}
-          <button className="ui green basic button" onClick={() => this.onSubmit(this.props.onClick)}>Aceptar</button>
-          <button className="ui red basic button" onClick={() => this.setAbierto(false)}>Cancelar</button>
+          <button className="ui basic negative button" onClick={() => this.setAbierto(false)}>Cancelar</button>
+          <button className="ui basic positive button" style={{border: "rgb(129,206,50)" }} onClick={() => this.onSubmit(this.props.onClick)}>Aceptar</button>
         </Modal.Actions>
       </Modal>
       </div>

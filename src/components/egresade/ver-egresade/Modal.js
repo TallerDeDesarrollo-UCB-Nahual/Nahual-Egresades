@@ -100,7 +100,7 @@ class ModalExampleModal extends Component {
             </Segment>
         }
         <Modal.Actions>
-          <Button color='grey' onClick={() => this.abrirModal(false)}>
+          <Button onClick={() => this.abrirModal(false)}>
             Cerrar
         </Button>
         </Modal.Actions>

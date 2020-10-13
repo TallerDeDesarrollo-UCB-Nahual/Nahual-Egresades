@@ -329,17 +329,17 @@ export class EditarEgresades extends Component {
               </Grid>
               <Grid centered rows={1} columns={1}>
                 <GridRow>
-                <Button className="ui basic positive button" style={{margin: "0px 50px 10px 50px", background: "rgb(129,206,50)"}}>Aceptar</Button>
+                <Link to={'/listaEgresades'}><Button className="ui basic negative button" style={{margin: "0px 50px 10px 50px"}}>Cancelar</Button></Link>
                 <Confirm
                   header='¿Está seguro que desea guardar los cambios?'
                   content="Si confirma el guardado, será redirigido a la lista principal"
                   open={this.state.abrirModal}
                   cancelButton='Cancelar'
-                  confirmButton='Confirmar'
+                  confirmButton='Aceptar'
                   onCancel={this.handleCancel}
                   onConfirm={this.handleConfirm}
                 />
-                  <Link to={'/listaEgresades'}><Button className="ui basic negative button" style={{margin: "0px 50px 10px 50px"}}>Cancelar</Button></Link>
+                <Button className="ui basic positive button" style={{margin: "0px 50px 10px 50px", background: "rgb(129,206,50)"}}>Aceptar</Button>
                 </GridRow>
             
               </Grid>            

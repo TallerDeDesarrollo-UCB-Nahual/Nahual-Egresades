@@ -30,6 +30,8 @@ function Eliminar({ egresadeId, eliminarVista }) {
             <Confirm
                 open={abierto}
                 content='Se eliminará permanentemente'
+                cancelButton='Cancelar'
+                confirmButton="Confirmar" 
                 onCancel={onClose}
                 onConfirm={() => eliminarEgresadeDeAPI(egresadeId)}
             />
