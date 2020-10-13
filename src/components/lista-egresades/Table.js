@@ -25,8 +25,7 @@ class Nahual_Table extends Component {
     if (contador > 0) {
       this.setState({
         mensajeDeEstado: "Se realizo el registro de " + contador + " egresados exitosamente.",
-        mostrarMensajeDeEstado: true,
-        filasEncontradas: []
+        mostrarMensajeDeEstado: true
       });
     }
   }

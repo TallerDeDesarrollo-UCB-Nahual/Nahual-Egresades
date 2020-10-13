@@ -20,7 +20,7 @@ export default class LoadedList extends Component{
            </Table.Row>
          </Table.Header>
          <Table.Body>
-         {this.props.json.map(fila => (
+         {this.props.json.map((fila) => (
            <Table.Row  key={fila.fullName}>
             <Table.Cell >{fila["nombreCompleto"]}</Table.Cell>
             <Table.Cell>{fila["fechaNacimiento"]}</Table.Cell>
