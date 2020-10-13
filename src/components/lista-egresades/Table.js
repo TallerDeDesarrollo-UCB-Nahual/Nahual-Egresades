@@ -109,9 +109,8 @@ class Nahual_Table extends Component {
               >
             </Search>
             <div className="registrar" style={{ color: "black" }}>
-              <Link to={'/'}>
-                <ImportModal onClick={this.enRegistroExitoso} />
-              </Link>
+              
+              <ImportModal onClick={this.enRegistroExitoso} />
             </div>
           </div>
           <br /><br />
