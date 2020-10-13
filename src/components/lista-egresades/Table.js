@@ -30,6 +30,7 @@ class Nahual_Table extends Component {
         mostrarMensajeDeEstado: true
       });
     }
+    this.obtenerEgresades();
   }
 
   obtenerEgresades() {
@@ -47,7 +48,7 @@ class Nahual_Table extends Component {
   }
 
   eliminarEgresadesVista(id) {
-    this.setState({ filasEncontradas: this.state.filasEncontradas.filter(egresade => egresade.id !== id) })
+    this.obtenerEgresades();
   }
 
   componentDidMount() {
