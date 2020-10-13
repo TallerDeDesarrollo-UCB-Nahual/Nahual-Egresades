@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../public/stylesheets/Registrar.css';
+import '../../../public/stylesheets/Registrar.css';
 import { Segment } from 'semantic-ui-react'
 
 export default function EncabezadoDeRegistrar() {

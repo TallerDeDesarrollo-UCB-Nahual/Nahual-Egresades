@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.css';
 import {Dropdown, Button, Grid, GridRow, Confirm} from 'semantic-ui-react';
 import {Form, Input } from 'semantic-ui-react-form-validator';
-import '../../public/stylesheets/Registrar.css';
+import '../../../public/stylesheets/Registrar.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Link } from 'react-router-dom'
 import axios  from 'axios';
@@ -12,10 +12,9 @@ import {OpcionesDeCuatrimestre} from './opciones-de-seleccion/OpcionesDeCuatrime
 import {OpcionesDeNivelDeIngles} from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
 import {OpcionesDeEstadoLaboral} from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import {MensajeResultante} from './tipo-de-mensaje/MensajeResultante.js';
-import Cargando from '../inicio-de-sesion/Cargando';
+import Cargando from '../../inicio-de-sesion/Cargando';
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 
-const rutaEstudiantes = 'https://mighty-anchorage-20911.herokuapp.com/api/students';
 
 function obtenerEstadoDepurado(estadoActual){
   var estadoDepurado = estadoActual;
@@ -329,17 +328,17 @@ export class EditarEgresades extends Component {
               </Grid>
               <Grid centered rows={1} columns={1}>
                 <GridRow>
-                <Link to={'/listaEgresades'}><Button className="ui basic negative button" style={{margin: "0px 50px 10px 50px"}}>Cancelar</Button></Link>
+                <Button className="ui basic positive button" style={{margin: "0px 50px 10px 50px", background: "rgb(129,206,50)"}}>Aceptar</Button>
                 <Confirm
                   header='¿Está seguro que desea guardar los cambios?'
                   content="Si confirma el guardado, será redirigido a la lista principal"
                   open={this.state.abrirModal}
                   cancelButton='Cancelar'
-                  confirmButton='Aceptar'
+                  confirmButton='Confirmar'
                   onCancel={this.handleCancel}
                   onConfirm={this.handleConfirm}
                 />
-                <Button className="ui basic positive button" style={{margin: "0px 50px 10px 50px", background: "rgb(129,206,50)"}}>Aceptar</Button>
+                  <Link to={'/listaEgresades'}><Button className="ui basic negative button" style={{margin: "0px 50px 10px 50px"}}>Cancelar</Button></Link>
                 </GridRow>
             
               </Grid>            
