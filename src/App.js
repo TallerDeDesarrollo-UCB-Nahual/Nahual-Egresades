@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/lista-egresades/Navbar';
 import EditarEgresades from './components/egresade/editar-egresades/EditarEgresades.js'; 
 import EncabezadoDeRegistrar from './components/egresade/editar-egresades/EncabezadoDeRegistrar.js';
-import Nahual_Table from './components/lista-egresades/Table';
+import Nahual_Table from './components/lista-egresades/Tabla';
 import InicioSesion from "./components/inicio-de-sesion/InicioSesion";
 
 function App() {
