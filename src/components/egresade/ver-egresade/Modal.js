@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { Button, Image, Modal, Grid, GridRow, Icon, Header, Segment, Loader, Dimmer } from 'semantic-ui-react';
 import '../../../public/stylesheets/Modal.css';
-import LogoNahual from '../../../public/images/logo-proyecto-nahual.webp';
+import LogoNahual from '../../../public/imagenes/logo-proyecto-nahual.webp';
 import InformacionDelEgresade from "./InformacionDelEgresade";
 import InformacionDelCurso from "./InformacionDelCurso";
 import axios from "axios";
-import userIcon from '../../../public/images/user-icon.jpeg'
+import userIcon from '../../../public/imagenes/user-icon.jpeg'
 
 class ModalExampleModal extends Component {
   constructor() {
@@ -96,7 +96,7 @@ class ModalExampleModal extends Component {
               <Dimmer active inverted>
                 <Loader inverted>Cargando...</Loader>
               </Dimmer>
-              <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+              <Image src='https://react.semantic-ui.com/imagenes/wireframe/short-paragraph.png' />
             </Segment>
         }
         <Modal.Actions>

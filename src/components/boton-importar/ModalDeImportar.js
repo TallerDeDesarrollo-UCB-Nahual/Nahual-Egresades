@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import { CSVReader } from 'react-papaparse'
 import { Button, Modal } from 'semantic-ui-react'
-import LoadedList from './LoadedList';
+import CargarLista from './CargarLista';
 
 const publicarListaDeEgresades_URL = 'http://fathomless-falls-62194.herokuapp.com/api/egresades'
 
-class ImportModal extends Component {
+class ModalDeImportar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -126,7 +126,7 @@ class ImportModal extends Component {
         </Modal.Content>
         <Modal.Actions>
           {this.state.mostrarLista && this.state.egresades !== [] ?
-            <LoadedList json={this.state.egresades} />
+            <CargarLista json={this.state.egresades} />
             :
             <h1 align="center">No se cargo ningun archivo</h1>}
           <button className="ui basic negative button" onClick={() => this.setAbierto(false)}>Cancelar</button>
@@ -137,4 +137,4 @@ class ImportModal extends Component {
     )
   }
 }
-export default ImportModal;
+export default ModalDeImportar;

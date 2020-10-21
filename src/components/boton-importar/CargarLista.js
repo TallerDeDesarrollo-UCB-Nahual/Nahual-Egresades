@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import { Table } from 'semantic-ui-react'
 
-export default class LoadedList extends Component {
+export default class CargarLista extends Component {
 
   render() {
     return (

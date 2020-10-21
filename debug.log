@@ -28,3 +28,4 @@
 [0919/115319.326:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0919/115319.326:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0919/115319.326:ERROR:crash_report_database_win.cc(469)] failed to stat report
+[1020/175435.867:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
