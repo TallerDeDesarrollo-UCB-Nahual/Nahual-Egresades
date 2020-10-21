@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import ImportarModal from './ImportarModal';
+import ModalDeImportar from './ModalDeImportar';
 
 test('renders learn react link', () => {
-  const { getByText } = render(<ImportarModal />);
+  const { getByText } = render(<ModalDeImportar />);
   const linkElement = getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });

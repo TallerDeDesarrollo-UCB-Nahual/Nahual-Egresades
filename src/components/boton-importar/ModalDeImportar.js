@@ -6,7 +6,7 @@ import CargarLista from './CargarLista';
 
 const publicarListaDeEgresades_URL = 'http://fathomless-falls-62194.herokuapp.com/api/egresades'
 
-class ImportarModal extends Component {
+class ModalDeImportar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -137,4 +137,4 @@ class ImportarModal extends Component {
     )
   }
 }
-export default ImportarModal;
+export default ModalDeImportar;

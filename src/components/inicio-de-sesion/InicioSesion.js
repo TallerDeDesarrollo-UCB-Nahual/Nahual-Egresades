@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import logo from '../../public/imagenes/logo.png';
 class InicioSesion extends Component {
 
