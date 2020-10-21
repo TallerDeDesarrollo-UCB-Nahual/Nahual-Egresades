@@ -3,7 +3,7 @@ import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
-import ImportModal from '../ImportButton/ImportModal';
+import ImportarModal from '../boton-importar/ImportarModal';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
 import Cargando from '../inicio-de-sesion/Cargando';
 import { withAuthenticationRequired } from "@auth0/auth0-react";
@@ -111,7 +111,7 @@ class Nahual_Table extends Component {
             </Search>
             <div className="registrar" style={{ color: "black" }}>
               
-              <ImportModal onClick={this.enRegistroExitoso} />
+              <ImportarModal onClick={this.enRegistroExitoso} />
             </div>
           </div>
           <br /><br />
