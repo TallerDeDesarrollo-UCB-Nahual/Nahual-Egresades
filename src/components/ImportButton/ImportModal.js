@@ -24,7 +24,6 @@ class ImportModal extends Component {
     });
   }
 
-
   setAbierto = (state) => {
     this.setState({
       abierto: state,
@@ -56,7 +55,6 @@ class ImportModal extends Component {
       })
   }
 
-
   handleOnDrop = (data) => {
     data.forEach(fila => {
       console.log(fila)
@@ -85,11 +83,11 @@ class ImportModal extends Component {
     this.setState({ contadorEgresades: this.state.contadorEgresades + 1 })
   }
 
-  handleOnError = (err, file, inputElem, reason) => {
+  handleOnError = (err) => {
     console.log(err)
   }
 
-  handleOnRemoveFile = (data) => {
+  handleOnRemoveFile = () => {
     this.setState({ mostrarLista: false, egresades: [] });
   }
   setAbierto(state) {
@@ -132,7 +130,7 @@ class ImportModal extends Component {
             :
             <h1 align="center">No se cargo ningun archivo</h1>}
           <button className="ui basic negative button" onClick={() => this.setAbierto(false)}>Cancelar</button>
-          <button className="ui basic positive button" style={{border: "rgb(129,206,50)" }} onClick={() => this.onSubmit(this.props.onClick)}>Confirmar</button>
+          <button className="ui basic positive button" style={{ border: "rgb(129,206,50)" }} onClick={() => this.onSubmit(this.props.onClick)}>Confirmar</button>
         </Modal.Actions>
       </Modal>
       </div>

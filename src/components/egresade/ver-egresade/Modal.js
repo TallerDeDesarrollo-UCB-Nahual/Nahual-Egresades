@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Image, Modal, Grid, GridRow, Icon, Header, Segment, Loader, Dimmer} from 'semantic-ui-react';
+import { Button, Image, Modal, Grid, GridRow, Icon, Header, Segment, Loader, Dimmer } from 'semantic-ui-react';
 import '../../../public/stylesheets/Modal.css';
 import LogoNahual from '../../../public/images/logo-proyecto-nahual.webp';
 import InformacionDelEgresade from "./InformacionDelEgresade";
@@ -67,9 +67,9 @@ class ModalExampleModal extends Component {
                 <Grid columns='equal'>
                   <Grid.Row>
                     <Grid.Column>
-                      <img src={userIcon}></img> 
+                      <img src={userIcon}></img>
                     </Grid.Column>
-                    
+
                     <Grid.Column width={9}>
                       <InformacionDelEgresade egresade={this.state.egresade} />
                     </Grid.Column>

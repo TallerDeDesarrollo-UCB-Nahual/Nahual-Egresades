@@ -1,5 +1,5 @@
 
-export const OpcionesDeTipoDeCurso=[
+export const OpcionesDeTipoDeCurso = [
     {
         key: 'Testing funcional',
         text: 'Testing funcional',
@@ -20,5 +20,5 @@ export const OpcionesDeTipoDeCurso=[
         text: 'Alfabetización Digital',
         value: 'Alfabetización Digital'
     }
-  ];
+];
 

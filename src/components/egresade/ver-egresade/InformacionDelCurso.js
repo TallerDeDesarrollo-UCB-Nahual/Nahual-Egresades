@@ -9,7 +9,7 @@ function InformacionDelCurso({ egresade }) {
         <Grid columns='equal'>
           <Grid.Column />
           <Grid.Column floated="right" width={11}>
-            <Icon color='green' name='check' /> <span className="card-green">{egresade.modulo}</span> 
+            <Icon color='green' name='check' /> <span className="card-green">{egresade.modulo}</span>
           </Grid.Column>
 
           <Grid.Column floated="left" width={4}>
