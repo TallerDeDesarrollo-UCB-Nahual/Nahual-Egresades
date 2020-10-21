@@ -16,8 +16,8 @@ export const OpcionesDeNivelDeIngles = [
         value: 'Basico'
     },
     {
-      key: 'En aprendizaje',
-      text: 'En aprendizaje',
-      value: 'En aprendizaje'
+        key: 'En aprendizaje',
+        text: 'En aprendizaje',
+        value: 'En aprendizaje'
     }
-  ];
+];

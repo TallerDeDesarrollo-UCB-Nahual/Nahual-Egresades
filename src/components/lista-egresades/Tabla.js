@@ -5,8 +5,6 @@ import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ImportarModal from '../boton-importar/ImportarModal';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
-import Cargando from '../inicio-de-sesion/Cargando';
-import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 class Nahual_Table extends Component {
   constructor() {
@@ -20,7 +18,6 @@ class Nahual_Table extends Component {
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
-
 
   enRegistroExitoso(contador) {
     console.log(contador)
@@ -56,7 +53,7 @@ class Nahual_Table extends Component {
   }
 
   mostrarModal() {
-    this.setState({ mostrarModal : true });
+    this.setState({ mostrarModal: true });
   }
 
   manejarProblemas = () => {
@@ -106,8 +103,8 @@ class Nahual_Table extends Component {
             <Search
               showNoResults={false}
               onSearchChange={this.buscarPorNombre.bind(this)}
-              style={{width:"auto"}}
-              >
+              style={{ width: "auto" }}
+            >
             </Search>
             <div className="registrar" style={{ color: "black" }}>
               
@@ -138,7 +135,7 @@ class Nahual_Table extends Component {
                   <Table.Cell className="bordes-tabla">
                     <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
                   <Table.Cell colSpan="3" className="bordes-tabla">
-                  {<Link to={`/editar/${value.id}`}><Button className="view-button">
+                    {<Link to={`/editar/${value.id}`}><Button className="view-button">
                       <i className="edit icon"></i>
                       <label className="icon-text">Editar</label>
                     </Button></Link>
@@ -154,18 +151,6 @@ class Nahual_Table extends Component {
             <Table.Footer>
               <Table.Row>
                 <Table.HeaderCell colSpan='4' className="no-border">
-                  {/* <Menu floated='right' pagination>
-                    <Menu.Item as='a' icon>
-                      <Icon name='chevron left' />
-                    </Menu.Item>
-                    <Menu.Item as='a'>1</Menu.Item>
-                    <Menu.Item as='a'>2</Menu.Item>
-                    <Menu.Item as='a'>3</Menu.Item>
-                    <Menu.Item as='a'>4</Menu.Item>
-                    <Menu.Item as='a' icon>
-                      <Icon name='chevron right' />
-                    </Menu.Item>
-                  </Menu> */}
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Footer>

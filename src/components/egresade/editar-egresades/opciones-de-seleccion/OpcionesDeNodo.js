@@ -16,11 +16,11 @@ export const OpcionesDeNodo = [
         value: 'Ituzaingo'
     },
     {
-      key: 'Santa Fe',
-      text: 'Santa Fe',
-      value: 'Santa Fe'
+        key: 'Santa Fe',
+        text: 'Santa Fe',
+        value: 'Santa Fe'
     }
-  ];
+];
 
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import {Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider } from "@auth0/auth0-react";
 
 const ProveedorAuth0ConHistoria = ({ children }) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN;
@@ -18,7 +18,7 @@ const ProveedorAuth0ConHistoria = ({ children }) => {
       redirectUri={CALLBACK_PATH}
       onRedirectCallback={onRedirectCallback}>
       {children}
-      
+
     </Auth0Provider>
   );
 };

@@ -6,12 +6,12 @@ export default function EncabezadoDeRegistrar() {
     return (
         <Segment basic textAlign='center'>
             <h2 className="tituloRegistrar">Editar Egresade</h2>
-            <hr  style={{
-            color: '#BDBDBD',
-            backgroundColor: '#BDBDBD',
-            borderColor : '#BDBDBD',
-            maxWidth: '1000px'
-            }}/>
+            <hr style={{
+                color: '#BDBDBD',
+                backgroundColor: '#BDBDBD',
+                borderColor: '#BDBDBD',
+                maxWidth: '1000px'
+            }} />
         </Segment>
     )
 }
