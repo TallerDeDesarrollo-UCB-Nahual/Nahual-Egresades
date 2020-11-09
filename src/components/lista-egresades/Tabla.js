@@ -5,6 +5,8 @@ import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
+import { withAuth0 } from "@auth0/auth0-react";
+
 
 class Nahual_Table extends Component {
   constructor() {
@@ -81,6 +83,10 @@ class Nahual_Table extends Component {
   }
 
   render() {
+    const { user } = this.props.auth0;
+    console.log(user)
+    const { isAuthenticated } = this.props.auth0;
+    console.log(isAuthenticated)
     return (
       <div>
         <div className="tabla">
