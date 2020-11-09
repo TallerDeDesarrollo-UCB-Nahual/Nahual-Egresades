@@ -9,7 +9,7 @@ function Eliminar({ egresadeId, eliminarVista }) {
     const onClose = () => setAbierto(false);
 
     const eliminarEgresadeDeAPI = (egresadeId) => {
-        const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/estudiantes/`;
+        const API_URL = `http://boiling-brushlands-85294.herokuapp.com/api/estudiantes/`;
         axios
             .delete(`${API_URL}${egresadeId}`)
             .then(response => {

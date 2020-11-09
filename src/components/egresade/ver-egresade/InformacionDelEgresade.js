@@ -33,7 +33,12 @@ function InformacionDelEgresade({ egresade }) {
 
               <Form.Field inline>
                 <label><Icon name='map outline' /><span className="title-data"> Nodo:</span></label>
-                <Input> {egresade.nombreNodo} </Input>
+                <Input> {egresade.nodo} </Input>
+              </Form.Field>
+
+              <Form.Field inline>
+                <label><Icon name='map outline' /><span className="title-data"> Sede:</span></label>
+                <Input> {egresade.sede} </Input>
               </Form.Field>
 
             </Form>

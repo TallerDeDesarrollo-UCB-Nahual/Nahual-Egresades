@@ -45,9 +45,9 @@ export class EditarEgresades extends Component {
 
   }
   obtenerEgresade() {
-    const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/egresades/`;
+    const API_URL = `http://boiling-brushlands-85294.herokuapp.com/api/egresades/`;
     axios
-      .get(`${API_URL}${this.props.match.params.id}`)
+      .get(`${API_URL}${this.props.match.params.id}${"/DTO"}`)
       .then(response => {
         this.setState({
           egresade: response.data.response
@@ -196,6 +196,20 @@ export class EditarEgresades extends Component {
                   />
                 </span>
               </Grid.Column>
+              <Grid.Column>
+                <span className="etiquetas">
+                  <label htmlFor="correo">Sede<br /></label>
+                  <Input type="email"
+                    name="sede"
+                    placeholder="Sede"
+                    value={this.state.egresade.sede}
+                    validators={['required']}
+                    errorMessages={['Este campo es requerido']}
+                    style={{ margin: "0px 15%" }}
+                    onChange={this.enCambio}
+                  />
+                </span>
+              </Grid.Column>
             </Grid.Row>
             <Grid.Row columns={2}>
               <Grid.Column className="centrarColumnas">
@@ -209,7 +223,7 @@ export class EditarEgresades extends Component {
                     required
                     style={{ margin: "0px 11%" }}
                     options={OpcionesDeNodo}
-                    value={this.state.egresade.nombreNodo}
+                    value={this.state.egresade.nodo}
                     onChange={this.onChangeDropdown}
                   />
                 </span>
