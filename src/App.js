@@ -9,6 +9,7 @@ import InicioSesion from "./components/inicio-de-sesion/InicioSesion";
 import Autenticado from "./components/inicio-de-sesion/Autenticado"
 import { Container } from "semantic-ui-react";
 import { useAuth0 } from "@auth0/auth0-react";
+import VistaNoAutorizado from './components/inicio-de-sesion/usuario-no-autorizado/VistaNoAutorizado.js';
 
 function App() {
   const { isAuthenticated: estaAutenticado } = useAuth0();
@@ -20,14 +21,15 @@ function App() {
         {estaAutenticado ? <Autenticado /> : <InicioSesion />}
         </Container>
         <Switch>
-          <Route path="/" exact component={InicioSesion} />
-          <Route path="/listaEgresades" component={Nahual_Table} />
-          <Route exact path="/editar/:id" render={ (props) =>(
-            <React.Fragment>   
-            <EncabezadoDeRegistrar/> 
-            <EditarEgresades {...props} />
-            </React.Fragment>
-          )}/>
+            <Route path="/" exact component={InicioSesion} />
+              <Route path="/listaEgresades" component={Nahual_Table} />
+            <Route exact path="/editar/:id" render={ (props) =>(
+              <React.Fragment>   
+              <EncabezadoDeRegistrar/> 
+              <EditarEgresades {...props} />
+              </React.Fragment>
+            )}/>
+          <Route path="/noAutorizado" component={VistaNoAutorizado} />
         </Switch>
       </div>
   );
