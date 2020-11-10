@@ -1,23 +1,21 @@
 
 export const OpcionesDeNivelDeIngles = [
     {
-        key: 'Avanzado',
-        text: 'Avanzado',
-        value: 'Avanzado'
+        key: 'Basico',
+        text: 'Basico',
+        value: 'Basico',
+        valueToSend : 1
     },
     {
         key: 'Intermedio',
         text: 'Intermedio',
-        value: 'Intermedio'
+        value: 'Intermedio',
+        valueToSend : 2
     },
     {
-        key: 'Basico',
-        text: 'Basico',
-        value: 'Basico'
-    },
-    {
-        key: 'En aprendizaje',
-        text: 'En aprendizaje',
-        value: 'En aprendizaje'
+        key: 'Avanzado',
+        text: 'Avanzado',
+        value: 'Avanzado',
+        valueToSend : 3
     }
 ];

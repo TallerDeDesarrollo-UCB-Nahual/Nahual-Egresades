@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Segment, Dimmer, Loader, Image } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`http://boiling-brushlands-85294.herokuapp.com/api/egresades/DTO`)
+    fetch(`https://nahual-test.herokuapp.com/api/egresades/DTO`)
       .then(res => {
         return res.json()
       })

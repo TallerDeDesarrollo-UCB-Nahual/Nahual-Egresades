@@ -2,28 +2,15 @@ import React from 'react'
 
 export const OpcionesDeSede = [
   {
-    key: 'Contra Viento y Marea',
-    text: 'Contra Viento y Marea',
-    value: 'Contra Viento y Marea'
+    key: 'Buenos Aires',
+    text: 'Buenos Aires',
+    value: 'Buenos Aires',
+    valueToSend : 1
   },
   {
-    key: 'Intive',
-    text: 'Intive',
-    value: 'Intive'
-  },
-  {
-    key: 'Ituzaingo',
-    text: 'Ituzaingo',
-    value: 'Ituzaingo'
-  },
-  {
-    key: 'Maximo Paz',
-    text: 'Maximo Paz',
-    value: 'Maximo Paz'
-  },
-  {
-    key: 'Tierra Violeta',
-    text: 'Tierra Violeta',
-    value: 'Tierra Violeta'
+    key: 'La Plata',
+    text: 'La Plata',
+    value: 'La Plata',
+    valueToSend: 2
   }
 ];
