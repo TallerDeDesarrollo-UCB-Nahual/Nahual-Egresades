@@ -1,41 +1,50 @@
 import React, { Component } from 'react'
 import {Button, Grid, Form, Divider, Segment } from 'semantic-ui-react';
-import {useAuth0} from '@auth0/auth0-react';
-import logo from '../../../public/imagenes/noAutorizado.png';
-import '../../../public/stylesheets/NoAutorizado.css';
+import logo from '../../public/imagenes/noAutorizado.png';
+import '../../public/stylesheets/NoAutorizado.css';
 
-/*
-const {user: usuarioSesion, logout: cerrarSesion} = useAuth0();
-*/
+
+
 const origenSolicitud = 'https://nahual-8298d.web.app/';
 const solicitudAccesoNahual= 'https://nahual-admin.herokuapp.com/';
 const clave = 'Nahual123';
 
-function generarDatosDeSolicitud(){
-    const datosEnvio = {
-        nombre: 'Pedro',
-        correo: 'pedro@gmail.com',
-        origen: 'Egresades',
-        redirigir: origenSolicitud
-    }
-
-    var AES = require('crypto-js/aes');
-    let encriptado = AES.encrypt(JSON.stringify(datosEnvio), clave);
-    let urlSolicitud = new URL(solicitudAccesoNahual);
-    let parametros = urlSolicitud.searchParams;
-    parametros.set('datos', encriptado.toString());
-    urlSolicitud.search = parametros.toString();
-    console.log(urlSolicitud.toString());
-}
-
 export class VistaNoAutorizado extends Component {
+    
+    usuario = null;
     constructor(props){
         super(props);
+        this.state = {
+            usuario : null
+        }
     }
 
-    redireccionarSolicitudAcceso(){
-        //window.location.assign(generarDatosDeSolicitud())
-        generarDatosDeSolicitud();
+    componentDidUpdate(){
+        var datos = this.props.datosUsuario; 
+        this.recibirDatos(datos);
+    }
+
+    recibirDatos(datos){
+        this.usuario = datos
+    }
+
+    generarDatosDeSolicitud(datos){
+        var datosUsuario = JSON.parse(datos);
+        const datosEnvio = {
+            nombre: datosUsuario.nombre,
+            correo: datosUsuario.email,
+            origen: datosUsuario.aplicacion,
+            redirigir: origenSolicitud
+        }
+        console.log(datosEnvio);
+    
+          var AES = require('crypto-js/aes');
+          let encriptado = AES.encrypt(JSON.stringify(datosEnvio), clave);
+          let urlSolicitud = new URL(solicitudAccesoNahual);
+          let parametros = urlSolicitud.searchParams;
+          parametros.set('datos', encriptado.toString());
+          urlSolicitud.search = parametros.toString();
+          window.location.assign(urlSolicitud);
     }
 
     render() {
@@ -49,7 +58,7 @@ export class VistaNoAutorizado extends Component {
                     <Grid columns={2} relaxed='very' stackable>
                     <Grid.Column className="centrar">
                         <h2>Puedes solicitar acceso</h2>
-                        <Button className="acceso" onClick={this.redireccionarSolicitudAcceso}>Solicitar Acceso</Button>
+                        <Button className="acceso" onClick={() => {this.generarDatosDeSolicitud(this.props.datosUsuario)}}>Solicitar Acceso</Button>
                     </Grid.Column>
 
                     <Grid.Column className="centrar" verticalAlign='middle'>
@@ -64,5 +73,6 @@ export class VistaNoAutorizado extends Component {
         )
     }
 }
+
 
 export default VistaNoAutorizado

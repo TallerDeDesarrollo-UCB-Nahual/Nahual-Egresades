@@ -1,22 +1,23 @@
 import Axios from "axios";
 import React, { Component } from "react";
 import Nahual_Table from "../lista-egresades/Tabla";
-import NoAutorizado from "./NoAutorizado";
+import VistaNoAutorizado from './VistaNoAutorizado.js';
 import { Auth0Context } from "@auth0/auth0-react";
 import { Dimmer, Loader } from "semantic-ui-react";
 
 class Autenticado extends Component {
+static contextType = Auth0Context;
   constructor(props) {
     super(props);
     this.state = {
       validado: false,
-      mostrarBotonDeCarga: true
+      mostrarBotonDeCarga: true,
+      datosRecuperados: null
     };
   }
-  static contextType = Auth0Context;
 
-  componentDidMount() {
-    this.obtenerVerificacion();
+  componentWillMount() {
+    this.obtenerVerificacion()
   }
   errorDeCaptura(error) {
     this.setState({
@@ -24,7 +25,8 @@ class Autenticado extends Component {
     });
     alert("Hay un error en la base de datos, status: " + error.status);
   }
-  async obtenerVerificacion() {
+  
+  obtenerVerificacion() {
     const SERVICIO_DE_VERIFICACION_API_NAHUAL ="https://nahual-authentication-api.herokuapp.com/api/";
     const { user: usuario } = this.context;
     const datos = JSON.stringify({
@@ -32,9 +34,8 @@ class Autenticado extends Component {
       email: usuario.email,
       aplicacion: "Egresades"
     });
-    console.log(datos)
     Axios({
-        key: "apiData",
+      key: "apiData",
       method: "post",
       url: `${SERVICIO_DE_VERIFICACION_API_NAHUAL}/verificarAcceso`,
       headers: { "Content-Type": "application/json" },
@@ -43,7 +44,8 @@ class Autenticado extends Component {
       .then((respuesta) => {
         this.setState({
           validado: respuesta.data.data,
-          mostrarBotonDeCarga: false
+          mostrarBotonDeCarga: false,
+          datosRecuperados: datos
         });
       })
       .catch((error) => {
@@ -60,11 +62,10 @@ class Autenticado extends Component {
     );
   }
   render() {
-      console.log(this.state.validado)
     return (
       <>
         {this.iconoDeCarga()}
-        {this.state.validado ? <Nahual_Table /> : <NoAutorizado />}
+        {this.state.validado ? <Nahual_Table /> : <VistaNoAutorizado datosUsuario={this.state.datosRecuperados}/>}
       </>
     );
   }
