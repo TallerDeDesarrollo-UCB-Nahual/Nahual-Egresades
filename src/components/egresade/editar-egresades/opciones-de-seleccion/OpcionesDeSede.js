@@ -54,7 +54,7 @@ export const OpcionesDeSede = [
     text: 'Ituzaingó',
     value: 'Ituzaingó',
     valueToSend: 9
-  },,
+  },
   {
     key: 'Contra viento y marea',
     text: 'Contra viento y marea',
