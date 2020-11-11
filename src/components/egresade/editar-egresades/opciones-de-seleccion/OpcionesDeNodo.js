@@ -19,9 +19,9 @@ export const OpcionesDeNodo = [
         valueToSend : 3
     },
     {
-        key: 'Ituzaingo',
-        text: 'Ituzaingo',
-        value: 'Ituzaingo',
+        key: 'Ituzaingó',
+        text: 'Ituzaingó',
+        value: 'Ituzaingó',
         valueToSend : 4
     }
 ];
