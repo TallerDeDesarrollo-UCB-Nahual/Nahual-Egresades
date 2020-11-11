@@ -59,7 +59,7 @@ export class EditarEgresades extends Component {
         });
         let egresadeCompleto = prepararDatosARecuperar(this.state.egresade);
         this.setState({ egresade: egresadeCompleto });
-        console.log(this.state.egresade); 
+        console.log(this.state.egresade);
       })
       .catch(function (error) {
         console.log(error);
@@ -94,21 +94,21 @@ export class EditarEgresades extends Component {
       nivelInglesId: obtenerValorConvertidoDeEnvio(OpcionesDeNivelDeIngles, this.state.egresade.nivelIngles)
     }
     egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
-    egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op=> op.value === this.state.egresade.esEmpleado)[0].valueToSend;
+    egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
     delete egresadeAEnviar.nombre;
     delete egresadeAEnviar.apellido;
     delete egresadeAEnviar.nodo;
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
-       axios.put(`https://nahual-test.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
-         .then(function (respuesta) {
-           window.open("/listaEgresades", "_self");
-         })
-         .catch(function (error) {
-           this.setState({ exito: false });
-         }.bind(this));
-       setTimeout(() => { this.setState({ exito: null }); }, 5000);
+    axios.put(`https://nahual-test.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
+      .then(function (respuesta) {
+        window.open("/listaEgresades", "_self");
+      })
+      .catch(function (error) {
+        this.setState({ exito: false });
+      }.bind(this));
+    setTimeout(() => { this.setState({ exito: null }); }, 5000);
 
   }
 
