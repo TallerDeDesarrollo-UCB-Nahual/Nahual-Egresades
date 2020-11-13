@@ -32,7 +32,7 @@ function prepararDatosARecuperar(estadoActual) {
 }
 
 function obtenerValorConvertidoDeEnvio(opciones, valorAConvertir) {
-  return opciones.filter(op => op.key === valorAConvertir)[0].valueToSend;
+   return opciones.filter(op => op.key === valorAConvertir)[0].valueToSend;
 }
 
 export class EditarEgresades extends Component {
@@ -101,15 +101,14 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
-    axios.put(`https://nahual-test.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
-      .then(function (respuesta) {
-        window.open("/listaEgresades", "_self");
-      })
-      .catch(function (error) {
-        this.setState({ exito: false });
-      }.bind(this));
-    setTimeout(() => { this.setState({ exito: null }); }, 5000);
-
+    // axios.put(`https://nahual-test.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
+    //   .then(function (respuesta) {
+    //     window.open("/listaEgresades", "_self");
+    //   })
+    //   .catch(function (error) {
+    //     this.setState({ exito: false });
+    //   }.bind(this));
+    // setTimeout(() => { this.setState({ exito: null }); }, 5000);
   }
 
   handleButtonClick = () => this.setState({ abrirModal: true })
@@ -127,6 +126,10 @@ export class EditarEgresades extends Component {
     valor = value;
     this.state.egresade[name] = valor;
     console.log(this.state.egresade);
+  }
+
+  filtrarSedes(opcionesSede, valorAConvertir) {
+    return opcionesSede.filter(op => op.nodo === valorAConvertir);
   }
 
   render() {
@@ -222,7 +225,7 @@ export class EditarEgresades extends Component {
                     selection
                     required
                     style={{ margin: "0px 11%" }}
-                    options={OpcionesDeSede}
+                    options={this.filtrarSedes(OpcionesDeSede, this.state.egresade.nodo)}
                     value={this.state.egresade.sede}
                     onChange={this.onChangeDropdown}
                   />
