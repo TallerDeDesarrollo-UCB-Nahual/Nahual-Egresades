@@ -2,7 +2,12 @@ import React from "react";
 import { Form, Input, Icon, Item } from "semantic-ui-react";
 import '../../../public/stylesheets/Modal.css';
 
+
+
 function InformacionDelEgresade({ egresade }) {
+  var hoy = new Date(egresade.fechaNacimiento);
+  var mañana = new Date(hoy);
+  mañana.setDate(hoy.getDate()+1);
   return (
     <Item.Group>
       <Item>
@@ -23,7 +28,7 @@ function InformacionDelEgresade({ egresade }) {
 
               <Form.Field inline>
                 <label><Icon name='calendar outline' /><span className="title-data">Fecha de nacimiento:</span></label>
-                <Input> {new Date(egresade.fechaNacimiento).toLocaleDateString('es')} </Input>
+                <Input> {mañana.toLocaleDateString('es')} </Input>
               </Form.Field>
 
               <Form.Field inline>
