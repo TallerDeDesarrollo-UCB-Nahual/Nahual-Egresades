@@ -54,7 +54,7 @@ static contextType = Auth0Context;
     return (
       this.state.mostrarBotonDeCarga === true && (
         <Dimmer active inverted>
-          <Loader inverted>Verificando Acceso...</Loader>
+          <Loader inverted>Verificando Acceso...</Loader> 
         </Dimmer>
       )
     );

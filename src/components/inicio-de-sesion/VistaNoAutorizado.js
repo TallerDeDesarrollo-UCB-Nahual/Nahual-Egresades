@@ -73,6 +73,4 @@ export class VistaNoAutorizado extends Component {
         )
     }
 }
-
-
 export default VistaNoAutorizado
