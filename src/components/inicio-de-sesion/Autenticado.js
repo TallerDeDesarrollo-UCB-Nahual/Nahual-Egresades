@@ -53,8 +53,8 @@ static contextType = Auth0Context;
   iconoDeCarga() {
     return (
       this.state.mostrarBotonDeCarga === true && (
-        <Dimmer active inverted>
-          <Loader inverted>Verificando Acceso...</Loader>
+        <Dimmer active inverted blurring>
+          <Loader inverted>Verificando Acceso... Espere por favor</Loader>
         </Dimmer>
       )
     );

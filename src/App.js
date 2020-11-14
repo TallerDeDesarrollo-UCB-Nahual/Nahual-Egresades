@@ -17,9 +17,7 @@ function App() {
   return (
     <div>
         <Navbar/>
-        <Container  style={{ minHeight: "60vh", marginTop: "115px" }} >
         {estaAutenticado ? <Autenticado /> : <InicioSesion />}
-        </Container>
         <Switch>
             <Route exact path="/listaEgresades" component={Nahual_Table}/>
             <Route exact path="/editar/:id" render={ (props) =>(
