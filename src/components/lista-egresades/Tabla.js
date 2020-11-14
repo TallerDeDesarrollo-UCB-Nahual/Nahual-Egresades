@@ -5,8 +5,8 @@ import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
-import { withAuth0 } from "@auth0/auth0-react";
-
+import { withAuthenticationRequired } from "@auth0/auth0-react";
+import VistaNoAutorizado from "../inicio-de-sesion/VistaNoAutorizado"
 
 class Nahual_Table extends Component {
   constructor() {
@@ -164,4 +164,6 @@ class Nahual_Table extends Component {
   }
 
 }
-export default Nahual_Table
+export default withAuthenticationRequired(Nahual_Table, {
+  onRedirecting: () => <VistaNoAutorizado />,
+});
