@@ -5,7 +5,7 @@ import '../../public/stylesheets/NoAutorizado.css';
 
 
 
-const origenSolicitud = 'https://nahual-8298d.web.app/';
+const origenSolicitud = 'http://localhost:3000/';
 const solicitudAccesoNahual= 'https://nahual-admin.herokuapp.com/';
 const clave = 'Nahual123';
 

@@ -10,8 +10,8 @@ const ProveedorAuth0ConHistoria = ({ children }) => {
 
   return (
     <Auth0Provider
-      domain="dev-x08p31h3.us.auth0.com"
-      clientId="gQzzs4WlsO3oap0btBQNUAdu72Qio8B3"
+      domain="dev-0563c-jv.us.auth0.com"
+      clientId="4sZln7TJomw1pnvbHzVGhltN0kmh8a7m"
       redirectUri={window.location.origin}>
       {children}
     </Auth0Provider>

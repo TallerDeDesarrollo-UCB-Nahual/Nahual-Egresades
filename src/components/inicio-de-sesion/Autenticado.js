@@ -4,6 +4,7 @@ import Nahual_Table from "../lista-egresades/Tabla";
 import VistaNoAutorizado from './VistaNoAutorizado.js';
 import { Auth0Context } from "@auth0/auth0-react";
 import { Dimmer, Loader } from "semantic-ui-react";
+import{Redirect} from "react-router-dom";
 
 class Autenticado extends Component {
 static contextType = Auth0Context;
@@ -11,28 +12,21 @@ static contextType = Auth0Context;
     super(props);
     this.state = {
       validado: false,
-      mostrarBotonDeCarga: true,
-      datosRecuperados: null
+      datosRecuperados: null,
+      mostrarBotonDeCarga: true
     };
   }
 
   componentWillMount() {
-    this.obtenerVerificacion()
+    this.obtenerDatosVerificados()
   }
-  errorDeCaptura(error) {
-    this.setState({
-      mostrarBotonDeCarga: false
-    });
-    alert("Hay un error en la base de datos, status: " + error.status);
-  }
-  
-  obtenerVerificacion() {
+  async obtenerDatosVerificados() {
     const SERVICIO_DE_VERIFICACION_API_NAHUAL ="https://nahual-authentication-api.herokuapp.com/api/";
     const { user: usuario } = this.context;
     const datos = JSON.stringify({
       nombre: usuario.name,
       email: usuario.email,
-      aplicacion: "Egresades"
+      aplicacion: "Nahual"
     });
     Axios({
       key: "apiData",
@@ -49,9 +43,13 @@ static contextType = Auth0Context;
         });
       })
       .catch((error) => {
-        this.errorDeCaptura(error);
+        this.setState({
+          mostrarBotonDeCarga: false,
+        });
+        alert("Problemas en la solicitud, status: " + error.status);
       });
   }
+  
   iconoDeCarga() {
     return (
       this.state.mostrarBotonDeCarga === true && (
@@ -61,11 +59,13 @@ static contextType = Auth0Context;
       )
     );
   }
+
   render() {
     return (
       <>
         {this.iconoDeCarga()}
-        {this.state.validado ? <Nahual_Table /> : <VistaNoAutorizado datosUsuario={this.state.datosRecuperados}/>}
+        {(this.state.validado === true) && <Redirect to="/listaEgresades"/>}
+        {(this.state.validado === false) && <React.StrictMode><VistaNoAutorizado datosUsuario={this.state.datosRecuperados}/></React.StrictMode>}
       </>
     );
   }

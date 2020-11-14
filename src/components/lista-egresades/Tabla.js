@@ -83,10 +83,6 @@ class Nahual_Table extends Component {
   }
 
   render() {
-    const { user } = this.props.auth0;
-    console.log(user)
-    const { isAuthenticated } = this.props.auth0;
-    console.log(isAuthenticated)
     return (
       <div>
         <div className="tabla">

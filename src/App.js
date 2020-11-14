@@ -21,8 +21,7 @@ function App() {
         {estaAutenticado ? <Autenticado /> : <InicioSesion />}
         </Container>
         <Switch>
-            <Route path="/" exact component={InicioSesion} />
-              <Route path="/listaEgresades" component={Nahual_Table} />
+            <Route exact path="/listaEgresades" component={Nahual_Table}/>
             <Route exact path="/editar/:id" render={ (props) =>(
               <React.Fragment>   
               <EncabezadoDeRegistrar/> 
