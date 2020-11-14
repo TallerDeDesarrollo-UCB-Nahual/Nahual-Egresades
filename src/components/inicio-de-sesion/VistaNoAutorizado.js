@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import {Button, Grid, Form, Divider, Segment } from 'semantic-ui-react';
-import logo from '../../public/imagenes/noAutorizado.png';
+import logo from '../../public/imagenes/people-heart.png';
 import '../../public/stylesheets/NoAutorizado.css';
-
-
+import BotonLogout from "./../inicio-de-sesion/BotonLogout";
 
 const origenSolicitud = 'http://localhost:3000/';
 const solicitudAccesoNahual= 'https://nahual-admin.herokuapp.com/';
@@ -51,8 +50,8 @@ export class VistaNoAutorizado extends Component {
         return (
             <div>
                 <div className="logoNoAutorizado">
-                    <img src={logo} style={{ width: '200px', height: '200px' }}></img>
-                    <h1>No Pasaras!!!, hasta que pidas acceso</h1>
+                    <img src={logo} style={{ width: '300px', height: '300px' }}></img>
+                    <h1>Lo sentimos, parece que no tienes acceso a la siguiente página</h1>
                 </div>
                 <Segment placeholder>
                     <Grid columns={2} relaxed='very' stackable>
@@ -63,7 +62,7 @@ export class VistaNoAutorizado extends Component {
 
                     <Grid.Column className="centrar" verticalAlign='middle'>
                         <h2>Volver al menú principal</h2>
-                        <Button color='red'>Cerrar Sesión</Button>
+                        <BotonLogout />
                     </Grid.Column>
                     </Grid>
 
