@@ -4,7 +4,7 @@ import logo from '../../public/imagenes/people-heart.png';
 import '../../public/stylesheets/NoAutorizado.css';
 import BotonLogout from "./../inicio-de-sesion/BotonLogout";
 
-const origenSolicitud = 'http://localhost:3000/';
+const origenSolicitud = 'https://nahual-portal-egresades.herokuapp.com/';
 const solicitudAccesoNahual= 'https://nahual-admin.herokuapp.com/';
 const clave = 'Nahual123';
 
