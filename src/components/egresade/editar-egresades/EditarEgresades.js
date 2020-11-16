@@ -104,14 +104,14 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
-    // axios.put(`https://nahual-test.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
-    //   .then(function (respuesta) {
-    //     window.open("/listaEgresades", "_self");
-    //   })
-    //   .catch(function (error) {
-    //     this.setState({ exito: false });
-    //   }.bind(this));
-    // setTimeout(() => { this.setState({ exito: null }); }, 5000);
+    axios.put(`https://nahual-test.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
+      .then(function (respuesta) {
+        window.open("/listaEgresades", "_self");
+      })
+      .catch(function (error) {
+        this.setState({ exito: false });
+      }.bind(this));
+    setTimeout(() => { this.setState({ exito: null }); }, 5000);
   }
 
   handleButtonClick = () => this.setState({ abrirModal: true })
