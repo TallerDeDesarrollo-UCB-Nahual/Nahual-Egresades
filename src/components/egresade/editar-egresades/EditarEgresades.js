@@ -6,6 +6,8 @@ import '../../../public/stylesheets/Registrar.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
+import { withAuthenticationRequired } from "@auth0/auth0-react";
+
 import { OpcionesDeNodo } from './opciones-de-seleccion/OpcionesDeNodo.js';
 import { OpcionesDeSede } from './opciones-de-seleccion/OpcionesDeSede.js';
 import { OpcionesDeTipoDeCurso } from './opciones-de-seleccion/OpcionesDeTipoDeCurso.js';
@@ -13,6 +15,7 @@ import { OpcionesDeCuatrimestre } from './opciones-de-seleccion/OpcionesDeCuatri
 import { OpcionesDeNivelDeIngles } from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
 import { OpcionesDeEstadoLaboral } from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import { MensajeResultante } from './tipo-de-mensaje/MensajeResultante.js';
+import VistaNoAutorizado from "../../inicio-de-sesion/VistaNoAutorizado"
 
 function obtenerEstadoDepurado(estadoActual) {
   var estadoDepurado = estadoActual;
@@ -384,4 +387,6 @@ export class EditarEgresades extends Component {
   }
 }
 
-export default EditarEgresades;
+export default withAuthenticationRequired(EditarEgresades, {
+  onRedirecting: () => <VistaNoAutorizado />,
+});
