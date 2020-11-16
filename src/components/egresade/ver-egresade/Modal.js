@@ -16,9 +16,9 @@ class ModalExampleModal extends Component {
   }
 
   obtenerEgresadeDeAPI() {
-    const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/estudiantes/`;
+    const API_URL = `https://nahual-test.herokuapp.com/api/egresades/`;
     axios
-      .get(`${API_URL}${this.props.egresadeId}`)
+      .get(`${API_URL}${this.props.egresadeId}${"/DTO"}`)
       .then(response => {
         this.setState({
           egresade: response.data.response

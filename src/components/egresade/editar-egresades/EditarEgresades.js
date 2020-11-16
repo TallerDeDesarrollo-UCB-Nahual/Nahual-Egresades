@@ -7,6 +7,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { OpcionesDeNodo } from './opciones-de-seleccion/OpcionesDeNodo.js';
+import { OpcionesDeSede } from './opciones-de-seleccion/OpcionesDeSede.js';
 import { OpcionesDeTipoDeCurso } from './opciones-de-seleccion/OpcionesDeTipoDeCurso.js';
 import { OpcionesDeCuatrimestre } from './opciones-de-seleccion/OpcionesDeCuatrimestre.js';
 import { OpcionesDeNivelDeIngles } from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
@@ -25,9 +26,13 @@ function prepararDatosARecuperar(estadoActual) {
   var nombre = head;
   var apellido = rest.reduce(function (acc, char) { return acc.concat(char, " "); }, "").trim();
   var fechaNacimiento = estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec) => acc.concat(fec), "");
-  var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (estadoActual.esEmpleado ? 1 : 0)).text;
+  var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (estadoActual.esEmpleado ? 1 : 0))[0].value;
   let estadoDepurado = obtenerEstadoDepurado(estadoActual);
   return { ...estadoDepurado, nombre, apellido, fechaNacimiento, esEmpleado };
+}
+
+function obtenerValorConvertidoDeEnvio(opciones, valorAConvertir) {
+   return opciones.filter(op => op.key === valorAConvertir)[0].valueToSend;
 }
 
 export class EditarEgresades extends Component {
@@ -45,15 +50,16 @@ export class EditarEgresades extends Component {
 
   }
   obtenerEgresade() {
-    const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/egresades/`;
+    const API_URL = `https://nahual-test.herokuapp.com/api/egresades/`;
     axios
-      .get(`${API_URL}${this.props.match.params.id}`)
+      .get(`${API_URL}${this.props.match.params.id}${"/DTO"}`)
       .then(response => {
         this.setState({
           egresade: response.data.response
         });
         let egresadeCompleto = prepararDatosARecuperar(this.state.egresade);
         this.setState({ egresade: egresadeCompleto });
+        console.log(this.state.egresade);
       })
       .catch(function (error) {
         console.log(error);
@@ -78,23 +84,31 @@ export class EditarEgresades extends Component {
     var nombreConcatenado = this.state.egresade.nombre + " " + this.state.egresade.apellido;
     this.state.egresade.nombreCompleto = nombreConcatenado;
     this.setState({ abrirModal: true })
-    console.log(this.state);
   }
 
   guardarEgresade() {
-    var egresadeAEnviar = this.state.egresade;
+    var egresadeAEnviar = {
+      ...this.state.egresade,
+      nodoId: obtenerValorConvertidoDeEnvio(OpcionesDeNodo, this.state.egresade.nodo),
+      sedeId: obtenerValorConvertidoDeEnvio(OpcionesDeSede, this.state.egresade.sede),
+      nivelInglesId: obtenerValorConvertidoDeEnvio(OpcionesDeNivelDeIngles, this.state.egresade.nivelIngles)
+    }
     egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
+    egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
     delete egresadeAEnviar.nombre;
     delete egresadeAEnviar.apellido;
+    delete egresadeAEnviar.nodo;
+    delete egresadeAEnviar.sede;
+    delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
-    axios.put(`http://fathomless-falls-62194.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
-      .then(function (respuesta) {
-        window.open("/listaEgresades", "_self");
-      })
-      .catch(function (error) {
-        this.setState({ exito: false });
-      }.bind(this));
-    setTimeout(() => { this.setState({ exito: null }); }, 5000);
+    // axios.put(`https://nahual-test.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
+    //   .then(function (respuesta) {
+    //     window.open("/listaEgresades", "_self");
+    //   })
+    //   .catch(function (error) {
+    //     this.setState({ exito: false });
+    //   }.bind(this));
+    // setTimeout(() => { this.setState({ exito: null }); }, 5000);
   }
 
   handleButtonClick = () => this.setState({ abrirModal: true })
@@ -107,14 +121,19 @@ export class EditarEgresades extends Component {
   }
 
   onChangeDropdown = (e, { value, name }) => {
-    console.log(name);
     let valor = this.state.egresade[name];
     this.setState({ selectedType: valor })
     valor = value;
     this.state.egresade[name] = valor;
+    console.log(this.state.egresade);
+  }
+
+  filtrarSedes(opcionesSede, valorAConvertir) {
+    return opcionesSede.filter(op => op.nodo === valorAConvertir);
   }
 
   render() {
+
     return (
       <div className="contenedor">
         <Form id="myForm" onSubmit={this.enConfirmacion} className="ui form">
@@ -196,20 +215,36 @@ export class EditarEgresades extends Component {
                   />
                 </span>
               </Grid.Column>
+              <Grid.Column>
+                <span className="etiquetas">
+                  <label htmlFor="correo">Sede<br /></label>
+                  <Dropdown
+                    name="sede"
+                    id="sede"
+                    placeholder="Sede"
+                    selection
+                    required
+                    style={{ margin: "0px 11%" }}
+                    options={this.filtrarSedes(OpcionesDeSede, this.state.egresade.nodo)}
+                    value={this.state.egresade.sede}
+                    onChange={this.onChangeDropdown}
+                  />
+                </span>
+              </Grid.Column>
             </Grid.Row>
             <Grid.Row columns={2}>
               <Grid.Column className="centrarColumnas">
                 <span className="etiquetas">
-                  <label htmlFor="nombreNodo">Nodo<br /></label>
+                  <label htmlFor="nodo">Nodo<br /></label>
                   <Dropdown
-                    name="nombreNodo"
-                    id="nombreNodo"
+                    name="nodo"
+                    id="nodo"
                     placeholder="Nodo"
                     selection
                     required
                     style={{ margin: "0px 11%" }}
                     options={OpcionesDeNodo}
-                    value={this.state.egresade.nombreNodo}
+                    value={this.state.egresade.nodo}
                     onChange={this.onChangeDropdown}
                   />
                 </span>
@@ -219,7 +254,7 @@ export class EditarEgresades extends Component {
                   <label htmlFor="nivelIngles">Nivel de Ingles<br /></label>
                   <Dropdown type="text"
                     name="nivelIngles"
-                    placeholder="Nivel de Ingles"
+                    placeholder="Nivel de Inglés"
                     value={this.state.egresade.nivelIngles}
                     onChange={this.onChangeDropdown}
                     options={OpcionesDeNivelDeIngles}

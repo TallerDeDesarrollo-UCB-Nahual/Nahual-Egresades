@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Segment, Dimmer, Loader, Image } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
+    fetch(`https://nahual-test.herokuapp.com/api/egresades/DTO`)
       .then(res => {
         return res.json()
       })
@@ -117,6 +117,7 @@ class Nahual_Table extends Component {
               <Table.Row >
                 <Table.HeaderCell className="cabeceras-tabla">Nombre y Apellido</Table.HeaderCell>
                 <Table.HeaderCell className="cabeceras-tabla">Nodo</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Sede</Table.HeaderCell>
                 <Table.HeaderCell className="cabeceras-tabla">Modulo Cursado</Table.HeaderCell>
                 <Table.HeaderCell className="cabeceras-tabla">Acción</Table.HeaderCell>
               </Table.Row>
@@ -130,7 +131,10 @@ class Nahual_Table extends Component {
                     <Label className="email">{value.correo}</Label>
                   </Table.Cell >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="tarjeta-azul">• {value.nombreNodo}</Label>
+                    <Label className="tarjeta-azul">• {value.nodo}</Label>
+                  </Table.Cell>
+                  <Table.Cell className="bordes-tabla">
+                    <Label className="tarjeta-azul">• {value.sede}</Label>
                   </Table.Cell>
                   <Table.Cell className="bordes-tabla">
                     <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>

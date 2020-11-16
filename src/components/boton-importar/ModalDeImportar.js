@@ -64,6 +64,7 @@ class ModalDeImportar extends Component {
         "fechaNacimiento": fila.data["Fecha de Nacimiento"],
         "correo": fila.data["Mail"],
         "celular": fila.data["Numero de Celular"],
+        "sede": fila.data["SEDE"],
         "nombreNodo": fila.data["NODO"],
         "añoGraduacion": fila.data["Año"],
         "cuatrimestre": fila.data["Cuatri"],
