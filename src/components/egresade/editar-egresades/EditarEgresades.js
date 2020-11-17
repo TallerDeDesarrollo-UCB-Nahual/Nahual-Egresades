@@ -4,7 +4,7 @@ import { Dropdown, Button, Grid, GridRow, Confirm } from 'semantic-ui-react';
 import { Form, Input } from 'semantic-ui-react-form-validator';
 import '../../../public/stylesheets/Registrar.css';
 import 'semantic-ui-css/semantic.min.css';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 
@@ -41,6 +41,7 @@ function obtenerValorConvertidoDeEnvio(opciones, valorAConvertir) {
 export class EditarEgresades extends Component {
   state = {
     exito: null,
+    salir: false
   };
   constructor(props) {
     super(props);
@@ -62,7 +63,6 @@ export class EditarEgresades extends Component {
         });
         let egresadeCompleto = prepararDatosARecuperar(this.state.egresade);
         this.setState({ egresade: egresadeCompleto });
-        console.log(this.state.egresade);
       })
       .catch(function (error) {
         console.log(error);
@@ -106,10 +106,11 @@ export class EditarEgresades extends Component {
     console.log(egresadeAEnviar);
     axios.put(`https://nahual-datos-estudiantes.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
-        window.open("/listaEgresades", "_self");
-      })
+        this.setState({ salir: true });
+      }.bind(this))
       .catch(function (error) {
         this.setState({ exito: false });
+        console.log(error);
       }.bind(this));
     setTimeout(() => { this.setState({ exito: null }); }, 5000);
   }
@@ -128,7 +129,6 @@ export class EditarEgresades extends Component {
     this.setState({ selectedType: valor })
     valor = value;
     this.state.egresade[name] = valor;
-    console.log(this.state.egresade);
   }
 
   filtrarSedes(opcionesSede, valorAConvertir) {
@@ -375,8 +375,9 @@ export class EditarEgresades extends Component {
                 onCancel={this.handleCancel}
                 onConfirm={this.handleConfirm}
               />
-              <Button className="ui basic positive button" style={{ margin: "0px 50px 10px 50px", background: "rgb(129,206,50)" }}>Confirmar</Button>
+                <Button className="ui basic positive button" style={{ margin: "0px 50px 10px 50px", background: "rgb(129,206,50)" }}>Confirmar</Button>
             </GridRow>
+              {(this.state.salir === true) && <Redirect to='/listaEgresades'/>}
 
           </Grid>
         </Form>

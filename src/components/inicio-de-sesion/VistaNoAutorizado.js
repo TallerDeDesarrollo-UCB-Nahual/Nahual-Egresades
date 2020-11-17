@@ -5,7 +5,7 @@ import '../../public/stylesheets/NoAutorizado.css';
 import BotonLogout from "./../inicio-de-sesion/BotonLogout";
 
 const origenSolicitud = 'https://nahual-portal-egresades.herokuapp.com/';
-const solicitudAccesoNahual= 'https://nahual-admin.herokuapp.com/';
+const solicitudAccesoNahual= 'https://nahual-auth-portal.herokuapp.com/';
 const clave = 'Nahual123';
 
 export class VistaNoAutorizado extends Component {
