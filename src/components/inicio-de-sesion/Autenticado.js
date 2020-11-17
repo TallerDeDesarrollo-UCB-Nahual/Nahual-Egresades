@@ -21,7 +21,7 @@ static contextType = Auth0Context;
     this.obtenerDatosVerificados()
   }
   async obtenerDatosVerificados() {
-    const SERVICIO_DE_VERIFICACION_API_NAHUAL ="https://nahual-auth-service.herokuapp.com/api/";
+    const SERVICIO_DE_VERIFICACION_API_NAHUAL ="https://nahual-auth-portal.herokuapp.com/panel-administrador";
     const { user: usuario } = this.context;
     const datos = JSON.stringify({
       nombre: usuario.name,
