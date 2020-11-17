@@ -12,7 +12,9 @@ const ProveedorAuth0ConHistoria = ({ children }) => {
     <Auth0Provider
       domain="dev-0563c-jv.us.auth0.com"
       clientId="4sZln7TJomw1pnvbHzVGhltN0kmh8a7m"
-      redirectUri={window.location.origin}>
+      redirectUri={window.location.origin}
+      useRefreshTokens={true}
+      cacheLocation="localstorage">
       {children}
     </Auth0Provider>
   );
