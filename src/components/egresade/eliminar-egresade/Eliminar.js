@@ -9,7 +9,7 @@ function Eliminar({ egresadeId, eliminarVista }) {
     const onClose = () => setAbierto(false);
 
     const eliminarEgresadeDeAPI = (egresadeId) => {
-        const API_URL = `https://nahual-test.herokuapp.com/api/estudiantes/`;
+        const API_URL = `https://nahual-datos-estudiantes.herokuapp.com/api/estudiantes/`;
         axios
             .delete(`${API_URL}${egresadeId}`)
             .then(response => {
