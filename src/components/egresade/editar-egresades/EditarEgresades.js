@@ -53,7 +53,7 @@ export class EditarEgresades extends Component {
 
   }
   obtenerEgresade() {
-    const API_URL = `https://nahual-test.herokuapp.com/api/egresades/`;
+    const API_URL = `https://nahual-datos-estudiantes.herokuapp.com/api/egresades/`;
     axios
       .get(`${API_URL}${this.props.match.params.id}${"/DTO"}`)
       .then(response => {
@@ -104,7 +104,7 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
-    axios.put(`https://nahual-test.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
+    axios.put(`https://nahual-datos-estudiantes.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
         window.open("/listaEgresades", "_self");
       })
