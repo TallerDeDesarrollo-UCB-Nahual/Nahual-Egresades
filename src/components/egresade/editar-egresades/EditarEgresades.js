@@ -25,9 +25,8 @@ function obtenerEstadoDepurado(estadoActual) {
 }
 
 function prepararDatosARecuperar(estadoActual) {
-  var [head, ...rest] = estadoActual.nombreCompleto.split(" ");
-  var nombre = head;
-  var apellido = rest.reduce(function (acc, char) { return acc.concat(char, " "); }, "").trim();
+  var nombre = estadoActual.nombre;
+  var apellido = estadoActual.apellido;
   var fechaNacimiento = estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec) => acc.concat(fec), "");
   var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (estadoActual.esEmpleado ? 1 : 0))[0].value;
   let estadoDepurado = obtenerEstadoDepurado(estadoActual);

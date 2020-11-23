@@ -21,7 +21,7 @@ export default class CargarLista extends Component {
         <Table.Body>
           {this.props.json.map((fila) => (
             <Table.Row key={fila.fullName}>
-              <Table.Cell >{fila["nombreCompleto"]}</Table.Cell>
+              <Table.Cell >{fila["nombre"]}</Table.Cell>
               <Table.Cell>{fila["fechaNacimiento"]}</Table.Cell>
               <Table.Cell>{fila["correo"]}</Table.Cell>
               <Table.Cell>{fila["celular"]}</Table.Cell>

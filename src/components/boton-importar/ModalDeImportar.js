@@ -59,7 +59,8 @@ class ModalDeImportar extends Component {
     data.forEach(fila => {
       console.log(fila)
       var egresade = {
-        "nombreCompleto": fila.data["Nombre y apellido"],
+        "nombre": fila.data["Nombre"],
+        "apellido": fila.data["Apellido"],
         "nombreEstado": "Egresade",
         "fechaNacimiento": fila.data["Fecha de Nacimiento"],
         "correo": fila.data["Mail"],
