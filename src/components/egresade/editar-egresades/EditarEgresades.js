@@ -321,7 +321,7 @@ export class EditarEgresades extends Component {
                     maxLength="40"
                     placeholder="Nombre Primer Empleo"
                     value={this.state.egresade.nombrePrimerTrabajo}
-                    validators={['matchRegexp:^[^\p{L}\d\s#]+$']}
+                    validators={["matchRegexp:^[A-Za-z0-9\\!\\\"\\#\\$\\%\\&\\'\\(\\)\\*\\+\\,\\-\\.\\/\\:\\;\\<\\>\\=\\?\\@\\[\\]\\{\\}\\\\\\^\\_\\`\\~ ]+$"]}
                     errorMessages={['El campo no acepta valores numéricos']}
                     style={{ margin: "0px 15%" }}
                     onChange={this.enCambio}
