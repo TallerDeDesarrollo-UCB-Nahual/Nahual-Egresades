@@ -129,7 +129,7 @@ class Nahual_Table extends Component {
               {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
-              <Label className="nombre">{value.nombre}+{value.apellido}</Label><br></br>
+              <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
                     <Label className="email">{value.correo}</Label>
                   </Table.Cell >
                   <Table.Cell className="bordes-tabla">
