@@ -73,7 +73,7 @@ class Nahual_Table extends Component {
       });
     }
     for (let contador = 0; contador < listaEgresades.length; contador++) {
-      if (listaEgresades[contador].nombreCompleto.toLowerCase().includes(buscado.toLowerCase())) {
+      if (listaEgresades[contador].nombre.toLowerCase().includes(buscado.toLowerCase())) {
         resultados.push(listaEgresades[contador]);
       }
     }
@@ -129,7 +129,7 @@ class Nahual_Table extends Component {
               {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="nombre">{value.nombreCompleto}</Label><br></br>
+              <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
                     <Label className="email">{value.correo}</Label>
                   </Table.Cell >
                   <Table.Cell className="bordes-tabla">
