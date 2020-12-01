@@ -21,12 +21,12 @@ static contextType = Auth0Context;
     this.obtenerDatosVerificados()
   }
   async obtenerDatosVerificados() {
-    const SERVICIO_DE_VERIFICACION_API_NAHUAL ="https://nahual-authentication-api.herokuapp.com/api/";
-    const { user: usuario } = this.context;
+    const SERVICIO_DE_VERIFICACION_API_NAHUAL ="https://nahual-auth-service.herokuapp.com/api/";
+        const { user: usuario } = this.context;
     const datos = JSON.stringify({
       nombre: usuario.name,
       email: usuario.email,
-      aplicacion: "Nahual"
+      aplicacion: "Egresades"
     });
     Axios({
       key: "apiData",
