@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Segment, Dimmer, Loader, Image } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
+import { withAuthenticationRequired } from "@auth0/auth0-react";
+import VistaNoAutorizado from "../inicio-de-sesion/VistaNoAutorizado"
 
 class Nahual_Table extends Component {
   constructor() {
@@ -31,7 +33,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`http://fathomless-falls-62194.herokuapp.com/api/egresades`)
+    fetch(`https://nahual-datos-estudiantes.herokuapp.com/api/egresades/DTO`)
       .then(res => {
         return res.json()
       })
@@ -71,7 +73,7 @@ class Nahual_Table extends Component {
       });
     }
     for (let contador = 0; contador < listaEgresades.length; contador++) {
-      if (listaEgresades[contador].nombreCompleto.toLowerCase().includes(buscado.toLowerCase())) {
+      if (listaEgresades[contador].nombre.toLowerCase().includes(buscado.toLowerCase())) {
         resultados.push(listaEgresades[contador]);
       }
     }
@@ -117,6 +119,7 @@ class Nahual_Table extends Component {
               <Table.Row >
                 <Table.HeaderCell className="cabeceras-tabla">Nombre y Apellido</Table.HeaderCell>
                 <Table.HeaderCell className="cabeceras-tabla">Nodo</Table.HeaderCell>
+                <Table.HeaderCell className="cabeceras-tabla">Sede</Table.HeaderCell>
                 <Table.HeaderCell className="cabeceras-tabla">Modulo Cursado</Table.HeaderCell>
                 <Table.HeaderCell className="cabeceras-tabla">Acción</Table.HeaderCell>
               </Table.Row>
@@ -126,11 +129,14 @@ class Nahual_Table extends Component {
               {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="nombre">{value.nombreCompleto}</Label><br></br>
+              <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
                     <Label className="email">{value.correo}</Label>
                   </Table.Cell >
                   <Table.Cell className="bordes-tabla">
-                    <Label className="tarjeta-azul">• {value.nombreNodo}</Label>
+                    <Label className="tarjeta-azul">• {value.nodo}</Label>
+                  </Table.Cell>
+                  <Table.Cell className="bordes-tabla">
+                    <Label className="tarjeta-azul">• {value.sede}</Label>
                   </Table.Cell>
                   <Table.Cell className="bordes-tabla">
                     <Label className="tarjeta-verde">• {value.modulo}</Label></Table.Cell>
@@ -162,4 +168,6 @@ class Nahual_Table extends Component {
   }
 
 }
-export default Nahual_Table
+export default withAuthenticationRequired(Nahual_Table, {
+  onRedirecting: () => <VistaNoAutorizado />,
+});

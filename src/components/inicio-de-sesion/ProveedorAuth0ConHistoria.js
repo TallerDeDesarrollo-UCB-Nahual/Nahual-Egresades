@@ -6,19 +6,16 @@ const ProveedorAuth0ConHistoria = ({ children }) => {
   const domain = process.env.REACT_APP_AUTH0_DOMAIN;
   const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
   const history = useHistory();
-  const CALLBACK_PATH = 'https://nahual-8298d.web.app/listaEgresades';
-  const onRedirectCallback = (appState) => {
-    history.push(appState?.returnTo || window.location.pathname);
-  };
+  
 
   return (
     <Auth0Provider
-      domain="dev-x08p31h3.us.auth0.com"
-      clientId="gQzzs4WlsO3oap0btBQNUAdu72Qio8B3"
-      redirectUri={CALLBACK_PATH}
-      onRedirectCallback={onRedirectCallback}>
+      domain="dev-0563c-jv.us.auth0.com"
+      clientId="4sZln7TJomw1pnvbHzVGhltN0kmh8a7m"
+      redirectUri={window.location.origin}
+      useRefreshTokens={true}
+      cacheLocation="localstorage">
       {children}
-
     </Auth0Provider>
   );
 };

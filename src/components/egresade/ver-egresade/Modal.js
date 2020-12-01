@@ -16,9 +16,9 @@ class ModalExampleModal extends Component {
   }
 
   obtenerEgresadeDeAPI() {
-    const API_URL = `http://fathomless-falls-62194.herokuapp.com/api/estudiantes/`;
+    const API_URL = `https://nahual-datos-estudiantes.herokuapp.com/api/egresades/`;
     axios
-      .get(`${API_URL}${this.props.egresadeId}`)
+      .get(`${API_URL}${this.props.egresadeId}${"/DTO"}`)
       .then(response => {
         this.setState({
           egresade: response.data.response
@@ -58,7 +58,7 @@ class ModalExampleModal extends Component {
                     <Image src={LogoNahual} size='small' />
                   </Grid.Column>
                   <Grid.Column width={11}>
-                    <h1>{this.state.egresade.nombreCompleto}</h1>
+                    <h1>{this.state.egresade.nombre} {this.state.egresade.apellido}</h1>
                   </Grid.Column>
                 </Grid>
               </Modal.Header>
