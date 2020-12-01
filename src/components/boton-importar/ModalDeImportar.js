@@ -36,31 +36,25 @@ class ModalDeImportar extends Component {
 
   onSubmit = (onRegistrarCorrectamente) => {
     let lista = this.state.egresades
-    lista.forEach(fila => {
-    console.log(JSON.stringify(fila))
+    console.log(JSON.stringify(lista))
     fetch(publicarListaDeEgresades_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Content-Length': JSON.stringify(lista).length.toString()
       },
-      body: JSON.stringify(fila)
+      body: JSON.stringify(lista)
     }).then(res => {
       if (res) {
         onRegistrarCorrectamente(this.state.contadorEgresades)
         this.setAbierto(false)
-        console.log(fila)
         console.log(res)
       }
     })
       .catch(err => {
         console.log("error al leer los datos " + err)
       })
-    });
-
-    
   }
-
   handleOnDrop = (data) => {
     data.forEach(fila => {
       console.log(fila)
