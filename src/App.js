@@ -10,12 +10,11 @@ import Autenticado from "./components/inicio-de-sesion/Autenticado"
 import { Container } from "semantic-ui-react";
 import { useAuth0 } from "@auth0/auth0-react";
 function App() {
-  const { isAuthenticated: estaAutenticado } = useAuth0();
 
   return (
     <div>
         <Navbar/>
-        {estaAutenticado ? <Autenticado /> : <InicioSesion />}
+        {/* {estaAutenticado ? <Autenticado /> : <InicioSesion />} */}
         <Switch>
             <Route exact path="/listaEgresades" component={Nahual_Table}/>
             <Route exact path="/editar/:id" render={ (props) =>(
