@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, } from 'react';
 import 'semantic-ui-css/semantic.css';
 import { Dropdown, Button, Grid, GridRow, Confirm } from 'semantic-ui-react';
 import { Form, Input } from 'semantic-ui-react-form-validator';
@@ -8,8 +8,7 @@ import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 
-import { OpcionesDeNodo } from './opciones-de-seleccion/OpcionesDeNodo.js';
-import { OpcionesDeSede } from './opciones-de-seleccion/OpcionesDeSede.js';
+//import OpcionesDeNodo from './opciones-de-seleccion/OpcionesDeNodo.js';
 import { OpcionesDeTipoDeCurso } from './opciones-de-seleccion/OpcionesDeTipoDeCurso.js';
 import { OpcionesDeCuatrimestre } from './opciones-de-seleccion/OpcionesDeCuatrimestre.js';
 import { OpcionesDeNivelDeIngles } from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
@@ -34,7 +33,7 @@ function prepararDatosARecuperar(estadoActual) {
 }
 
 function obtenerValorConvertidoDeEnvio(opciones, valorAConvertir) {
-   return opciones.filter(op => op.key === valorAConvertir)[0].valueToSend;
+  return opciones.filter(op => op.key === valorAConvertir)[0].valueToSend;
 }
 
 export class EditarEgresades extends Component {
@@ -47,13 +46,14 @@ export class EditarEgresades extends Component {
     this.state = {
       egresade: {
         nombre: '',
-        apellido: ''
+        apellido: '',
+        nodos: []
       },
     };
-
   }
+
   obtenerEgresade() {
-    const API_URL = `https://nahual-datos-estudiantes.herokuapp.com/api/egresades/`;
+    const API_URL = `http://localhost:8000/api/egresades/`;
     axios
       .get(`${API_URL}${this.props.match.params.id}${"/DTO"}`)
       .then(response => {
@@ -62,10 +62,50 @@ export class EditarEgresades extends Component {
         });
         let egresadeCompleto = prepararDatosARecuperar(this.state.egresade);
         this.setState({ egresade: egresadeCompleto });
+        this.obtenerNodo();
       })
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  obtenerNodo() {
+    const API_URL = `http://localhost:8000/api/nodos/`;
+    axios
+      .get(`${API_URL}`)
+      .then(response => {
+        this.setState({
+          nodos: response.data.response
+        });
+
+        this.state.nodos.forEach(function (element) {
+          element.text = element.nombre;
+          element.key = element.nombre;
+          element.value = element.nombre;
+          element.valueToSend = element.id;
+          element.sedes.forEach(function (element) {
+            element.text = element.nombre;
+            element.key = element.nombre;
+            element.value = element.nombre;
+            element.valueToSend = element.id;
+          });
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  obtenerSede(nodo) {
+    if (this.state.nodos === undefined) {
+      return null;
+    }
+    else {
+      let nodoEscogido = this.state.nodos.filter(value => value.nombre === nodo)[0];
+      console.log(nodoEscogido);
+      let sedesEscogidas = nodoEscogido.sedes
+      return sedesEscogidas;
+    }
   }
 
   componentDidMount() {
@@ -91,8 +131,8 @@ export class EditarEgresades extends Component {
   guardarEgresade() {
     var egresadeAEnviar = {
       ...this.state.egresade,
-      nodoId: obtenerValorConvertidoDeEnvio(OpcionesDeNodo, this.state.egresade.nodo),
-      sedeId: obtenerValorConvertidoDeEnvio(OpcionesDeSede, this.state.egresade.sede),
+      nodoId: obtenerValorConvertidoDeEnvio(this.state.nodos, this.state.egresade.nodo),
+      sedeId: obtenerValorConvertidoDeEnvio(this.obtenerSede(this.state.egresade.nodo), this.state.egresade.sede),
       nivelInglesId: obtenerValorConvertidoDeEnvio(OpcionesDeNivelDeIngles, this.state.egresade.nivelIngles)
     }
     egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
@@ -103,7 +143,7 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
-    axios.put(`https://nahual-datos-estudiantes.herokuapp.com/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
+    axios.put(`http://localhost:8000/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
         this.setState({ salir: true });
       }.bind(this))
@@ -124,10 +164,15 @@ export class EditarEgresades extends Component {
   }
 
   onChangeDropdown = (e, { value, name }) => {
+    console.log(e);
+    console.log(value);
+    console.log(name);
+    console.log(this.state.egresade[name]);
     let valor = this.state.egresade[name];
     this.setState({ selectedType: valor })
     valor = value;
     this.state.egresade[name] = valor;
+    console.log(this.state.egresade);
   }
 
   filtrarSedes(opcionesSede, valorAConvertir) {
@@ -227,7 +272,7 @@ export class EditarEgresades extends Component {
                     selection
                     required
                     style={{ margin: "0px 11%" }}
-                    options={this.filtrarSedes(OpcionesDeSede, this.state.egresade.nodo)}
+                    options={this.obtenerSede(this.state.egresade.nodo)}
                     value={this.state.egresade.sede}
                     onChange={this.onChangeDropdown}
                   />
@@ -245,7 +290,7 @@ export class EditarEgresades extends Component {
                     selection
                     required
                     style={{ margin: "0px 11%" }}
-                    options={OpcionesDeNodo}
+                    options={this.state.nodos}
                     value={this.state.egresade.nodo}
                     onChange={this.onChangeDropdown}
                   />
@@ -374,9 +419,9 @@ export class EditarEgresades extends Component {
                 onCancel={this.handleCancel}
                 onConfirm={this.handleConfirm}
               />
-                <Button className="ui basic positive button" style={{ margin: "0px 50px 10px 50px", background: "rgb(129,206,50)" }}>Confirmar</Button>
+              <Button className="ui basic positive button" style={{ margin: "0px 50px 10px 50px", background: "rgb(129,206,50)" }}>Confirmar</Button>
             </GridRow>
-              {(this.state.salir === true) && <Redirect to='/listaEgresades'/>}
+            {(this.state.salir === true) && <Redirect to='/listaEgresades' />}
 
           </Grid>
         </Form>
