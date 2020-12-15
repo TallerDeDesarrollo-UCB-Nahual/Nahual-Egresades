@@ -3,7 +3,6 @@ import 'semantic-ui-css/semantic.min.css'
 import { CSVReader } from 'react-papaparse'
 import {Message, Button, Modal,Table } from 'semantic-ui-react'
 import CargarLista from './CargarLista';
-import exampleCsv from '../../public/example.csv'
 import exampleXlsx from '../../public/example.xlsx'
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 import axios from 'axios';
@@ -25,7 +24,7 @@ const findSede = (data, sede) => {
   return false; // so check result is truthy and extract `id`
 }
 
-const publicarListaDeEgresades_URL = 'https://nahual-datos-estudiantes.herokuapp.com/api/egresades/'
+const publicarListaDeEgresades_URL = `${process.env.EGRESADES_NAHUAL_API}/egresades/`;
 
 class ModalDeImportar extends Component {
    obtenerNodosYSedes=async()=> {
@@ -148,7 +147,6 @@ class ModalDeImportar extends Component {
       mostrarMensajeDeErrorDeCarga: true
     });
     this.handleOnRemoveFile();
-    // this.obtenerEgresades();
   }
 
   manejarProblemasErrorDeCarga = () => {

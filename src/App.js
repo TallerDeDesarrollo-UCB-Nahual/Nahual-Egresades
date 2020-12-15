@@ -7,7 +7,6 @@ import EncabezadoDeRegistrar from './components/egresade/editar-egresades/Encabe
 import Nahual_Table from './components/lista-egresades/Tabla';
 import InicioSesion from "./components/inicio-de-sesion/InicioSesion";
 import Autenticado from "./components/inicio-de-sesion/Autenticado"
-import { Container } from "semantic-ui-react";
 import { useAuth0 } from "@auth0/auth0-react";
 function App() {
   const { isAuthenticated: estaAutenticado } = useAuth0();
