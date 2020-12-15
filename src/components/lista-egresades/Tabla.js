@@ -33,7 +33,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`http://localhost:8000/api/egresades/DTO`)
+    fetch(`https://nahual-datos-estudiantes.herokuapp.com/api/egresades/DTO`)
       .then(res => {
         return res.json()
       })
