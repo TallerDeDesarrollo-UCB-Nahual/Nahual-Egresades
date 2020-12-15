@@ -6,8 +6,10 @@ import CargarLista from './CargarLista';
 import exampleCsv from '../../public/example.csv'
 import exampleXlsx from '../../public/example.xlsx'
 import { OpcionesDeNodo } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeNodo';
+import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 import { OpcionesDeSede } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeSede';
+import VistaNoAutorizado from "../inicio-de-sesion/VistaNoAutorizado"
 
 
 const findNodo = (data, nodo) => {
@@ -227,4 +229,8 @@ class ModalDeImportar extends Component {
     )
   }
 }
-export default ModalDeImportar;
+
+
+export default withAuthenticationRequired(ModalDeImportar, {
+  onRedirecting: () => <VistaNoAutorizado />,
+});
