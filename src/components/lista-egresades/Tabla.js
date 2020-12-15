@@ -16,9 +16,12 @@ class Nahual_Table extends Component {
       filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
+      // mensajeDeErrorDeCarga: "",
+      // mostrarMensajeDeErrorDeCarga: false,
       open: false
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
+    // this.errorDeCarga = this.errorDeCarga.bind(this)
   }
 
   enRegistroExitoso(contador) {
@@ -29,8 +32,19 @@ class Nahual_Table extends Component {
         mostrarMensajeDeEstado: true
       });
     }
+    // else{
+    //   this.errorDeCarga();
+    // }
     this.obtenerEgresades();
   }
+
+  // errorDeCarga() {
+  //   this.setState({
+  //     mensajeDeErrorDeCarga: "Error de formato en la columna Nodos o Sedes, verifique la informacion..",
+  //     mostrarMensajeDeErrorDeCarga: true
+  //   });
+  //   this.obtenerEgresades();
+  // }
 
   obtenerEgresades() {
     fetch(`https://nahual-datos-estudiantes.herokuapp.com/api/egresades/DTO`)
@@ -61,6 +75,10 @@ class Nahual_Table extends Component {
   manejarProblemas = () => {
     this.setState({ mostrarMensajeDeEstado: false })
   }
+
+  // manejarProblemasErrorDeCarga = () => {
+  //   this.setState({ mostrarMensajeDeErrorDeCarga: false })
+  // }
 
   buscarPorNombre(nombre) {
     let buscado = nombre.target.value;
@@ -100,6 +118,18 @@ class Nahual_Table extends Component {
               <p></p>
             }
           </div>
+          {/* <div>
+            {this.state.mostrarMensajeDeErrorDeCarga ?
+              <Message
+                negative
+                onDismiss={this.manejarProblemasErrorDeCarga}
+                header='Error de carga!'
+                content={this.state.mensajeDeErrorDeCarga}
+              ></Message>
+              :
+              <p></p>
+            }
+          </div> */}
 
           <div className="tabla-menu">
             <Search
@@ -168,6 +198,4 @@ class Nahual_Table extends Component {
   }
 
 }
-export default withAuthenticationRequired(Nahual_Table, {
-  onRedirecting: () => <VistaNoAutorizado />,
-});
+export default Nahual_Table;
