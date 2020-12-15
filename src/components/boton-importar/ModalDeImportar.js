@@ -3,7 +3,25 @@ import 'semantic-ui-css/semantic.min.css'
 import { CSVReader } from 'react-papaparse'
 import { Button, Modal,Table } from 'semantic-ui-react'
 import CargarLista from './CargarLista';
+import exampleCsv from '../../public/example.csv'
+import exampleXlsx from '../../public/example.xlsx'
+import { OpcionesDeNodo } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeNodo';
 
+import { OpcionesDeSede } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeSede';
+
+
+const findNodo = (data, nodo) => {
+  if(data.find(el => el.text === nodo)){
+    return true
+  }
+  return false; // so check result is truthy and extract `id`
+}
+const findSede = (data, sede) => {
+  if(data.find(el => el.text === sede)){
+    return true
+  }
+  return false; // so check result is truthy and extract `id`
+}
 
 const publicarListaDeEgresades_URL = 'https://nahual-datos-estudiantes.herokuapp.com/api/egresades/'
 
@@ -57,28 +75,37 @@ class ModalDeImportar extends Component {
   }
   handleOnDrop = (data) => {
     data.forEach(fila => {
-      console.log(fila)
-      var egresade = {
-        "nombre": fila.data["Nombre"],
-        "apellido": fila.data["Apellido"],
-        "nombreEstado": "Egresade",
-        "fechaNacimiento": fila.data["Fecha de Nacimiento"],
-        "correo": fila.data["Mail"],
-        "celular": fila.data["Numero de Celular"],
-        "sede": fila.data["SEDE"],
-        "nombreNodo": fila.data["NODO"],
-        "añoGraduacion": fila.data["Año"],
-        "cuatrimestre": fila.data["Cuatri"],
-        "nivelIngles": fila.data["Ingles"],
-        "nombrePrimerTrabajo": fila.data["Empresa IT primer empleo"],
-        "linkedin": fila.data["Linkedin"],
-        "esEmpleado": fila.data["Consiguió trabajo luego de egresar?"] === "Sí" || fila.data["Consiguió trabajo luego de egresar?"] === "Si" ? true : false,
-        "modulo": fila.data["Tipo de curso del cual egresó"]
+      var nodo=fila.data["NODO"]
+      var sede=fila.data["SEDE"]
+      console.log(nodo)
+      console.log(sede)
+      if((findNodo(OpcionesDeNodo,nodo))&&(findSede(OpcionesDeSede,sede))){
+        var egresade = {
+          "nombre": fila.data["Nombre"],
+          "apellido": fila.data["Apellido"],
+          "nombreEstado": "Egresade",
+          "fechaNacimiento": fila.data["Fecha de Nacimiento"],
+          "correo": fila.data["Mail"],
+          "celular": fila.data["Numero de Celular"],
+          "sede": fila.data["SEDE"],
+          "nombreNodo": fila.data["NODO"],
+          "añoGraduacion": fila.data["Año"],
+          "cuatrimestre": fila.data["Cuatri"],
+          "nivelIngles": fila.data["Ingles"],
+          "nombrePrimerTrabajo": fila.data["Empresa IT primer empleo"],
+          "linkedin": fila.data["Linkedin"],
+          "esEmpleado": fila.data["Consiguió trabajo luego de egresar?"] === "Sí" || fila.data["Consiguió trabajo luego de egresar?"] === "Si" ? true : false,
+          "modulo": fila.data["Tipo de curso del cual egresó"]
+        }
+        this.state.egresades.push(egresade)
+        this.incrementarContadorEgresades()
       }
-      this.state.egresades.push(egresade)
-      this.incrementarContadorEgresades()
+      else{
+        this.state.egresades=null;
+        return false;
+      }
+      this.mostrarTabla()
     });
-    this.mostrarTabla()
   }
 
   incrementarContadorEgresades() {
@@ -128,6 +155,9 @@ class ModalDeImportar extends Component {
           </Modal.Description>
         </Modal.Content>
         <h4>Nombres de headers del archivo .csv para la carga</h4>
+        <h5>El formato de fecha debe ser dd/mm/yyyy</h5>
+        <h5>No deben haber comillas entre los campos</h5>
+        <h5>El archivo no debe sobrepasar las 450 filas</h5>
         <Table celled>   
         <Table.Header>
           <Table.Row>
@@ -151,6 +181,8 @@ class ModalDeImportar extends Component {
             <Table.HeaderCell>Empresa IT primer empleo</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
+      <Button><a href={exampleXlsx} download="example.xlsx">Descargar Ejemplo</a></Button>
+
       </Table>
         <Modal.Actions>
           {this.state.mostrarLista && this.state.egresades !== [] ?
