@@ -16,12 +16,12 @@ class Nahual_Table extends Component {
       filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
-      mensajeDeErrorDeCarga: "",
-      mostrarMensajeDeErrorDeCarga: false,
+      // mensajeDeErrorDeCarga: "",
+      // mostrarMensajeDeErrorDeCarga: false,
       open: false
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
-    this.errorDeCarga = this.errorDeCarga.bind(this)
+    // this.errorDeCarga = this.errorDeCarga.bind(this)
   }
 
   enRegistroExitoso(contador) {
@@ -32,19 +32,19 @@ class Nahual_Table extends Component {
         mostrarMensajeDeEstado: true
       });
     }
-    else{
-      this.errorDeCarga();
-    }
+    // else{
+    //   this.errorDeCarga();
+    // }
     this.obtenerEgresades();
   }
 
-  errorDeCarga() {
-    this.setState({
-      mensajeDeErrorDeCarga: "Error de formato en la columna Nodos o Sedes, verifique la informacion..",
-      mostrarMensajeDeErrorDeCarga: true
-    });
-    this.obtenerEgresades();
-  }
+  // errorDeCarga() {
+  //   this.setState({
+  //     mensajeDeErrorDeCarga: "Error de formato en la columna Nodos o Sedes, verifique la informacion..",
+  //     mostrarMensajeDeErrorDeCarga: true
+  //   });
+  //   this.obtenerEgresades();
+  // }
 
   obtenerEgresades() {
     fetch(`https://nahual-datos-estudiantes.herokuapp.com/api/egresades/DTO`)
@@ -76,9 +76,9 @@ class Nahual_Table extends Component {
     this.setState({ mostrarMensajeDeEstado: false })
   }
 
-  manejarProblemasErrorDeCarga = () => {
-    this.setState({ mostrarMensajeDeErrorDeCarga: false })
-  }
+  // manejarProblemasErrorDeCarga = () => {
+  //   this.setState({ mostrarMensajeDeErrorDeCarga: false })
+  // }
 
   buscarPorNombre(nombre) {
     let buscado = nombre.target.value;
@@ -118,7 +118,7 @@ class Nahual_Table extends Component {
               <p></p>
             }
           </div>
-          <div>
+          {/* <div>
             {this.state.mostrarMensajeDeErrorDeCarga ?
               <Message
                 negative
@@ -129,7 +129,7 @@ class Nahual_Table extends Component {
               :
               <p></p>
             }
-          </div>
+          </div> */}
 
           <div className="tabla-menu">
             <Search

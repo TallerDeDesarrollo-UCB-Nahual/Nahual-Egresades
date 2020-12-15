@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import 'semantic-ui-css/semantic.min.css'
 import { CSVReader } from 'react-papaparse'
-import { Button, Modal,Table } from 'semantic-ui-react'
+import {Message, Button, Modal,Table } from 'semantic-ui-react'
 import CargarLista from './CargarLista';
 import exampleCsv from '../../public/example.csv'
 import exampleXlsx from '../../public/example.xlsx'
@@ -32,10 +32,13 @@ class ModalDeImportar extends Component {
       abierto: false,
       mostrarLista: false,
       egresades: [],
-      contadorEgresades: 0
+      contadorEgresades: 0,
+      mensajeDeErrorDeCarga: "",
+      mostrarMensajeDeErrorDeCarga: false
     };
     this.mostrarTabla = this.mostrarTabla.bind(this);
     this.setAbierto = this.setAbierto.bind(this);
+    this.errorDeCarga = this.errorDeCarga.bind(this)
   }
   mostrarTabla = (data) => {
     this.setState({
@@ -101,13 +104,26 @@ class ModalDeImportar extends Component {
         this.incrementarContadorEgresades()
       }
       else{
-        this.state.egresades=null;
-        //mostrar mensaje de error de nodo o sede
+        this.state.egresades = []
         this.setState({ contadorEgresades: 0})
-        return false;
+        this.errorDeCarga();
+        throw null;
       }
       this.mostrarTabla()
     });
+  }
+
+  errorDeCarga() {
+    this.setState({
+      mensajeDeErrorDeCarga: "Error de formato en la columna Nodos o Sedes, verifique la informacion..",
+      mostrarMensajeDeErrorDeCarga: true
+    });
+    this.handleOnRemoveFile();
+    // this.obtenerEgresades();
+  }
+
+  manejarProblemasErrorDeCarga = () => {
+    this.setState({ mostrarMensajeDeErrorDeCarga: false })
   }
 
   incrementarContadorEgresades() {
@@ -142,6 +158,18 @@ class ModalDeImportar extends Component {
 
         <Modal.Header>Importar</Modal.Header>
         <Modal.Content color="white">
+        <div>
+            {this.state.mostrarMensajeDeErrorDeCarga ?
+              <Message
+                negative
+                onDismiss={this.manejarProblemasErrorDeCarga}
+                header='Error de carga!'
+                content={this.state.mensajeDeErrorDeCarga}
+              ></Message>
+              :
+              <p></p>
+            }
+          </div>
           <Modal.Description>
             <CSVReader
               config={{
