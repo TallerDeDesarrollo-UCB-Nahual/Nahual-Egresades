@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search, Segment, Dimmer, Loader, Image } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
-import { withAuthenticationRequired } from "@auth0/auth0-react";
-import VistaNoAutorizado from "../inicio-de-sesion/VistaNoAutorizado"
 
 class Nahual_Table extends Component {
   constructor() {
@@ -16,12 +14,9 @@ class Nahual_Table extends Component {
       filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
-      // mensajeDeErrorDeCarga: "",
-      // mostrarMensajeDeErrorDeCarga: false,
       open: false
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
-    // this.errorDeCarga = this.errorDeCarga.bind(this)
   }
 
   enRegistroExitoso(contador) {
@@ -32,22 +27,11 @@ class Nahual_Table extends Component {
         mostrarMensajeDeEstado: true
       });
     }
-    // else{
-    //   this.errorDeCarga();
-    // }
     this.obtenerEgresades();
   }
 
-  // errorDeCarga() {
-  //   this.setState({
-  //     mensajeDeErrorDeCarga: "Error de formato en la columna Nodos o Sedes, verifique la informacion..",
-  //     mostrarMensajeDeErrorDeCarga: true
-  //   });
-  //   this.obtenerEgresades();
-  // }
-
   obtenerEgresades() {
-    fetch(`https://nahual-datos-estudiantes.herokuapp.com/api/egresades/DTO`)
+    fetch(`${process.env.EGRESADES_NAHUAL_API}/egresades/DTO`)
       .then(res => {
         return res.json()
       })
@@ -75,10 +59,6 @@ class Nahual_Table extends Component {
   manejarProblemas = () => {
     this.setState({ mostrarMensajeDeEstado: false })
   }
-
-  // manejarProblemasErrorDeCarga = () => {
-  //   this.setState({ mostrarMensajeDeErrorDeCarga: false })
-  // }
 
   buscarPorNombre(nombre) {
     let buscado = nombre.target.value;
@@ -118,18 +98,6 @@ class Nahual_Table extends Component {
               <p></p>
             }
           </div>
-          {/* <div>
-            {this.state.mostrarMensajeDeErrorDeCarga ?
-              <Message
-                negative
-                onDismiss={this.manejarProblemasErrorDeCarga}
-                header='Error de carga!'
-                content={this.state.mensajeDeErrorDeCarga}
-              ></Message>
-              :
-              <p></p>
-            }
-          </div> */}
 
           <div className="tabla-menu">
             <Search

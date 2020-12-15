@@ -7,8 +7,6 @@ import 'semantic-ui-css/semantic.min.css';
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios';
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-
-//import OpcionesDeNodo from './opciones-de-seleccion/OpcionesDeNodo.js';
 import { OpcionesDeTipoDeCurso } from './opciones-de-seleccion/OpcionesDeTipoDeCurso.js';
 import { OpcionesDeCuatrimestre } from './opciones-de-seleccion/OpcionesDeCuatrimestre.js';
 import { OpcionesDeNivelDeIngles } from './opciones-de-seleccion/OpcionesDeNivelDeIngles.js';
@@ -53,7 +51,7 @@ export class EditarEgresades extends Component {
   }
 
   obtenerEgresade() {
-    const API_URL = `http://localhost:8000/api/egresades/`;
+    const API_URL = `${process.env.EGRESADES_NAHUAL_API}/egresades/`;
     axios
       .get(`${API_URL}${this.props.match.params.id}${"/DTO"}`)
       .then(response => {
@@ -70,7 +68,7 @@ export class EditarEgresades extends Component {
   }
 
   obtenerNodo() {
-    const API_URL = `http://localhost:8000/api/nodos/`;
+    const API_URL = `${process.env.EGRESADES_NAHUAL_API}/nodos/`;
     axios
       .get(`${API_URL}`)
       .then(response => {
@@ -143,7 +141,7 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
-    axios.put(`http://localhost:8000/api/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
+    axios.put(`${process.env.EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
         this.setState({ salir: true });
       }.bind(this))
