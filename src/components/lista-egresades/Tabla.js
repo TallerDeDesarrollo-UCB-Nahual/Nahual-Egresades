@@ -16,9 +16,12 @@ class Nahual_Table extends Component {
       filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
+      mensajeDeErrorDeCarga: "",
+      mostrarMensajeDeErrorDeCarga: false,
       open: false
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
+    this.errorDeCarga = this.errorDeCarga.bind(this)
   }
 
   enRegistroExitoso(contador) {
@@ -29,6 +32,17 @@ class Nahual_Table extends Component {
         mostrarMensajeDeEstado: true
       });
     }
+    else{
+      this.errorDeCarga();
+    }
+    this.obtenerEgresades();
+  }
+
+  errorDeCarga() {
+    this.setState({
+      mensajeDeErrorDeCarga: "Error de formato en la columna Nodos o Sedes, verifique la informacion..",
+      mostrarMensajeDeErrorDeCarga: true
+    });
     this.obtenerEgresades();
   }
 
@@ -60,6 +74,10 @@ class Nahual_Table extends Component {
 
   manejarProblemas = () => {
     this.setState({ mostrarMensajeDeEstado: false })
+  }
+
+  manejarProblemasErrorDeCarga = () => {
+    this.setState({ mostrarMensajeDeErrorDeCarga: false })
   }
 
   buscarPorNombre(nombre) {
@@ -95,6 +113,18 @@ class Nahual_Table extends Component {
                 onDismiss={this.manejarProblemas}
                 header='Registro exitoso!'
                 content={this.state.mensajeDeEstado}
+              ></Message>
+              :
+              <p></p>
+            }
+          </div>
+          <div>
+            {this.state.mostrarMensajeDeErrorDeCarga ?
+              <Message
+                negative
+                onDismiss={this.manejarProblemasErrorDeCarga}
+                header='Error de carga!'
+                content={this.state.mensajeDeErrorDeCarga}
               ></Message>
               :
               <p></p>

@@ -102,6 +102,8 @@ class ModalDeImportar extends Component {
       }
       else{
         this.state.egresades=null;
+        //mostrar mensaje de error de nodo o sede
+        this.setState({ contadorEgresades: 0})
         return false;
       }
       this.mostrarTabla()
