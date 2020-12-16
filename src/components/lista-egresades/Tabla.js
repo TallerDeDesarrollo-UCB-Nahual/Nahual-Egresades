@@ -31,7 +31,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`${process.env.EGRESADES_NAHUAL_API}/egresades/DTO`)
+    fetch(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/DTO`)
       .then(res => {
         return res.json()
       })

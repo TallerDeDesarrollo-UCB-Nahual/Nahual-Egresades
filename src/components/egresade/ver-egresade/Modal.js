@@ -16,7 +16,7 @@ class ModalExampleModal extends Component {
   }
 
   obtenerEgresadeDeAPI() {
-    const API_URL = `${process.env.EGRESADES_NAHUAL_API}/egresades/`;
+    const API_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/`;
     axios
       .get(`${API_URL}${this.props.egresadeId}${"/DTO"}`)
       .then(response => {

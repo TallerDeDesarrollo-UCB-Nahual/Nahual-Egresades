@@ -51,7 +51,7 @@ export class EditarEgresades extends Component {
   }
 
   obtenerEgresade() {
-    const API_URL = `${process.env.EGRESADES_NAHUAL_API}/egresades/`;
+    const API_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/`;
     axios
       .get(`${API_URL}${this.props.match.params.id}${"/DTO"}`)
       .then(response => {
@@ -68,7 +68,7 @@ export class EditarEgresades extends Component {
   }
 
   obtenerNodo() {
-    const API_URL = `${process.env.EGRESADES_NAHUAL_API}/nodos/`;
+    const API_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/nodos/`;
     axios
       .get(`${API_URL}`)
       .then(response => {
@@ -141,7 +141,7 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
-    axios.put(`${process.env.EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
+    axios.put(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
         this.setState({ salir: true });
       }.bind(this))

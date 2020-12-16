@@ -4,9 +4,9 @@ import logo from '../../public/imagenes/people-heart.png';
 import '../../public/stylesheets/NoAutorizado.css';
 import BotonLogout from "./../inicio-de-sesion/BotonLogout";
 
-const origenSolicitud = `${process.env.ORIGEN_SOLICITUD}/egresades/`;
-const solicitudAccesoNahual = `${process.env.SOLICITUD_ACCESO_NAHUAL}/egresades/`;
-const clave = `${process.env.CLAVE}/egresades/`;
+const origenSolicitud = `${process.env.REACT_APP_ORIGEN_SOLICITUD}`;
+const solicitudAccesoNahual = `${process.env.REACT_APP_SOLICITUD_ACCESO_NAHUAL}`;
+const clave = `${process.env.REACT_APP_CLAVE}`;
 
 export class VistaNoAutorizado extends Component {
 

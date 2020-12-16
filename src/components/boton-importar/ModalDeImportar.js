@@ -24,7 +24,7 @@ const findSede = (data, sede) => {
   return false; // so check result is truthy and extract `id`
 }
 
-const publicarListaDeEgresades_URL = `${process.env.EGRESADES_NAHUAL_API}/egresades/`;
+const publicarListaDeEgresades_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/`;
 
 class ModalDeImportar extends Component {
    obtenerNodosYSedes=async()=> {
