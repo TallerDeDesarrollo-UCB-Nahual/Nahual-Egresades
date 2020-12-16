@@ -28,7 +28,7 @@ const publicarListaDeEgresades_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_A
 
 class ModalDeImportar extends Component {
   obtenerNodosYSedes = async () => {
-    const API_URL = `http://localhost:8000/api/nodos/`; //cambiar esto para deployar
+    const API_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/nodos/`; //cambiar esto para deployar
     await
       axios
         .get(`${API_URL}`)
