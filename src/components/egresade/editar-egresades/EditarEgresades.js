@@ -141,7 +141,7 @@ export class EditarEgresades extends Component {
     axios.put(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
         this.setState({ salir: true });
-        
+
       }.bind(this))
       .catch(function (error) {
         this.setState({ exito: false });
@@ -260,25 +260,7 @@ export class EditarEgresades extends Component {
               </Grid.Column>
               <Grid.Column>
                 <span className="etiquetas">
-                  <label htmlFor="correo">Sede<br /></label>
-                  <Dropdown
-                    name="sede"
-                    id="sede"
-                    placeholder="Sede"
-                    selection
-                    required
-                    style={{ margin: "0px 11%" }}
-                    options={this.obtenerSede(this.state.egresade.nodo)}
-                    value={this.state.egresade.sede}
-                    onChange={this.onChangeDropdown}
-                  />
-                </span>
-              </Grid.Column>
-            </Grid.Row>
-            <Grid.Row columns={2}>
-              <Grid.Column className="centrarColumnas">
-                <span className="etiquetas">
-                  <label htmlFor="nodo">Nodo<br /></label>
+                <label htmlFor="nodo">Nodo<br /></label>
                   <Dropdown
                     name="nodo"
                     id="nodo"
@@ -288,6 +270,24 @@ export class EditarEgresades extends Component {
                     style={{ margin: "0px 11%" }}
                     options={this.state.nodos}
                     value={this.state.egresade.nodo}
+                    onChange={this.onChangeDropdown}
+                  />
+                </span>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row columns={2}>
+              <Grid.Column className="centrarColumnas">
+                <span className="etiquetas">
+                <label htmlFor="correo">Sede<br /></label>
+                  <Dropdown
+                    name="sede"
+                    id="sede"
+                    placeholder="Sede"
+                    selection
+                    required
+                    style={{ margin: "0px 11%" }}
+                    options={this.obtenerSede(this.state.egresade.nodo)}
+                    value={this.state.egresade.sede}
                     onChange={this.onChangeDropdown}
                   />
                 </span>
