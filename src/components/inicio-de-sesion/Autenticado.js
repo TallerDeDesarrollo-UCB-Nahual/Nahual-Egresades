@@ -20,7 +20,7 @@ static contextType = Auth0Context;
     this.obtenerDatosVerificados()
   }
   async obtenerDatosVerificados() {
-    const SERVICIO_DE_VERIFICACION_API_NAHUAL =`${process.env.AUTENTICACION_NAHUAL_API}`;
+    const SERVICIO_DE_VERIFICACION_API_NAHUAL =`${process.env.REACT_APP_AUTENTICACION_NAHUAL_API}`;
         const { user: usuario } = this.context;
     const datos = JSON.stringify({
       nombre: usuario.name,
