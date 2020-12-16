@@ -121,8 +121,6 @@ export class EditarEgresades extends Component {
 
   enConfirmacion = (evento) => {
     evento.preventDefault();
-    var nombreConcatenado = this.state.egresade.nombre + " " + this.state.egresade.apellido;
-    this.state.egresade.nombreCompleto = nombreConcatenado;
     this.setState({ abrirModal: true })
   }
 
@@ -135,15 +133,15 @@ export class EditarEgresades extends Component {
     }
     egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
     egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
-    delete egresadeAEnviar.nombre;
-    delete egresadeAEnviar.apellido;
     delete egresadeAEnviar.nodo;
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
+
     axios.put(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
         this.setState({ salir: true });
+        
       }.bind(this))
       .catch(function (error) {
         this.setState({ exito: false });

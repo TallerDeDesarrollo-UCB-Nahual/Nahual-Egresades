@@ -28,7 +28,7 @@ const publicarListaDeEgresades_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_A
 
 class ModalDeImportar extends Component {
    obtenerNodosYSedes=async()=> {
-    const API_URL = `https://nahual-datos-dev.herokuapp.com/api/nodos/`;
+    const API_URL = `http://localhost:8000/api/nodos/`;
     await
     axios
       .get(`${API_URL}`)
