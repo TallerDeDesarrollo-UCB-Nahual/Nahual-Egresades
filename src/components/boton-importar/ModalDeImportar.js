@@ -5,21 +5,21 @@ import {Message, Button, Modal,Table } from 'semantic-ui-react'
 import CargarLista from './CargarLista';
 import exampleCsv from '../../public/example.csv'
 import exampleXlsx from '../../public/example.xlsx'
-import { OpcionesDeNodo } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeNodo';
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-
-import { OpcionesDeSede } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeSede';
+import axios from 'axios';
 import VistaNoAutorizado from "../inicio-de-sesion/VistaNoAutorizado"
+var listaNodos = [];
+var listaSedes = [];
 
+const findNodo = (datos, nodo) => {
 
-const findNodo = (data, nodo) => {
-  if(data.find(el => el.text === nodo)){
-    return true
-  }
+    if(datos.find(el => el == nodo)){
+      return true
+    }
   return false; // so check result is truthy and extract `id`
 }
 const findSede = (data, sede) => {
-  if(data.find(el => el.text === sede)){
+  if(data.find(el => el == sede)){
     return true
   }
   return false; // so check result is truthy and extract `id`
@@ -28,15 +28,40 @@ const findSede = (data, sede) => {
 const publicarListaDeEgresades_URL = 'https://nahual-datos-estudiantes.herokuapp.com/api/egresades/'
 
 class ModalDeImportar extends Component {
+   obtenerNodosYSedes=async()=> {
+    const API_URL = `https://nahual-datos-dev.herokuapp.com/api/nodos/`;
+    await
+    axios
+      .get(`${API_URL}`)
+      .then(response => {
+        this.setState({
+          respuestaNodos: response.data.response
+        });
+        this.state.respuestaNodos.forEach(function (element) {
+          listaNodos.push(element.nombre)
+          element.sedes.forEach(function (element) {
+            listaSedes.push(element.nombre)
+          });
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      console.log(listaNodos)
+      console.log(listaSedes)
+
+  }
   constructor(props) {
     super(props);
+    this.obtenerNodosYSedes()
     this.state = {
       abierto: false,
       mostrarLista: false,
       egresades: [],
       contadorEgresades: 0,
       mensajeDeErrorDeCarga: "",
-      mostrarMensajeDeErrorDeCarga: false
+      mostrarMensajeDeErrorDeCarga: false,
+      respuestaNodos:[]
     };
     this.mostrarTabla = this.mostrarTabla.bind(this);
     this.setAbierto = this.setAbierto.bind(this);
@@ -78,13 +103,15 @@ class ModalDeImportar extends Component {
         console.log("error al leer los datos " + err)
       })
   }
+  
   handleOnDrop = (data) => {
+    
     data.forEach(fila => {
       var nodo=fila.data["NODO"]
       var sede=fila.data["SEDE"]
-      console.log(nodo)
-      console.log(sede)
-      if((findNodo(OpcionesDeNodo,nodo))&&(findSede(OpcionesDeSede,sede))){
+    
+
+      if((findNodo(listaNodos,nodo))&&(findSede(listaSedes,sede))){
         var egresade = {
           "nombre": fila.data["Nombre"],
           "apellido": fila.data["Apellido"],
