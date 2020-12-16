@@ -14,7 +14,7 @@ export default class CargarLista extends Component {
             <Table.HeaderCell>Fecha de Nacimiento</Table.HeaderCell>
             <Table.HeaderCell>Mail</Table.HeaderCell>
             <Table.HeaderCell>Numero de Celular</Table.HeaderCell>
-            <Table.HeaderCell>Sede</Table.HeaderCell>
+            <Table.HeaderCell>SEDE</Table.HeaderCell>
             <Table.HeaderCell>NODO</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -26,7 +26,7 @@ export default class CargarLista extends Component {
               <Table.Cell>{fila["correo"]}</Table.Cell>
               <Table.Cell>{fila["celular"]}</Table.Cell>
               <Table.Cell>{fila["sede"]}</Table.Cell>
-              <Table.Cell>{fila["nombreNodo"]}</Table.Cell>
+              <Table.Cell>{fila["nodo"]}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

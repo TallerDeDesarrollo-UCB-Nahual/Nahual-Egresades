@@ -1,7 +1,7 @@
 import React, { Component, } from 'react';
 import 'semantic-ui-css/semantic.css';
-import { Dropdown, Button, Grid, GridRow, Confirm } from 'semantic-ui-react';
-import { Form, Input } from 'semantic-ui-react-form-validator';
+import { Button, Grid, GridRow, Confirm } from 'semantic-ui-react';
+import { Form, Input, Dropdown } from 'semantic-ui-react-form-validator';
 import '../../../public/stylesheets/Registrar.css';
 import 'semantic-ui-css/semantic.min.css';
 import { Link, Redirect } from 'react-router-dom'
@@ -121,8 +121,6 @@ export class EditarEgresades extends Component {
 
   enConfirmacion = (evento) => {
     evento.preventDefault();
-    var nombreConcatenado = this.state.egresade.nombre + " " + this.state.egresade.apellido;
-    this.state.egresade.nombreCompleto = nombreConcatenado;
     this.setState({ abrirModal: true })
   }
 
@@ -135,15 +133,15 @@ export class EditarEgresades extends Component {
     }
     egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
     egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
-    delete egresadeAEnviar.nombre;
-    delete egresadeAEnviar.apellido;
     delete egresadeAEnviar.nodo;
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     console.log(egresadeAEnviar);
+
     axios.put(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
         this.setState({ salir: true });
+
       }.bind(this))
       .catch(function (error) {
         this.setState({ exito: false });
@@ -162,15 +160,18 @@ export class EditarEgresades extends Component {
   }
 
   onChangeDropdown = (e, { value, name }) => {
-    console.log(e);
-    console.log(value);
-    console.log(name);
-    console.log(this.state.egresade[name]);
     let valor = this.state.egresade[name];
     this.setState({ selectedType: valor })
     valor = value;
     this.state.egresade[name] = valor;
-    console.log(this.state.egresade);
+  }
+
+  onChangeDropdownNodo = (e, { value, name }) => {
+    let valor = this.state.egresade[name];
+    this.setState({ selectedType: valor })
+    this.state.egresade['sede'] = null;
+    valor = value;
+    this.state.egresade[name] = valor;
   }
 
   filtrarSedes(opcionesSede, valorAConvertir) {
@@ -262,17 +263,17 @@ export class EditarEgresades extends Component {
               </Grid.Column>
               <Grid.Column>
                 <span className="etiquetas">
-                  <label htmlFor="correo">Sede<br /></label>
+                <label htmlFor="nodo">Nodo<br /></label>
                   <Dropdown
-                    name="sede"
-                    id="sede"
-                    placeholder="Sede"
+                    name="nodo"
+                    id="nodo"
+                    placeholder={this.state.egresade.nodo}
                     selection
                     required
-                    style={{ margin: "0px 11%" }}
-                    options={this.obtenerSede(this.state.egresade.nodo)}
-                    value={this.state.egresade.sede}
-                    onChange={this.onChangeDropdown}
+                    style={{ margin: "0px 15%" }}
+                    options={this.state.nodos}
+                    value={this.state.egresade.nodo}
+                    onChange={this.onChangeDropdownNodo}
                   />
                 </span>
               </Grid.Column>
@@ -280,16 +281,17 @@ export class EditarEgresades extends Component {
             <Grid.Row columns={2}>
               <Grid.Column className="centrarColumnas">
                 <span className="etiquetas">
-                  <label htmlFor="nodo">Nodo<br /></label>
+                <label htmlFor="correo">Sede<br /></label>
                   <Dropdown
-                    name="nodo"
-                    id="nodo"
-                    placeholder="Nodo"
+                    name="sede"
+                    id="sede"
+                    placeholder={this.state.egresade.sede}
                     selection
-                    required
-                    style={{ margin: "0px 11%" }}
-                    options={this.state.nodos}
-                    value={this.state.egresade.nodo}
+                    validators={['required']}
+                    errorMessages={['Este campo es requerido, porfavor seleccione otro nodo']}
+                    style={{ margin: "0px 15%" }}
+                    options={this.obtenerSede(this.state.egresade.nodo)}
+                    value={this.state.egresade.sede}
                     onChange={this.onChangeDropdown}
                   />
                 </span>
@@ -303,7 +305,7 @@ export class EditarEgresades extends Component {
                     value={this.state.egresade.nivelIngles}
                     onChange={this.onChangeDropdown}
                     options={OpcionesDeNivelDeIngles}
-                    style={{ margin: "0px 11%" }}
+                    style={{ margin: "0px 15%" }}
                     selection
                     required
                   />
@@ -318,7 +320,7 @@ export class EditarEgresades extends Component {
                     options={OpcionesDeCuatrimestre}
                     value={this.state.egresade.cuatrimestre}
                     placeholder='Cuatrimestre'
-                    style={{ margin: "0px 11%" }}
+                    style={{ margin: "0px 15%" }}
                     selection
                   />
                 </span>
@@ -334,7 +336,7 @@ export class EditarEgresades extends Component {
                     validators={['required']}
                     options={OpcionesDeTipoDeCurso}
                     value={this.state.egresade.modulo}
-                    style={{ margin: "0px 11%" }}
+                    style={{ margin: "0px 15%" }}
                     selection
                   />
                 </span>
@@ -349,7 +351,7 @@ export class EditarEgresades extends Component {
                     placeholder="Estado Laboral"
                     selection
                     onChange={this.onChangeDropdown}
-                    style={{ margin: "0px 11%" }}
+                    style={{ margin: "0px 15%" }}
                     options={OpcionesDeEstadoLaboral}
                     value={this.state.egresade.esEmpleado}
                   />
