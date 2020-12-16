@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search, Segment, Dimmer, Loader, Image } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
-import { withAuthenticationRequired } from "@auth0/auth0-react";
-import VistaNoAutorizado from "../inicio-de-sesion/VistaNoAutorizado"
 
 class Nahual_Table extends Component {
   constructor() {
@@ -33,7 +31,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`https://nahual-datos-estudiantes.herokuapp.com/api/egresades/DTO`)
+    fetch(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/DTO`)
       .then(res => {
         return res.json()
       })
@@ -168,6 +166,4 @@ class Nahual_Table extends Component {
   }
 
 }
-export default withAuthenticationRequired(Nahual_Table, {
-  onRedirecting: () => <VistaNoAutorizado />,
-});
+export default Nahual_Table;

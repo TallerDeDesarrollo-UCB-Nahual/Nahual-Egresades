@@ -1,6 +1,5 @@
 import Axios from "axios";
 import React, { Component } from "react";
-import Nahual_Table from "../lista-egresades/Tabla";
 import VistaNoAutorizado from './VistaNoAutorizado.js';
 import { Auth0Context } from "@auth0/auth0-react";
 import { Dimmer, Loader } from "semantic-ui-react";
@@ -21,7 +20,7 @@ static contextType = Auth0Context;
     this.obtenerDatosVerificados()
   }
   async obtenerDatosVerificados() {
-    const SERVICIO_DE_VERIFICACION_API_NAHUAL ="https://nahual-auth-service.herokuapp.com/api/";
+    const SERVICIO_DE_VERIFICACION_API_NAHUAL =`${process.env.REACT_APP_AUTENTICACION_NAHUAL_API}`;
         const { user: usuario } = this.context;
     const datos = JSON.stringify({
       nombre: usuario.name,

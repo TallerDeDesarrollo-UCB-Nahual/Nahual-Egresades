@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { Button, Grid, Form, Divider, Segment, Icon} from 'semantic-ui-react';
+import { Button, Grid, Divider, Segment, Icon} from 'semantic-ui-react';
 import logo from '../../public/imagenes/people-heart.png';
 import '../../public/stylesheets/NoAutorizado.css';
 import BotonLogout from "./../inicio-de-sesion/BotonLogout";
 
-const origenSolicitud = 'https://nahual-portal-egresades.herokuapp.com/';
-const solicitudAccesoNahual = 'https://nahual-auth-portal.herokuapp.com/';
-const clave = 'Nahual123';
+const origenSolicitud = process.env.REACT_APP_ORIGEN_SOLICITUD;
+const solicitudAccesoNahual = process.env.REACT_APP_SOLICITUD_ACCESO_NAHUAL;
+const clave = process.env.REACT_APP_CLAVE;
 
 export class VistaNoAutorizado extends Component {
 
