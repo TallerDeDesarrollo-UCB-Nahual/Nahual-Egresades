@@ -1,7 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 ## Documentation
 
-The documentation of this app can be found at [https://docs.google.com/document/d/1zACbohQx_PL9Wp1UcpI8vqg29hPvqngsBiC-Yy1nRGY/edit?usp=sharing]
+The documentation of this app can be found at [https://docs.google.com/document/d/1zACbohQx_PL9Wp1UcpI8vqg29hPvqngsBiC-Yy1nRGY/edit?usp=sharing] (https://docs.google.com/document/d/1zACbohQx_PL9Wp1UcpI8vqg29hPvqngsBiC-Yy1nRGY/edit?usp=sharing)
 
 ## Available Scripts
 
