@@ -28,7 +28,7 @@ function InformacionDelEgresade({ egresade }) {
 
               <Form.Field inline>
                 <label><Icon name='calendar outline' /><span className="title-data">Fecha de nacimiento:</span></label>
-                <Input> {mañana.toLocaleDateString('es')} </Input>
+                <Input> {egresade.fechaNacimiento != null ? mañana.toLocaleDateString('es') : "Sin Fecha"} </Input>
               </Form.Field>
 
               <Form.Field inline>

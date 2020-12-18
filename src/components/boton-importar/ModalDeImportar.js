@@ -6,7 +6,9 @@ import CargarLista from './CargarLista';
 import exampleXlsx from '../../public/example.csv'
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 import axios from 'axios';
-import VistaNoAutorizado from "../inicio-de-sesion/VistaNoAutorizado"
+import VistaNoAutorizado from "../inicio-de-sesion/VistaNoAutorizado";
+import * as moment from 'moment';
+
 var listaNodos = [];
 var listaSedes = [];
 
@@ -15,20 +17,20 @@ const findNodo = (datos, nodo) => {
   if (datos.find(el => el === nodo)) {
     return true
   }
-  return false; // so check result is truthy and extract `id`
+  return false;
 }
 const findSede = (data, sede) => {
   if (data.find(el => el === sede)) {
     return true
   }
-  return false; // so check result is truthy and extract `id`
+  return false;
 }
 
 const publicarListaDeEgresades_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/`;
 
 class ModalDeImportar extends Component {
   obtenerNodosYSedes = async () => {
-    const API_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/nodos/`; //cambiar esto para deployar
+    const API_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/nodos/`;
     await
       axios
         .get(`${API_URL}`)
@@ -98,6 +100,16 @@ class ModalDeImportar extends Component {
       })
   }
 
+  getDate(date) {
+    if(date){
+      let splittedDate = date.split("/");
+      let preparedDate = splittedDate[1] + '/' + splittedDate[0] + '/' + splittedDate[2];
+      return preparedDate;
+    } else {
+      return null;
+    }
+  }
+
   handleOnDrop = (data) => {
 
     data.forEach(fila => {
@@ -109,19 +121,20 @@ class ModalDeImportar extends Component {
           "nombre": fila.data["Nombre"],
           "apellido": fila.data["Apellido"],
           "Estado": "Egresade",
-          "fechaNacimiento": fila.data["Fecha de Nacimiento"],
+          "fechaNacimiento": this.getDate(fila.data["Fecha de Nacimiento"]),
           "correo": fila.data["Mail"],
           "celular": fila.data["Numero de Celular"],
           "sede": fila.data["SEDE"],
           "nodo": fila.data["NODO"],
           "añoGraduacion": fila.data["Anio"],
           "cuatrimestre": fila.data["Cuatri"],
-          "nivelIngles": fila.data["Ingles"]=== "Básico"? "Basico":fila.data["Ingles"],
+          "nivelIngles": fila.data["Ingles"] === "Básico" ? "Basico":fila.data["Ingles"],
           "nombrePrimerTrabajo": fila.data["Empresa IT primer empleo"],
           "linkedin": fila.data["Linkedin"],
           "esEmpleado": fila.data["Consiguio trabajo luego de egresar?"] === "Sí" || fila.data["Consiguio trabajo luego de egresar?"] === "Si" ? true : false,
           "modulo": fila.data["Tipo de curso del cual egreso"]
         }
+        this.getDate(egresade.fechaNacimiento);
         this.state.egresades.push(egresade)
         this.incrementarContadorEgresades()
       }
@@ -221,16 +234,16 @@ class ModalDeImportar extends Component {
                 <Table.HeaderCell>Numero de Celular</Table.HeaderCell>
                 <Table.HeaderCell>NODO</Table.HeaderCell>
                 <Table.HeaderCell>SEDE</Table.HeaderCell>
-                <Table.HeaderCell>Año</Table.HeaderCell>
+                <Table.HeaderCell>Anio</Table.HeaderCell>
 
               </Table.Row>
               <Table.Row>
                 <Table.HeaderCell>Cuatri</Table.HeaderCell>
-                <Table.HeaderCell>Tipo de curso del cual egresó</Table.HeaderCell>
+                <Table.HeaderCell>Tipo de curso del cual egreso</Table.HeaderCell>
                 <Table.HeaderCell>Profesor referente</Table.HeaderCell>
                 <Table.HeaderCell>Ingles</Table.HeaderCell>
                 <Table.HeaderCell>Linkedin</Table.HeaderCell>
-                <Table.HeaderCell>Consiguió trabajo luego de egresar?</Table.HeaderCell>
+                <Table.HeaderCell>Consiguio trabajo luego de egresar?</Table.HeaderCell>
                 <Table.HeaderCell>Empresa IT primer empleo</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
