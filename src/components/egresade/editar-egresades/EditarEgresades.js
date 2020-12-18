@@ -100,7 +100,6 @@ export class EditarEgresades extends Component {
     }
     else {
       let nodoEscogido = this.state.nodos.filter(value => value.nombre === nodo)[0];
-      console.log(nodoEscogido);
       let sedesEscogidas = nodoEscogido.sedes
       return sedesEscogidas;
     }
@@ -136,7 +135,6 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.nodo;
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
-    console.log(egresadeAEnviar);
 
     axios.put(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {

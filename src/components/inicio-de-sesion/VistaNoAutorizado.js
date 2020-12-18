@@ -35,7 +35,6 @@ export class VistaNoAutorizado extends Component {
             origen: datosUsuario.aplicacion,
             redirigir: origenSolicitud
         }
-        console.log(datosEnvio);
 
         var AES = require('crypto-js/aes');
         let encriptado = AES.encrypt(JSON.stringify(datosEnvio), clave);

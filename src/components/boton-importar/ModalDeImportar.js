@@ -46,9 +46,6 @@ class ModalDeImportar extends Component {
         .catch(function (error) {
           console.log(error);
         });
-    console.log(listaNodos)
-    console.log(listaSedes)
-
   }
   constructor(props) {
     super(props);
@@ -83,7 +80,6 @@ class ModalDeImportar extends Component {
 
   onSubmit = (onRegistrarCorrectamente) => {
     let lista = this.state.egresades
-    console.log(JSON.stringify(lista))
     fetch(publicarListaDeEgresades_URL, {
       method: 'POST',
       headers: {
@@ -95,7 +91,6 @@ class ModalDeImportar extends Component {
       if (res) {
         onRegistrarCorrectamente(this.state.contadorEgresades)
         this.setAbierto(false)
-        console.log(res)
       }
     })
       .catch(err => {
@@ -134,10 +129,8 @@ class ModalDeImportar extends Component {
         this.state.egresades = []
         this.setState({ contadorEgresades: 0 })
         this.errorDeCarga();
-        console.log("-----------------------------------");
         throw null;
       }
-      console.log(fila.data);
       this.mostrarTabla()
     });
   }
