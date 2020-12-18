@@ -12,13 +12,13 @@ var listaSedes = [];
 
 const findNodo = (datos, nodo) => {
 
-  if (datos.find(el => el == nodo)) {
+  if (datos.find(el => el === nodo)) {
     return true
   }
   return false; // so check result is truthy and extract `id`
 }
 const findSede = (data, sede) => {
-  if (data.find(el => el == sede)) {
+  if (data.find(el => el === sede)) {
     return true
   }
   return false; // so check result is truthy and extract `id`
@@ -109,7 +109,7 @@ class ModalDeImportar extends Component {
           "nombre": fila.data["Nombre"],
           "apellido": fila.data["Apellido"],
           "Estado": "Egresade",
-          "fechaNacimiento": fila.data["Fecha de Nacimiento"] == ""? "12/17/2020": fila.data["Fecha de Nacimiento"],
+          "fechaNacimiento": fila.data["Fecha de Nacimiento"],
           "correo": fila.data["Mail"],
           "celular": fila.data["Numero de Celular"],
           "sede": fila.data["SEDE"],
