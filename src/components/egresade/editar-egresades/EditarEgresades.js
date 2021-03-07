@@ -21,10 +21,14 @@ function obtenerEstadoDepurado(estadoActual) {
   return estadoDepurado;
 }
 
+function getFechaPorDefecto(){
+  return new Date().toISOString().split('T')[0];
+}
+
 function prepararDatosARecuperar(estadoActual) {
   var nombre = estadoActual.nombre;
   var apellido = estadoActual.apellido;
-  var fechaNacimiento = estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec) => acc.concat(fec), "");
+  var fechaNacimiento = estadoActual.fechaNacimiento != null ? estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec) => acc.concat(fec), "") : getFechaPorDefecto();
   var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (estadoActual.esEmpleado ? 1 : 0))[0].value;
   let estadoDepurado = obtenerEstadoDepurado(estadoActual);
   return { ...estadoDepurado, nombre, apellido, fechaNacimiento, esEmpleado };
@@ -50,6 +54,16 @@ export class EditarEgresades extends Component {
     };
   }
 
+  existeNivelIngles(nivelDeIngles) {
+    if(!nivelDeIngles)
+      {
+        return null
+      }
+      else{
+        return OpcionesDeNivelDeIngles.filter(op => op.value === this.state.egresade.nivelIngles)[0].valueToSend;
+      }
+  }
+
   obtenerEgresade() {
     const API_URL = `${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/`;
     axios
@@ -59,12 +73,20 @@ export class EditarEgresades extends Component {
           egresade: response.data.response
         });
         let egresadeCompleto = prepararDatosARecuperar(this.state.egresade);
+        egresadeCompleto = this.validarFecha(egresadeCompleto);
         this.setState({ egresade: egresadeCompleto });
         this.obtenerNodo();
       })
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  validarFecha(egresade){
+    if(egresade.fechaNacimiento == null){
+      egresade.fechaNacimiento = new Date().toLocaleDateString();
+    }
+    return egresade;
   }
 
   obtenerNodo() {
@@ -100,7 +122,6 @@ export class EditarEgresades extends Component {
     }
     else {
       let nodoEscogido = this.state.nodos.filter(value => value.nombre === nodo)[0];
-      console.log(nodoEscogido);
       let sedesEscogidas = nodoEscogido.sedes
       return sedesEscogidas;
     }
@@ -124,19 +145,27 @@ export class EditarEgresades extends Component {
     this.setState({ abrirModal: true })
   }
 
+  obtenerFechaNacimiento(egresade){
+    if(egresade.fechaNacimiento == getFechaPorDefecto()){
+      egresade.fechaNacimiento = null;
+    }
+    return egresade;
+  }
+
   guardarEgresade() {
     var egresadeAEnviar = {
       ...this.state.egresade,
       nodoId: obtenerValorConvertidoDeEnvio(this.state.nodos, this.state.egresade.nodo),
-      sedeId: obtenerValorConvertidoDeEnvio(this.obtenerSede(this.state.egresade.nodo), this.state.egresade.sede),
-      nivelInglesId: obtenerValorConvertidoDeEnvio(OpcionesDeNivelDeIngles, this.state.egresade.nivelIngles)
+      sedeId: obtenerValorConvertidoDeEnvio(this.obtenerSede(this.state.egresade.nodo), this.state.egresade.sede)
     }
+
+    egresadeAEnviar.nivelInglesId = this.existeNivelIngles(this.state.egresade.nivelIngles)
+    egresadeAEnviar = this.obtenerFechaNacimiento(egresadeAEnviar);
     egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
     egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
     delete egresadeAEnviar.nodo;
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
-    console.log(egresadeAEnviar);
 
     axios.put(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
       .then(function (respuesta) {
@@ -226,8 +255,6 @@ export class EditarEgresades extends Component {
                     validators={['required']}
                     errorMessages={['Este campo es requerido']}
                     style={{ margin: "0px 15%" }}
-                    min="1960-01-01"
-                    max="2020-01-01"
                     onChange={this.enCambio}
                   />
                 </span>
@@ -240,8 +267,8 @@ export class EditarEgresades extends Component {
                     name="celular"
                     placeholder="Celular"
                     value={this.state.egresade.celular}
-                    validators={['required', 'matchRegexp:^[0-9]+$']}
-                    errorMessages={['Este campo es requerido', 'El campo sólo acepta números']}
+                    validators={['matchRegexp:^[0-9]+$']}
+                    errorMessages={['El campo sólo acepta números']}
                     style={{ margin: "0px 15%" }}
                     onChange={this.enCambio}
                   />
@@ -254,8 +281,6 @@ export class EditarEgresades extends Component {
                     name="correo"
                     placeholder="Correo Electrónico"
                     value={this.state.egresade.correo}
-                    validators={['required']}
-                    errorMessages={['Este campo es requerido']}
                     style={{ margin: "0px 15%" }}
                     onChange={this.enCambio}
                   />
@@ -346,15 +371,17 @@ export class EditarEgresades extends Component {
               <Grid.Column className="centrarColumnas">
                 <span className="etiquetas">
                   <label htmlFor="esEmpleado">Estado Laboral<br /></label>
-                  <Dropdown
+                  <Dropdown type="text"
                     name="esEmpleado"
                     placeholder="Estado Laboral"
-                    selection
+                    value={this.state.modulo}
                     onChange={this.onChangeDropdown}
-                    style={{ margin: "0px 15%" }}
                     options={OpcionesDeEstadoLaboral}
                     value={this.state.egresade.esEmpleado}
+                    style={{ margin: "0px 15%" }}
+                    selection
                   />
+                  
                 </span>
               </Grid.Column>
               <Grid.Column>
@@ -398,8 +425,6 @@ export class EditarEgresades extends Component {
                     name="linkedin"
                     placeholder="LinkedIn"
                     value={this.state.egresade.linkedin}
-                    validators={['required']}
-                    errorMessages={['Este campo es requerido']}
                     style={{ margin: "0px 15%" }}
                     onChange={this.enCambio}
                   />
