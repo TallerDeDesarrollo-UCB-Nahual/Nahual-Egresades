@@ -371,15 +371,17 @@ export class EditarEgresades extends Component {
               <Grid.Column className="centrarColumnas">
                 <span className="etiquetas">
                   <label htmlFor="esEmpleado">Estado Laboral<br /></label>
-                  <Dropdown
+                  <Dropdown type="text"
                     name="esEmpleado"
                     placeholder="Estado Laboral"
-                    selection
+                    value={this.state.modulo}
                     onChange={this.onChangeDropdown}
-                    style={{ margin: "0px 15%" }}
                     options={OpcionesDeEstadoLaboral}
                     value={this.state.egresade.esEmpleado}
+                    style={{ margin: "0px 15%" }}
+                    selection
                   />
+                  
                 </span>
               </Grid.Column>
               <Grid.Column>

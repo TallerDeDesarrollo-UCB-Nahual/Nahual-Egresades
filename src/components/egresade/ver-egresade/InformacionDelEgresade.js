@@ -2,12 +2,19 @@ import React from "react";
 import { Form, Input, Icon, Item } from "semantic-ui-react";
 import '../../../public/stylesheets/Modal.css';
 
-
+function MostrarEstadoDelEgresade(estado){
+  const estadoEgresade = 'Desempleado'
+  if(estado){
+    estadoEgresade = 'Empleado';
+  }
+  return estadoEgresade;
+}
 
 function InformacionDelEgresade({ egresade }) {
   var hoy = new Date(egresade.fechaNacimiento);
   var mañana = new Date(hoy);
   mañana.setDate(hoy.getDate()+1);
+  console.log(egresade);
   return (
     <Item.Group>
       <Item>
@@ -44,6 +51,16 @@ function InformacionDelEgresade({ egresade }) {
               <Form.Field inline>
                 <label><Icon name='map outline' /><span className="title-data"> Sede:</span></label>
                 <Input> {egresade.sede} </Input>
+              </Form.Field>
+
+              <Form.Field inline>
+                <label><Icon name='child' /><span className="title-data"> Estado:</span></label>
+                <Input> {MostrarEstadoDelEgresade(egresade.esEmpleado)} </Input>
+              </Form.Field>
+
+              <Form.Field inline>
+                <label><Icon name='briefcase' /><span className="title-data"> Primer empleo:</span></label>
+                <Input> {egresade.nombrePrimerTrabajo} </Input>
               </Form.Field>
 
             </Form>
