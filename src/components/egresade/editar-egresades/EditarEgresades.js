@@ -133,16 +133,6 @@ export class EditarEgresades extends Component {
     this.obtenerEgresade();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.isVisibleErrorMessage !== prevState.isVisibleErrorMessage) {
-      if (this.state.isVisibleErrorMessage) {
-        setTimeout(() => {
-          this.setState({ isVisibleErrorMessage: false });
-        }, 2200);
-      }
-    }
-  }
-
   enCambio = (event) => {
     let nombre = event.target.name;
     let valor = event.target.value;
@@ -185,9 +175,12 @@ export class EditarEgresades extends Component {
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
     try {
-      graduateData = await axios.put(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}//${egresadeAEnviar.id}`, egresadeAEnviar)
+      graduateData = await axios.put(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/estudiantes/${egresadeAEnviar.id}`, egresadeAEnviar)
     } catch {
-      this.setState({ isVisibleErrorMessage: true })
+      this.setState({ isVisibleErrorMessage: true });
+      setTimeout(() => {
+        this.setState({ isVisibleErrorMessage: false });
+      }, 2200);
     }
     return graduateData;
   }
@@ -449,17 +442,17 @@ export class EditarEgresades extends Component {
           </Grid>
           <Grid centered rows={1} columns={1}>
             <GridRow>
-              <Button onClick={() => this.handleCancelEdition()} className="ui basic negative button" style={{ margin: "0px 50px 10px 50px" }}>Cancelar</Button>
-              {this.state.abrirModal && <Confirm
+              <Button type="button" onClick={() => this.handleCancelEdition()} className="ui basic negative button" style={{ margin: "0px 50px 10px 50px" }}>Cancelar</Button>
+              {(this.state.abrirModal) && <Confirm
                 header='¿Está seguro que desea cancelar los cambios?'
-                content="Si acpeta la cancelacion del guardado, será redirigido a la lista principal"
+                content="Si acepta la cancelacion del guardado, será redirigido a la lista principal sin guardar sus cambios"
                 open={this.state.abrirModal}
                 cancelButton='Cancelar'
                 confirmButton='Confirmar'
                 onCancel={this.handleCancel}
                 onConfirm={this.handleConfirm}
               />}
-              <Button onClick={() => this.handleConfirmEdition()} className="ui basic positive button" style={{ margin: "0px 50px 10px 50px", background: "rgb(129,206,50)" }}>Confirmar</Button>
+              <Button type="Submit" className="ui basic positive button" style={{ margin: "0px 50px 10px 50px", background: "rgb(129,206,50)" }}>Confirmar</Button>
             </GridRow>
           </Grid>
         </Form>
