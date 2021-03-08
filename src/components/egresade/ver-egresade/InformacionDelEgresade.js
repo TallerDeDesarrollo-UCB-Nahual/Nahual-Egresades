@@ -3,7 +3,7 @@ import { Form, Input, Icon, Item } from "semantic-ui-react";
 import '../../../public/stylesheets/Modal.css';
 
 function MostrarEstadoDelEgresade(estado){
-  const estadoEgresade = 'Desempleado'
+  var estadoEgresade = 'Desempleado'
   if(estado){
     estadoEgresade = 'Empleado';
   }
@@ -14,7 +14,6 @@ function InformacionDelEgresade({ egresade }) {
   var hoy = new Date(egresade.fechaNacimiento);
   var mañana = new Date(hoy);
   mañana.setDate(hoy.getDate()+1);
-  console.log(egresade);
   return (
     <Item.Group>
       <Item>
