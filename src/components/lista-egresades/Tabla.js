@@ -5,13 +5,15 @@ import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
+const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
 
 class Nahual_Table extends Component {
   constructor() {
     super();
     this.state = {
       api: [],
-      filasEncontradas: Array(0),
+      busqueda: '',
+      egresades: [],
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
       open: false
@@ -30,7 +32,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/DTO`)
+    fetch(`${REACT_APP_EGRESADES_NAHUAL_API}/egresades/DTO`)
       .then(res => {
         return res.json()
       })
@@ -38,9 +40,10 @@ class Nahual_Table extends Component {
         let dat = res;
         this.setState({
           api: dat.response,
-          filasEncontradas: dat.response
+          egresades: dat.response
         });
       })
+      
   }
 
   eliminarEgresadesVista(id) {
@@ -59,25 +62,24 @@ class Nahual_Table extends Component {
     this.setState({ mostrarMensajeDeEstado: false })
   }
 
-  buscarPorNombre(nombre) {
-    let buscado = nombre.target.value;
-    let listaEgresades = this.state.api;
-    let resultados = Array(0);
-
-    if (nombre.target.value.trim() === "") {
-      this.setState({
-        filasEncontradas: this.state.api
-      });
-    }
-    for (let contador = 0; contador < listaEgresades.length; contador++) {
-      if (listaEgresades[contador].nombre.toLowerCase().includes(buscado.toLowerCase())) {
-        resultados.push(listaEgresades[contador]);
-      }
-    }
-    this.setState({
-      filasEncontradas: resultados
-    });
+  onSearchChange = e => {
+    this.setState({busqueda: e.target.value});
+    this.filtrarEgresades();
   }
+
+  filtrarEgresades = () =>{
+    var search = this.state.api.filter(item=>{
+      if((item.nombre.toLowerCase() + ' ' + item.apellido.toLowerCase()).includes(this.state.busqueda.toLowerCase()) ||
+        item.nodo.toLowerCase().includes(this.state.busqueda.toLowerCase()) ||
+        item.sede.toLowerCase().includes(this.state.busqueda.toLowerCase()) 
+      ){
+        return item;
+      }
+    })
+    this.setState({egresades: search});
+  }
+
+
 
   render() {
     return (
@@ -101,7 +103,8 @@ class Nahual_Table extends Component {
           <div className="tabla-menu">
             <Search
               showNoResults={false}
-              onSearchChange={this.buscarPorNombre.bind(this)}
+              onSearchChange={this.onSearchChange}
+              value = {this.state.busqueda}
               style={{ width: "auto" }}
             >
             </Search>
@@ -123,7 +126,7 @@ class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.filasEncontradas.map((value) => (
+              {this.state.egresades.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
               <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
