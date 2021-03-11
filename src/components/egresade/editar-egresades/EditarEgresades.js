@@ -246,7 +246,7 @@ export class EditarEgresades extends Component {
               </Grid.Column>
               <Grid.Column>
                 <span className="etiquetas">
-                  <label htmlFor="fechaNacimiento">Fecha de Nacimiento<br /></label>
+                  <label htmlFor="fechaNacimiento">Fecha de Nacimiento (dd/mm/aaaa)<br /></label>
                   <Input type="date"
                     name="fechaNacimiento"
                     pattern="[0-9]*"
