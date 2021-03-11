@@ -62,8 +62,9 @@ class Nahual_Table extends Component {
     this.setState({ mostrarMensajeDeEstado: false })
   }
 
-  onSearchChange = e => {
-    this.setState({busqueda: e.target.value});
+  onSearchChange = async e => {
+    e.persist();
+    await this.setState({busqueda: e.target.value});
     this.filtrarEgresades();
   }
 
