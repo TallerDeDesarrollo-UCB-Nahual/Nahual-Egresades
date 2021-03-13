@@ -286,6 +286,20 @@ export class EditarEgresades extends Component {
                   />
                 </span>
               </Grid.Column>
+
+              <Grid.Column>
+                <span className="etiquetas">
+                  <label htmlFor="correoOpcional">Correo Electrónico Opcional<br /></label>
+                  <Input type="email"
+                    name="correoOpcional"
+                    placeholder="Correo Opcional"
+                    value={this.state.egresade.correoOpcional}
+                    style={{ margin: "0px 15%" }}
+                    onChange={this.enCambio}
+                  />
+                </span>
+              </Grid.Column>
+
               <Grid.Column>
                 <span className="etiquetas">
                 <label htmlFor="nodo">Nodo<br /></label>
