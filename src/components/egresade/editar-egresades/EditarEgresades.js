@@ -31,7 +31,7 @@ function getFechaPorDefecto() {
 function prepararDatosARecuperar(estadoActual) {
   var nombre = estadoActual.nombre;
   var apellido = estadoActual.apellido;
-  var fechaNacimiento = estadoActual.fechaNacimiento != null ? estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec) => acc.concat(fec), "") : getFechaPorDefecto();
+  var fechaNacimiento = estadoActual.fechaNacimiento !== null ? estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec) => acc.concat(fec), "") : "";
   var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (estadoActual.esEmpleado ? 1 : 0))[0].value;
   let estadoDepurado = obtenerEstadoDepurado(estadoActual);
   return { ...estadoDepurado, nombre, apellido, fechaNacimiento, esEmpleado };
@@ -174,6 +174,7 @@ export class EditarEgresades extends Component {
     egresadeAEnviar = this.obtenerFechaNacimiento(egresadeAEnviar);
     egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
     egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
+    egresadeAEnviar.fechaNacimiento = egresadeAEnviar.fechaNacimiento === "" ? null :  egresadeAEnviar.fechaNacimiento;
     delete egresadeAEnviar.nodo;
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
@@ -220,14 +221,17 @@ export class EditarEgresades extends Component {
   editarFecha=fecha=>{
     let estadoDepurado = this.state.egresade;
     delete estadoDepurado[`fechaNacimiento`];
-    let nuevoEstado = { ...estadoDepurado, [`fechaNacimiento`]: fecha.toISOString().split('T')[0]};
+    let nuevoEstado = { ...estadoDepurado, [`fechaNacimiento`]: ""};
+    if(fecha != "" && fecha != null){
+      nuevoEstado = { ...estadoDepurado, [`fechaNacimiento`]: fecha.toISOString().split('T')[0]};
+    } 
     this.setState({ egresade: nuevoEstado });
   }
 
   
   obtenerNuevaFecha() {
-    if(this.state.egresade.fechaNacimiento == undefined) {
-      return new Date();
+    if(this.state.egresade.fechaNacimiento == undefined || this.state.egresade.fechaNacimiento == ""){
+      return null;
     }else {
       const mes = this.state.egresade.fechaNacimiento.substring(5,7);
       const dia = this.state.egresade.fechaNacimiento.substring(8,10);
@@ -239,7 +243,7 @@ export class EditarEgresades extends Component {
   }
 
   render() {
-    const { isVisibleErrorMessage, isVisibleSuccessMessage } = this.state;
+    const { isVisibleErrorMessage, isVisibleSuccessMessage, egresade } = this.state;
     return (
       <div className="contenedor">
         <Form id="myForm" onSubmit={() => this.handleConfirmEdition()} className="ui form">
