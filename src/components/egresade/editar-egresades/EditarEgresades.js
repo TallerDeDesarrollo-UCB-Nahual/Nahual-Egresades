@@ -161,7 +161,7 @@ export class EditarEgresades extends Component {
 
     egresadeAEnviar.nivelInglesId = this.existeNivelIngles(this.state.egresade.nivelIngles)
     egresadeAEnviar = this.obtenerFechaNacimiento(egresadeAEnviar);
-    egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
+    //egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
     egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
     delete egresadeAEnviar.nodo;
     delete egresadeAEnviar.sede;
@@ -263,12 +263,12 @@ export class EditarEgresades extends Component {
                 <span className="etiquetas">
                   <label htmlFor="telefono">Teléfono de Contacto<br /></label>
                   <Input type="text"
-                    maxLength="10"
+                    maxLength="50"
                     name="celular"
                     placeholder="Celular"
                     value={this.state.egresade.celular}
-                    validators={['matchRegexp:^[0-9]+$']}
-                    errorMessages={['El campo sólo acepta números']}
+                   //  validators={['matchRegexp:^[0-9]+$']}
+                    errorMessages={['Solo se permite 50 caracteres como maximo']}
                     style={{ margin: "0px 15%" }}
                     onChange={this.enCambio}
                   />
