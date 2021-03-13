@@ -13,6 +13,9 @@ import { OpcionesDeNivelDeIngles } from './opciones-de-seleccion/OpcionesDeNivel
 import { OpcionesDeEstadoLaboral } from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import { MensajeResultante } from './tipo-de-mensaje/MensajeResultante.js';
 import VistaNoAutorizado from "../../inicio-de-sesion/VistaNoAutorizado"
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+
 
 function obtenerEstadoDepurado(estadoActual) {
   var estadoDepurado = estadoActual;
@@ -214,6 +217,26 @@ export class EditarEgresades extends Component {
   filtrarSedes(opcionesSede, valorAConvertir) {
     return opcionesSede.filter(op => op.nodo === valorAConvertir);
   }
+  editarFecha=fecha=>{
+    let estadoDepurado = this.state.egresade;
+    delete estadoDepurado[`fechaNacimiento`];
+    let nuevoEstado = { ...estadoDepurado, [`fechaNacimiento`]: fecha.toISOString().split('T')[0]};
+    this.setState({ egresade: nuevoEstado });
+  }
+
+  
+  obtenerNuevaFecha() {
+    if(this.state.egresade.fechaNacimiento == undefined) {
+      return new Date();
+    }else {
+      const mes = this.state.egresade.fechaNacimiento.substring(5,7);
+      const dia = this.state.egresade.fechaNacimiento.substring(8,10);
+      const anio = this.state.egresade.fechaNacimiento.substring(0,4);
+      const hora = 'T00:00:00';
+      const fecha = anio+'-'+mes+'-'+dia+hora;
+      return new Date(fecha);
+    }
+  }
 
   render() {
     const { isVisibleErrorMessage, isVisibleSuccessMessage } = this.state;
@@ -253,19 +276,14 @@ export class EditarEgresades extends Component {
                 </span>
               </Grid.Column>
               <Grid.Column>
-                <span className="etiquetas">
-                  <label htmlFor="fechaNacimiento">Fecha de Nacimiento<br /></label>
-                  <Input type="date"
-                    name="fechaNacimiento"
-                    pattern="[0-9]*"
-                    placeholder="Fecha de Nacimiento"
-                    value={this.state.egresade.fechaNacimiento}
-                    validators={['required']}
-                    errorMessages={['Este campo es requerido']}
-                    style={{ margin: "0px 15%" }}
-                    onChange={this.enCambio}
-                  />
-                </span>
+                {
+                  <span className="etiquetas"  >
+                    <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
+                    <div  style={{ margin: "0px 12%"}}>
+                    <DatePicker selected={this.obtenerNuevaFecha()} onChange={this.editarFecha}/>
+                    </div>
+                  </span>    
+              }
               </Grid.Column>
               <Grid.Column>
                 <span className="etiquetas">
