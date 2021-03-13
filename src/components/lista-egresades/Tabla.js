@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search, Dropdown, Input } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Segment, Dropdown, Input } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
 import './Tablas.css'
+import { Dimmer, Loader } from "semantic-ui-react";
+
 const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
 
 class Nahual_Table extends Component {
@@ -40,7 +42,8 @@ class Nahual_Table extends Component {
         }
       ],
       currentFilter: 'Todes',
-      valueFilter:''
+      valueFilter:'',
+      cargando: true
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
@@ -65,7 +68,8 @@ class Nahual_Table extends Component {
         this.setState({
           api: dat.response,
           egresades: dat.response,
-          filasEncontradas: dat.response
+          filasEncontradas: dat.response,
+          cargando: false
         });
       })
       
@@ -210,8 +214,13 @@ class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-            
-              {this.state.filasEncontradas.map((value) => (
+              {this.state.cargando? 
+              (<Table.Row>
+                <td colSpan="5">
+                  <div class="ui active centered inline loader"></div>
+                </td>
+              </Table.Row>) :
+              (this.state.egresades.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
               <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
@@ -236,15 +245,9 @@ class Nahual_Table extends Component {
                     <Eliminar egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Eliminar>
                   </Table.Cell>
                 </Table.Row>
-              ))}
+              )))
+              }
             </Table.Body>
-
-            <Table.Footer>
-              <Table.Row>
-                <Table.HeaderCell colSpan='4' className="no-border">
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Footer>
           </Table>
 
         </div>
