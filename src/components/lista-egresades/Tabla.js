@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Dropdown, Input } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
-
+import './Tablas.css'
 class Nahual_Table extends Component {
   constructor() {
     super();
@@ -14,7 +14,29 @@ class Nahual_Table extends Component {
       filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
-      open: false
+      open: false,
+      stateOptions : [
+        {
+          key: 'Todes',
+          text: 'Todes',
+          value: 'Todes',
+          /* label: { color: '', empty: true, circular: true }, */
+        },
+        {
+          key: 'Egresade',
+          text: 'Egresade',
+          value: 'Egresade',
+/*           label: { color: '', empty: true, circular: true },
+ */        },
+        {
+          key: 'Empleade',
+          text: 'Empleade',
+          value: 'Empleade',
+          /* label: { color: '', empty: true, circular: true }, */
+        }
+      ],
+      currentFilter: 'Todes',
+      valueFilter:''
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
@@ -69,14 +91,43 @@ class Nahual_Table extends Component {
         filasEncontradas: this.state.api
       });
     }
-    for (let contador = 0; contador < listaEgresades.length; contador++) {
+    for (let contador = 0; contador < listaEgresades.length; contador++) {      
       if (listaEgresades[contador].nombre.toLowerCase().includes(buscado.toLowerCase())) {
-        resultados.push(listaEgresades[contador]);
+        /* if(listaEgresades[contador].esEmpleado) {
+          resultados.push(listaEgresades[contador]);
+        } */
+
+        switch (this.state.currentFilter) {
+          case 'Egresade':
+              if(!listaEgresades[contador].esEmpleado) {
+                resultados.push(listaEgresades[contador]);
+              }
+            break;
+          case 'Empleade':
+              if(listaEgresades[contador].esEmpleado) {
+                resultados.push(listaEgresades[contador]);
+              }
+            break;
+          default:
+              resultados.push(listaEgresades[contador]);
+        }
       }
     }
     this.setState({
-      filasEncontradas: resultados
-    });
+      filasEncontradas: resultados,
+      valueFilter: nombre.target.value
+    },()=>{});
+  }
+
+  activeFilter(filter){
+    console.log(filter)
+    this.setState({
+      currentFilter: filter
+    },()=>{ 
+      this.buscarPorNombre(
+      {target:{value:this.state.valueFilter}}
+    )});
+   
   }
 
   render() {
@@ -110,6 +161,30 @@ class Nahual_Table extends Component {
               <ModalDeImportar onClick={this.enRegistroExitoso} />
             </div>
           </div>
+
+          <Dropdown
+            text={this.state.currentFilter}
+            icon='filter'
+            floating
+            labeled
+            button
+            className='icon'
+          >
+            <Dropdown.Menu>
+              
+              <Dropdown.Divider />
+              <Dropdown.Header icon='tags' content='Estados' />
+              <Dropdown.Menu scrolling>
+                {this.state.stateOptions.map((option) => (
+                  <Dropdown.Item 
+                  active={option.value === this.state.currentFilter}
+                  key={option.value} {...option} 
+                  onClick={()=>{this.activeFilter(option.value)}}
+                  />
+                ))}
+              </Dropdown.Menu>
+            </Dropdown.Menu>
+          </Dropdown>
           <br /><br />
           <Table celled className="tarjeta-tabla">
             <Table.Header>
