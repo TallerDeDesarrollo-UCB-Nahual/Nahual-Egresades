@@ -64,7 +64,7 @@ class Nahual_Table extends Component {
         let dat = res;
         this.setState({
           api: dat.response,
-          egresades: dat.response
+          egresades: dat.response,
           filasEncontradas: dat.response
         });
       })
@@ -91,7 +91,10 @@ class Nahual_Table extends Component {
     this.setState({busqueda: e.target.value});
     this.filtrarEgresades();
   }
-
+  buscarPorNombre(nombre){
+    let buscado = nombre.target.value;
+    let listaEgresades = this.state.api;
+    let resultados = Array(0);
     if (nombre.target.value.trim() === "") {
       this.setState({
         filasEncontradas: this.state.api
@@ -160,7 +163,7 @@ class Nahual_Table extends Component {
           <div className="tabla-menu">
             <Search
               showNoResults={false}
-              value = {this.state.busqueda}
+      
               onSearchChange={this.buscarPorNombre.bind(this)}
               style={{ width: "auto" }}
             >
