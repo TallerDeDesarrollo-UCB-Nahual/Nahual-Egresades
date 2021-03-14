@@ -172,7 +172,7 @@ export class EditarEgresades extends Component {
     let graduateData;
     egresadeAEnviar.nivelInglesId = this.existeNivelIngles(this.state.egresade.nivelIngles)
     egresadeAEnviar = this.obtenerFechaNacimiento(egresadeAEnviar);
-    egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
+    //egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
     egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
     egresadeAEnviar.fechaNacimiento = egresadeAEnviar.fechaNacimiento === "" ? null :  egresadeAEnviar.fechaNacimiento;
     delete egresadeAEnviar.nodo;
@@ -293,12 +293,12 @@ export class EditarEgresades extends Component {
                 <span className="etiquetas">
                   <label htmlFor="telefono">Teléfono de Contacto<br /></label>
                   <Input type="text"
-                    maxLength="10"
+                    maxLength="50"
                     name="celular"
                     placeholder="Celular"
                     value={this.state.egresade.celular}
-                    validators={['matchRegexp:^[0-9]+$']}
-                    errorMessages={['El campo sólo acepta números']}
+                   //  validators={['matchRegexp:^[0-9]+$']}
+                    errorMessages={['Solo se permite 50 caracteres como maximo']}
                     style={{ margin: "0px 15%" }}
                     onChange={this.enCambio}
                   />
@@ -316,6 +316,20 @@ export class EditarEgresades extends Component {
                   />
                 </span>
               </Grid.Column>
+
+              <Grid.Column>
+                <span className="etiquetas">
+                  <label htmlFor="correoOpcional">Correo Electrónico Opcional<br /></label>
+                  <Input type="email"
+                    name="correoOpcional"
+                    placeholder="Correo Opcional"
+                    value={this.state.egresade.correoOpcional}
+                    style={{ margin: "0px 15%" }}
+                    onChange={this.enCambio}
+                  />
+                </span>
+              </Grid.Column>
+
               <Grid.Column>
                 <span className="etiquetas">
                   <label htmlFor="nodo">Nodo<br /></label>
