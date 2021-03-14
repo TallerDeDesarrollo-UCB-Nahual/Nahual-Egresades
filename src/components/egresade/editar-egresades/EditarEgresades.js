@@ -13,6 +13,9 @@ import { OpcionesDeNivelDeIngles } from './opciones-de-seleccion/OpcionesDeNivel
 import { OpcionesDeEstadoLaboral } from './opciones-de-seleccion/OpcionesDeEstadoLaboral.js';
 import { MensajeResultante } from './tipo-de-mensaje/MensajeResultante.js';
 import VistaNoAutorizado from "../../inicio-de-sesion/VistaNoAutorizado"
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+
 
 function obtenerEstadoDepurado(estadoActual) {
   var estadoDepurado = estadoActual;
@@ -28,7 +31,7 @@ function getFechaPorDefecto() {
 function prepararDatosARecuperar(estadoActual) {
   var nombre = estadoActual.nombre;
   var apellido = estadoActual.apellido;
-  var fechaNacimiento = estadoActual.fechaNacimiento != null ? estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec) => acc.concat(fec), "") : getFechaPorDefecto();
+  var fechaNacimiento = estadoActual.fechaNacimiento !== null ? estadoActual.fechaNacimiento.split("T", 1).reduce((acc, fec) => acc.concat(fec), "") : "";
   var esEmpleado = OpcionesDeEstadoLaboral.filter(opcion => opcion.key === (estadoActual.esEmpleado ? 1 : 0))[0].value;
   let estadoDepurado = obtenerEstadoDepurado(estadoActual);
   return { ...estadoDepurado, nombre, apellido, fechaNacimiento, esEmpleado };
@@ -171,6 +174,7 @@ export class EditarEgresades extends Component {
     egresadeAEnviar = this.obtenerFechaNacimiento(egresadeAEnviar);
     egresadeAEnviar.celular = parseInt(egresadeAEnviar.celular);
     egresadeAEnviar.esEmpleado = OpcionesDeEstadoLaboral.filter(op => op.value === this.state.egresade.esEmpleado)[0].valueToSend;
+    egresadeAEnviar.fechaNacimiento = egresadeAEnviar.fechaNacimiento === "" ? null :  egresadeAEnviar.fechaNacimiento;
     delete egresadeAEnviar.nodo;
     delete egresadeAEnviar.sede;
     delete egresadeAEnviar.nivelIngles;
@@ -214,9 +218,32 @@ export class EditarEgresades extends Component {
   filtrarSedes(opcionesSede, valorAConvertir) {
     return opcionesSede.filter(op => op.nodo === valorAConvertir);
   }
+  editarFecha=fecha=>{
+    let estadoDepurado = this.state.egresade;
+    delete estadoDepurado[`fechaNacimiento`];
+    let nuevoEstado = { ...estadoDepurado, [`fechaNacimiento`]: ""};
+    if(fecha != "" && fecha != null){
+      nuevoEstado = { ...estadoDepurado, [`fechaNacimiento`]: fecha.toISOString().split('T')[0]};
+    } 
+    this.setState({ egresade: nuevoEstado });
+  }
+
+  
+  obtenerNuevaFecha() {
+    if(this.state.egresade.fechaNacimiento == undefined || this.state.egresade.fechaNacimiento == ""){
+      return null;
+    }else {
+      const mes = this.state.egresade.fechaNacimiento.substring(5,7);
+      const dia = this.state.egresade.fechaNacimiento.substring(8,10);
+      const anio = this.state.egresade.fechaNacimiento.substring(0,4);
+      const hora = 'T00:00:00';
+      const fecha = anio+'-'+mes+'-'+dia+hora;
+      return new Date(fecha);
+    }
+  }
 
   render() {
-    const { isVisibleErrorMessage, isVisibleSuccessMessage } = this.state;
+    const { isVisibleErrorMessage, isVisibleSuccessMessage, egresade } = this.state;
     return (
       <div className="contenedor">
         <Form id="myForm" onSubmit={() => this.handleConfirmEdition()} className="ui form">
@@ -253,19 +280,14 @@ export class EditarEgresades extends Component {
                 </span>
               </Grid.Column>
               <Grid.Column>
-                <span className="etiquetas">
-                  <label htmlFor="fechaNacimiento">Fecha de Nacimiento<br /></label>
-                  <Input type="date"
-                    name="fechaNacimiento"
-                    pattern="[0-9]*"
-                    placeholder="Fecha de Nacimiento"
-                    value={this.state.egresade.fechaNacimiento}
-                    validators={['required']}
-                    errorMessages={['Este campo es requerido']}
-                    style={{ margin: "0px 15%" }}
-                    onChange={this.enCambio}
-                  />
-                </span>
+                {
+                  <span className="etiquetas"  >
+                    <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
+                    <div  style={{ margin: "0px 12%"}}>
+                    <DatePicker selected={this.obtenerNuevaFecha()} onChange={this.editarFecha}/>
+                    </div>
+                  </span>    
+              }
               </Grid.Column>
               <Grid.Column>
                 <span className="etiquetas">
