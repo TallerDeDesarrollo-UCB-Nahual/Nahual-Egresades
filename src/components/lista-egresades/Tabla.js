@@ -6,11 +6,15 @@ import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
 import './Tablas.css'
+const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
+
 class Nahual_Table extends Component {
   constructor() {
     super();
     this.state = {
       api: [],
+      busqueda: '',
+      egresades: [],
       filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
@@ -52,7 +56,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/DTO`)
+    fetch(`${REACT_APP_EGRESADES_NAHUAL_API}/egresades/DTO`)
       .then(res => {
         return res.json()
       })
@@ -60,9 +64,11 @@ class Nahual_Table extends Component {
         let dat = res;
         this.setState({
           api: dat.response,
+          egresades: dat.response
           filasEncontradas: dat.response
         });
       })
+      
   }
 
   eliminarEgresadesVista(id) {
@@ -81,10 +87,10 @@ class Nahual_Table extends Component {
     this.setState({ mostrarMensajeDeEstado: false })
   }
 
-  buscarPorNombre(nombre) {
-    let buscado = nombre.target.value;
-    let listaEgresades = this.state.api;
-    let resultados = Array(0);
+  onSearchChange = e => {
+    this.setState({busqueda: e.target.value});
+    this.filtrarEgresades();
+  }
 
     if (nombre.target.value.trim() === "") {
       this.setState({
@@ -130,6 +136,8 @@ class Nahual_Table extends Component {
    
   }
 
+
+
   render() {
     return (
       <div>
@@ -152,6 +160,7 @@ class Nahual_Table extends Component {
           <div className="tabla-menu">
             <Search
               showNoResults={false}
+              value = {this.state.busqueda}
               onSearchChange={this.buscarPorNombre.bind(this)}
               style={{ width: "auto" }}
             >
@@ -198,6 +207,7 @@ class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
+            
               {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
