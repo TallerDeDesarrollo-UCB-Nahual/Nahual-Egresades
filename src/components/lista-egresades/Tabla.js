@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Dropdown, Input } from 'semantic-ui-react'
 import Modal from '../egresade/ver-egresade/Modal'
 import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
+import './Tablas.css'
 const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
 
 class Nahual_Table extends Component {
@@ -14,9 +15,32 @@ class Nahual_Table extends Component {
       api: [],
       busqueda: '',
       egresades: [],
+      filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
-      open: false
+      open: false,
+      stateOptions : [
+        {
+          key: 'Todes',
+          text: 'Todes',
+          value: 'Todes',
+          /* label: { color: '', empty: true, circular: true }, */
+        },
+        {
+          key: 'Egresade',
+          text: 'Egresade',
+          value: 'Egresade',
+/*           label: { color: '', empty: true, circular: true },
+ */        },
+        {
+          key: 'Empleade',
+          text: 'Empleade',
+          value: 'Empleade',
+          /* label: { color: '', empty: true, circular: true }, */
+        }
+      ],
+      currentFilter: 'Todes',
+      valueFilter:''
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
@@ -40,7 +64,8 @@ class Nahual_Table extends Component {
         let dat = res;
         this.setState({
           api: dat.response,
-          egresades: dat.response
+          egresades: dat.response,
+          filasEncontradas: dat.response
         });
       })
       
@@ -67,17 +92,52 @@ class Nahual_Table extends Component {
     await this.setState({busqueda: e.target.value});
     this.filtrarEgresades();
   }
+  buscarPorNombre(nombre){
+    let buscado = nombre.target.value;
+    let listaEgresades = this.state.api;
+    let resultados = Array(0);
+    if (nombre.target.value.trim() === "") {
+      this.setState({
+        filasEncontradas: this.state.api
+      });
+    }
+    for (let contador = 0; contador < listaEgresades.length; contador++) {      
+      if (listaEgresades[contador].nombre.toLowerCase().includes(buscado.toLowerCase())) {
+        /* if(listaEgresades[contador].esEmpleado) {
+          resultados.push(listaEgresades[contador]);
+        } */
 
-  filtrarEgresades = () =>{
-    var search = this.state.api.filter(item=>{
-      if((item.nombre.toLowerCase() + ' ' + item.apellido.toLowerCase()).includes(this.state.busqueda.toLowerCase()) ||
-        item.nodo.toLowerCase().includes(this.state.busqueda.toLowerCase()) ||
-        item.sede.toLowerCase().includes(this.state.busqueda.toLowerCase()) 
-      ){
-        return item;
+        switch (this.state.currentFilter) {
+          case 'Egresade':
+              if(!listaEgresades[contador].esEmpleado) {
+                resultados.push(listaEgresades[contador]);
+              }
+            break;
+          case 'Empleade':
+              if(listaEgresades[contador].esEmpleado) {
+                resultados.push(listaEgresades[contador]);
+              }
+            break;
+          default:
+              resultados.push(listaEgresades[contador]);
+        }
       }
-    })
-    this.setState({egresades: search});
+    }
+    this.setState({
+      filasEncontradas: resultados,
+      valueFilter: nombre.target.value
+    },()=>{});
+  }
+
+  activeFilter(filter){
+    console.log(filter)
+    this.setState({
+      currentFilter: filter
+    },()=>{ 
+      this.buscarPorNombre(
+      {target:{value:this.state.valueFilter}}
+    )});
+   
   }
 
 
@@ -104,8 +164,8 @@ class Nahual_Table extends Component {
           <div className="tabla-menu">
             <Search
               showNoResults={false}
-              onSearchChange={this.onSearchChange}
-              value = {this.state.busqueda}
+      
+              onSearchChange={this.buscarPorNombre.bind(this)}
               style={{ width: "auto" }}
             >
             </Search>
@@ -114,6 +174,30 @@ class Nahual_Table extends Component {
               <ModalDeImportar onClick={this.enRegistroExitoso} />
             </div>
           </div>
+
+          <Dropdown
+            text={this.state.currentFilter}
+            icon='filter'
+            floating
+            labeled
+            button
+            className='icon'
+          >
+            <Dropdown.Menu>
+              
+              <Dropdown.Divider />
+              <Dropdown.Header icon='tags' content='Estados' />
+              <Dropdown.Menu scrolling>
+                {this.state.stateOptions.map((option) => (
+                  <Dropdown.Item 
+                  active={option.value === this.state.currentFilter}
+                  key={option.value} {...option} 
+                  onClick={()=>{this.activeFilter(option.value)}}
+                  />
+                ))}
+              </Dropdown.Menu>
+            </Dropdown.Menu>
+          </Dropdown>
           <br /><br />
           <Table celled className="tarjeta-tabla">
             <Table.Header>
@@ -127,7 +211,8 @@ class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.egresades.map((value) => (
+            
+              {this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
               <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
