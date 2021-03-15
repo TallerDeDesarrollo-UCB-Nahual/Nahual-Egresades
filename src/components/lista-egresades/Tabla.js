@@ -21,6 +21,7 @@ class Nahual_Table extends Component {
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
       open: false,
+      cargando: true,
       stateOptions : [
         {
           key: 'Todes',
@@ -42,8 +43,7 @@ class Nahual_Table extends Component {
         }
       ],
       currentFilter: 'Todes',
-      valueFilter:'',
-      cargando: true
+      valueFilter:''
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
