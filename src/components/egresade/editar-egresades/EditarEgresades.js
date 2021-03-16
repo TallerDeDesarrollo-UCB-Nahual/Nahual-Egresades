@@ -282,9 +282,11 @@ export class EditarEgresades extends Component {
               <Grid.Column>
                 {
                   <span className="etiquetas"  >
-                    <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
+                    <label htmlFor="fechaNacimiento">Fecha de Nacimiento (MM/DD/AAAA)</label>
                     <div  style={{ margin: "0px 12%"}}>
-                    <DatePicker selected={this.obtenerNuevaFecha()} onChange={this.editarFecha}/>
+                    <DatePicker
+                    selected={this.obtenerNuevaFecha()} 
+                    onChange={this.editarFecha}/>
                     </div>
                   </span>    
               }

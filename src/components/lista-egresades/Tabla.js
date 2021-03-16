@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { Label, Button, Message, Table, Search, Segment, Dropdown, Input } from 'semantic-ui-react'
-import Modal from '../egresade/ver-egresade/Modal'
-import '../../public/stylesheets/Table.css';
 import { Link } from 'react-router-dom';
+import { OpcionesDeFiltro } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeFiltro.js';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
 import './Tablas.css'
 import { Dimmer, Loader } from "semantic-ui-react";
 
+import '../../public/stylesheets/Table.css';
+import Modal from '../egresade/ver-egresade/Modal';
 const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
 
 class Nahual_Table extends Component {
@@ -21,29 +22,9 @@ class Nahual_Table extends Component {
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
       open: false,
-      cargando: true,
-      stateOptions : [
-        {
-          key: 'Todes',
-          text: 'Todes',
-          value: 'Todes',
-          /* label: { color: '', empty: true, circular: true }, */
-        },
-        {
-          key: 'Egresade',
-          text: 'Egresade',
-          value: 'Egresade',
-/*           label: { color: '', empty: true, circular: true },
- */        },
-        {
-          key: 'Empleade',
-          text: 'Empleade',
-          value: 'Empleade',
-          /* label: { color: '', empty: true, circular: true }, */
-        }
-      ],
       currentFilter: 'Todes',
-      valueFilter:''
+      valueFilter:'',
+      cargando: true
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
@@ -91,10 +72,13 @@ class Nahual_Table extends Component {
     this.setState({ mostrarMensajeDeEstado: false })
   }
 
-  onSearchChange = e => {
-    this.setState({busqueda: e.target.value});
+  onSearchChange = async e => {
+    e.persist();
+    await this.setState({busqueda: e.target.value});
     this.filtrarEgresades();
   }
+
+  
   buscarPorNombre(nombre){
     let buscado = nombre.target.value;
     let listaEgresades = this.state.api;
@@ -105,7 +89,9 @@ class Nahual_Table extends Component {
       });
     }
     for (let contador = 0; contador < listaEgresades.length; contador++) {      
-      if (listaEgresades[contador].nombre.toLowerCase().includes(buscado.toLowerCase())) {
+      if ((listaEgresades[contador].nombre.toLowerCase()+" "+listaEgresades[contador].apellido.toLowerCase()).includes(buscado.toLowerCase()) ||
+      listaEgresades[contador].nodo.toLowerCase().includes(buscado.toLowerCase()) ||
+      listaEgresades[contador].sede.toLowerCase().includes(buscado.toLowerCase())) {
         /* if(listaEgresades[contador].esEmpleado) {
           resultados.push(listaEgresades[contador]);
         } */
@@ -191,7 +177,7 @@ class Nahual_Table extends Component {
               <Dropdown.Divider />
               <Dropdown.Header icon='tags' content='Estados' />
               <Dropdown.Menu scrolling>
-                {this.state.stateOptions.map((option) => (
+                {OpcionesDeFiltro.map((option) => (
                   <Dropdown.Item 
                   active={option.value === this.state.currentFilter}
                   key={option.value} {...option} 
@@ -220,7 +206,7 @@ class Nahual_Table extends Component {
                   <div class="ui active centered inline loader"></div>
                 </td>
               </Table.Row>) :
-              (this.state.egresades.map((value) => (
+              (this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
               <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
