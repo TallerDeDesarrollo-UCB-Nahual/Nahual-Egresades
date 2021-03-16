@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search, Dropdown, Input } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Segment, Dropdown, Input } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { OpcionesDeFiltro } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeFiltro.js';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
@@ -23,7 +23,8 @@ class Nahual_Table extends Component {
       mostrarMensajeDeEstado: false,
       open: false,
       currentFilter: 'Todes',
-      valueFilter:''
+      valueFilter:'',
+      cargando: true
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
@@ -205,7 +206,7 @@ class Nahual_Table extends Component {
                   <div class="ui active centered inline loader"></div>
                 </td>
               </Table.Row>) :
-              (this.state.egresades.map((value) => (
+              (this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
               <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
