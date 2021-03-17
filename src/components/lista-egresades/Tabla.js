@@ -1,20 +1,30 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search } from 'semantic-ui-react'
-import Modal from '../egresade/ver-egresade/Modal'
-import '../../public/stylesheets/Table.css';
+import { Label, Button, Message, Table, Search, Segment, Dropdown, Input } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
+import { OpcionesDeFiltro } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeFiltro.js';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
+import './Tablas.css'
+import { Dimmer, Loader } from "semantic-ui-react";
+
+import '../../public/stylesheets/Table.css';
+import Modal from '../egresade/ver-egresade/Modal';
+const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
 
 class Nahual_Table extends Component {
   constructor() {
     super();
     this.state = {
       api: [],
+      busqueda: '',
+      egresades: [],
       filasEncontradas: Array(0),
       mensajeDeEstado: "",
       mostrarMensajeDeEstado: false,
-      open: false
+      open: false,
+      currentFilter: 'Todes',
+      valueFilter:'',
+      cargando: true
     }
     this.enRegistroExitoso = this.enRegistroExitoso.bind(this)
   }
@@ -30,7 +40,7 @@ class Nahual_Table extends Component {
   }
 
   obtenerEgresades() {
-    fetch(`${process.env.REACT_APP_EGRESADES_NAHUAL_API}/egresades/DTO`)
+    fetch(`${REACT_APP_EGRESADES_NAHUAL_API}/egresades/DTO`)
       .then(res => {
         return res.json()
       })
@@ -38,9 +48,12 @@ class Nahual_Table extends Component {
         let dat = res;
         this.setState({
           api: dat.response,
-          filasEncontradas: dat.response
+          egresades: dat.response,
+          filasEncontradas: dat.response,
+          cargando: false
         });
       })
+      
   }
 
   eliminarEgresadesVista(id) {
@@ -59,25 +72,64 @@ class Nahual_Table extends Component {
     this.setState({ mostrarMensajeDeEstado: false })
   }
 
-  buscarPorNombre(nombre) {
+  onSearchChange = async e => {
+    e.persist();
+    await this.setState({busqueda: e.target.value});
+    this.filtrarEgresades();
+  }
+
+  
+  buscarPorNombre(nombre){
     let buscado = nombre.target.value;
     let listaEgresades = this.state.api;
     let resultados = Array(0);
-
     if (nombre.target.value.trim() === "") {
       this.setState({
         filasEncontradas: this.state.api
       });
     }
-    for (let contador = 0; contador < listaEgresades.length; contador++) {
-      if (listaEgresades[contador].nombre.toLowerCase().includes(buscado.toLowerCase())) {
-        resultados.push(listaEgresades[contador]);
+    for (let contador = 0; contador < listaEgresades.length; contador++) {      
+      if ((listaEgresades[contador].nombre.toLowerCase()+" "+listaEgresades[contador].apellido.toLowerCase()).includes(buscado.toLowerCase()) ||
+      listaEgresades[contador].nodo.toLowerCase().includes(buscado.toLowerCase()) ||
+      listaEgresades[contador].sede.toLowerCase().includes(buscado.toLowerCase())) {
+        /* if(listaEgresades[contador].esEmpleado) {
+          resultados.push(listaEgresades[contador]);
+        } */
+
+        switch (this.state.currentFilter) {
+          case 'Egresade':
+              if(!listaEgresades[contador].esEmpleado) {
+                resultados.push(listaEgresades[contador]);
+              }
+            break;
+          case 'Empleade':
+              if(listaEgresades[contador].esEmpleado) {
+                resultados.push(listaEgresades[contador]);
+              }
+            break;
+          default:
+              resultados.push(listaEgresades[contador]);
+        }
       }
     }
     this.setState({
-      filasEncontradas: resultados
-    });
+      filasEncontradas: resultados,
+      valueFilter: nombre.target.value
+    },()=>{});
   }
+
+  activeFilter(filter){
+    console.log(filter)
+    this.setState({
+      currentFilter: filter
+    },()=>{ 
+      this.buscarPorNombre(
+      {target:{value:this.state.valueFilter}}
+    )});
+   
+  }
+
+
 
   render() {
     return (
@@ -101,6 +153,7 @@ class Nahual_Table extends Component {
           <div className="tabla-menu">
             <Search
               showNoResults={false}
+      
               onSearchChange={this.buscarPorNombre.bind(this)}
               style={{ width: "auto" }}
             >
@@ -110,6 +163,30 @@ class Nahual_Table extends Component {
               <ModalDeImportar onClick={this.enRegistroExitoso} />
             </div>
           </div>
+
+          <Dropdown
+            text={this.state.currentFilter}
+            icon='filter'
+            floating
+            labeled
+            button
+            className='icon'
+          >
+            <Dropdown.Menu>
+              
+              <Dropdown.Divider />
+              <Dropdown.Header icon='tags' content='Estados' />
+              <Dropdown.Menu scrolling>
+                {OpcionesDeFiltro.map((option) => (
+                  <Dropdown.Item 
+                  active={option.value === this.state.currentFilter}
+                  key={option.value} {...option} 
+                  onClick={()=>{this.activeFilter(option.value)}}
+                  />
+                ))}
+              </Dropdown.Menu>
+            </Dropdown.Menu>
+          </Dropdown>
           <br /><br />
           <Table celled className="tarjeta-tabla">
             <Table.Header>
@@ -123,7 +200,13 @@ class Nahual_Table extends Component {
             </Table.Header>
 
             <Table.Body>
-              {this.state.filasEncontradas.map((value) => (
+              {this.state.cargando? 
+              (<Table.Row>
+                <td colSpan="5">
+                  <div class="ui active centered inline loader"></div>
+                </td>
+              </Table.Row>) :
+              (this.state.filasEncontradas.map((value) => (
                 <Table.Row key={value.id} >
                   <Table.Cell className="bordes-tabla">
               <Label className="nombre">{value.nombre} {value.apellido}</Label><br></br>
@@ -148,15 +231,9 @@ class Nahual_Table extends Component {
                     <Eliminar egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Eliminar>
                   </Table.Cell>
                 </Table.Row>
-              ))}
+              )))
+              }
             </Table.Body>
-
-            <Table.Footer>
-              <Table.Row>
-                <Table.HeaderCell colSpan='4' className="no-border">
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Footer>
           </Table>
 
         </div>
