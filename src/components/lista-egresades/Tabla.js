@@ -6,6 +6,7 @@ import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
 import './Tablas.css'
 import { Dimmer, Loader } from "semantic-ui-react";
+import GenerarCertificado from  "../certificacion/GenerarCertificado"
 
 import '../../public/stylesheets/Table.css';
 import Modal from '../egresade/ver-egresade/Modal';
@@ -128,6 +129,12 @@ class Nahual_Table extends Component {
     )});
    
   }
+  certificado(){
+    console.log("entracertificado");
+    return(
+      <GenerarCertificado></GenerarCertificado>
+    )
+  }
 
 
 
@@ -229,6 +236,11 @@ class Nahual_Table extends Component {
 
                     <Modal egresadeId={value.id} open={this.state.mostrarModal} />
                     <Eliminar egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Eliminar>
+                    {<Link to={`/certificado`}><Button className="view-button">
+                      <i className="edit icon"></i>
+                      <label className="icon-text">Generar Certificado</label>
+                    </Button></Link>}
+                   
                   </Table.Cell>
                 </Table.Row>
               )))

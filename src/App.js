@@ -6,7 +6,8 @@ import EditarEgresades from './components/egresade/editar-egresades/EditarEgresa
 import EncabezadoDeRegistrar from './components/egresade/editar-egresades/EncabezadoDeRegistrar.js';
 import Nahual_Table from './components/lista-egresades/Tabla';
 import InicioSesion from "./components/inicio-de-sesion/InicioSesion";
-import Autenticado from "./components/inicio-de-sesion/Autenticado"
+import Autenticado from "./components/inicio-de-sesion/Autenticado";
+import GenerarCertificado from "./components/certificacion/GenerarCertificado"
 import { useAuth0 } from "@auth0/auth0-react";
 function App() {
   const { isAuthenticated: estaAutenticado } = useAuth0();
@@ -17,6 +18,7 @@ function App() {
         {estaAutenticado ? <Autenticado /> : <InicioSesion />}
         <Switch>
             <Route exact path="/listaEgresades" component={Nahual_Table}/>
+            <Route exact path="/certificado" component={GenerarCertificado}/>
             <Route exact path="/editar/:id" render={ (props) =>(
               <React.Fragment>   
               <EncabezadoDeRegistrar/> 
