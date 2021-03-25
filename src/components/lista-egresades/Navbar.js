@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../../public/imagenes/logo.png';
 import '../../public/stylesheets/Navbar.css';
 import BarraNavegacionAutenticacion from "./../inicio-de-sesion/BarraNavegacionAutenticacion";
+import Nahual_Estadisticas from '../estadisticas/barras/Test.js';
 
 export default class Navbar extends Component {
 

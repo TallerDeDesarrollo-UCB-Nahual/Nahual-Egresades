@@ -9,7 +9,13 @@ import { Dimmer, Loader } from "semantic-ui-react";
 
 import '../../public/stylesheets/Table.css';
 import Modal from '../egresade/ver-egresade/Modal';
+import { Menu } from 'semantic-ui-react'
+import Nahual_NavTest from '../Menu/Menu'
+
+
 const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
+// new
+
 
 class Nahual_Table extends Component {
   constructor() {
@@ -88,6 +94,7 @@ class Nahual_Table extends Component {
         filasEncontradas: this.state.api
       });
     }
+  
     for (let contador = 0; contador < listaEgresades.length; contador++) {      
       if ((listaEgresades[contador].nombre.toLowerCase()+" "+listaEgresades[contador].apellido.toLowerCase()).includes(buscado.toLowerCase()) ||
       listaEgresades[contador].nodo.toLowerCase().includes(buscado.toLowerCase()) ||
@@ -129,13 +136,23 @@ class Nahual_Table extends Component {
    
   }
 
-
-
   render() {
     return (
       <div>
+   
+   <React.Fragment>
+              <Nahual_NavTest/>
+          </React.Fragment>
         <div className="tabla">
-          <p className="titulo">Lista de Egresades</p>
+
+
+          <p className="titulo" style={{  textAlign : "center"}} >Lista de Egresades</p>
+
+          {/* 
+          {<Link to={`/estadisticas`}>
+            <p className="titulo">Estadisticas</p>
+          </Link>} */}
+
           <div className="linea"></div>
           <div>
             {this.state.mostrarMensajeDeEstado ?
