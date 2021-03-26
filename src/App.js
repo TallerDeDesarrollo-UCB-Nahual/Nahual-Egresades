@@ -18,7 +18,7 @@ function App() {
         {estaAutenticado ? <Autenticado /> : <InicioSesion />}
         <Switch>
             <Route exact path="/listaEgresades" component={Nahual_Table}/>
-            <Route exact path="/certificado" component={GenerarCertificado}/>
+            <Route exact path="/certificado/:id" component={GenerarCertificado}/>
             <Route exact path="/editar/:id" render={ (props) =>(
               <React.Fragment>   
               <EncabezadoDeRegistrar/> 

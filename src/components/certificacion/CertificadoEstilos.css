@@ -1,0 +1,27 @@
+.Post{
+    width: 108vh;
+    display: table;
+    padding: 20px 50px;
+    background-image:url("../../public/imagenes/diploma.jpg");
+    background-size: 108vh 76.29vh;
+    min-height: 76.29vh;
+    background-repeat: no-repeat;
+    
+}
+
+.img{
+  width: 100vh;
+}
+
+.nombreEgresade{
+  margin-left: 18%!important;
+}
+
+.nodoEgresade
+{
+  margin-top:22.2%!important; 
+  margin-right: 20%;
+  text-align:right;
+  color:white;
+  text-transform: uppercase;
+}
