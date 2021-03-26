@@ -263,6 +263,19 @@ export class EditarEgresades extends Component {
     }
   }
 
+  obtenerNuevaFechaPrimerTrabajo() {
+    if(this.state.egresade.fechaPrimerEmpleo == undefined || this.state.egresade.fechaPrimerEmpleo == ""){
+      return null;
+    }else {
+      const mes = this.state.egresade.fechaPrimerEmpleo.substring(5,7);
+      const dia = this.state.egresade.fechaPrimerEmpleo.substring(8,10);
+      const anio = this.state.egresade.fechaPrimerEmpleo.substring(0,4);
+      const hora = 'T00:00:00';
+      const fecha = anio+'-'+mes+'-'+dia+hora;
+      return new Date(fecha);
+    }
+  }
+
   render() {
     const { isVisibleErrorMessage, isVisibleSuccessMessage, egresade } = this.state;
     return (
@@ -498,9 +511,22 @@ export class EditarEgresades extends Component {
                   />
                 </span>
               </Grid.Column>
+              {(this.state.egresade.nombrePrimerTrabajo !== "" && this.state.egresade.nombrePrimerTrabajo !== null) &&
+              <Grid.Column>
+              {
+                  <span className="etiquetas"  >
+                    <label htmlFor="fechaPrimerEmpleo">Fecha de primer empleo (DD/MM/AAAA)</label>
+                    <div  style={{ margin: "0px 12%"}}>
+                    <DatePicker
+                    selected={this.obtenerNuevaFechaPrimerTrabajo()} 
+                    onChange={this.editarFechaTrabajoActual}/>
+                    </div>
+                  </span>    
+              }
+              </Grid.Column>
+              }
             </Grid.Row>
             <Grid.Row columns={2}>
-              
               <Grid.Column>
                 <span className="etiquetas">
                   <label for="añoGraduacion">Año de Graduación<br /></label>

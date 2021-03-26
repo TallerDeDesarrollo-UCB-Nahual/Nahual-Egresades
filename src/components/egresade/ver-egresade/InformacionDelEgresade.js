@@ -71,10 +71,18 @@ function InformacionDelEgresade({ egresade }) {
                 <Input>  {egresade.fechaActualTrabajo != null ? mañana.toLocaleDateString('es') : "Sin Fecha"} </Input>
               </Form.Field>
             }
+            {(egresade.nombrePrimerTrabajo !== "" && egresade.nombrePrimerTrabajo !== null) &&
               <Form.Field inline>
                 <label><Icon name='briefcase' /><span className="title-data"> Primer empleo:</span></label>
                 <Input> {egresade.nombrePrimerTrabajo} </Input>
               </Form.Field>
+            }
+            {(egresade.nombrePrimerTrabajo !== "" && egresade.nombrePrimerTrabajo !== null) &&
+              <Form.Field inline>
+                <label><Icon name='calendar outline' /><span className="title-data"> Fecha obtencion primer empleo:</span></label>
+                <Input>  {egresade.fechaPrimerEmpleo != null ? mañana.toLocaleDateString('es') : "Sin Fecha"} </Input>
+              </Form.Field>
+            }
 
             </Form>
           </Item.Description>
