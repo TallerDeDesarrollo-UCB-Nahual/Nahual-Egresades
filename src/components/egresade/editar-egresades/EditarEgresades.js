@@ -227,7 +227,15 @@ export class EditarEgresades extends Component {
     } 
     this.setState({ egresade: nuevoEstado });
   }
-
+  editarFechaTrabajoActual=fecha=>{
+    let estadoDepurado = this.state.egresade;
+    delete estadoDepurado[`fechaActualTrabajo`];
+    let nuevoEstado = { ...estadoDepurado, [`fechaActualTrabajo`]: ""};
+    if(fecha != "" && fecha != null){
+      nuevoEstado = { ...estadoDepurado, [`fechaActualTrabajo`]: fecha.toISOString().split('T')[0]};
+    } 
+    this.setState({ egresade: nuevoEstado });
+  }
   
   obtenerNuevaFecha() {
     if(this.state.egresade.fechaNacimiento == undefined || this.state.egresade.fechaNacimiento == ""){
@@ -236,6 +244,19 @@ export class EditarEgresades extends Component {
       const mes = this.state.egresade.fechaNacimiento.substring(5,7);
       const dia = this.state.egresade.fechaNacimiento.substring(8,10);
       const anio = this.state.egresade.fechaNacimiento.substring(0,4);
+      const hora = 'T00:00:00';
+      const fecha = anio+'-'+mes+'-'+dia+hora;
+      return new Date(fecha);
+    }
+  }
+
+  obtenerNuevaFechaActualTrabajo() {
+    if(this.state.egresade.fechaActualTrabajo == undefined || this.state.egresade.fechaActualTrabajo == ""){
+      return null;
+    }else {
+      const mes = this.state.egresade.fechaActualTrabajo.substring(5,7);
+      const dia = this.state.egresade.fechaActualTrabajo.substring(8,10);
+      const anio = this.state.egresade.fechaActualTrabajo.substring(0,4);
       const hora = 'T00:00:00';
       const fecha = anio+'-'+mes+'-'+dia+hora;
       return new Date(fecha);
@@ -413,6 +434,7 @@ export class EditarEgresades extends Component {
                 </span>
               </Grid.Column>
             </Grid.Row>
+
             <Grid.Row columns={2}>
               <Grid.Column className="centrarColumnas">
                 <span className="etiquetas">
@@ -427,10 +449,41 @@ export class EditarEgresades extends Component {
                     style={{ margin: "0px 15%" }}
                     selection
                   />
-
                 </span>
               </Grid.Column>
+              {
+                (OpcionesDeEstadoLaboral[1].value === this.state.egresade.esEmpleado) &&
+
               <Grid.Column>
+              {
+                  <span className="etiquetas"  >
+                    <label htmlFor="fechaActualTrabajo">Fecha de obtencion trabajo (DD/MM/AAAA)</label>
+                    <div  style={{ margin: "0px 12%"}}>
+                    <DatePicker
+                    selected={this.obtenerNuevaFechaActualTrabajo()} 
+                    onChange={this.editarFechaTrabajoActual}/>
+                    </div>
+                  </span>    
+              }
+              </Grid.Column>
+            }
+              { (OpcionesDeEstadoLaboral[1].value === this.state.egresade.esEmpleado) &&
+                <Grid.Column>
+                <span className="etiquetas">
+                  <label htmlFor="correo">Lugar de trabajo(Area tecnologica)<br /></label>
+                  <Input type="text"
+                    name="lugarActualTrabajo"
+                    placeholder="empresa actual trabajo"
+                    value={this.state.egresade.lugarActualTrabajo}
+                    style={{ margin: "0px 15%" }}
+                    onChange={this.enCambio}
+                  />
+                </span>
+              </Grid.Column>
+              }
+            </Grid.Row>
+            <Grid.Row columns={2}>
+            <Grid.Column>
                 <span className="etiquetas">
                   <label htmlFor="nombrePrimerTrabajo">Nombre Primer Empleo<br /></label>
                   <Input type="text"
@@ -445,6 +498,9 @@ export class EditarEgresades extends Component {
                   />
                 </span>
               </Grid.Column>
+            </Grid.Row>
+            <Grid.Row columns={2}>
+              
               <Grid.Column>
                 <span className="etiquetas">
                   <label for="añoGraduacion">Año de Graduación<br /></label>
