@@ -1,27 +1,31 @@
-.Post{
-    width: 108vh;
+.certificado{
+    width: 122vh;
+    height: 85vh;
     display: table;
-    padding: 20px 50px;
     background-image:url("../../public/imagenes/diploma.jpg");
-    background-size: 108vh 76.29vh;
-    min-height: 76.29vh;
+    background-size: 122vh 85vh;
+    background-position: center;
+    min-height: 85vh;
     background-repeat: no-repeat;
-    
-}
-
-.img{
-  width: 100vh;
+    margin-right: auto !important;
+    margin-left: auto !important;    
 }
 
 .nombreEgresade{
-  margin-left: 18%!important;
+  margin-left: 21%!important;
+  font-size:50px
 }
 
 .nodoEgresade
 {
-  margin-top:22.2%!important; 
-  margin-right: 20%;
+  margin-top:22%!important; 
+  margin-right: 23%;
   text-align:right;
   color:white;
   text-transform: uppercase;
+  
+}
+.pdfBotones{
+  text-align: center;
+  margin-top: 2%;
 }
