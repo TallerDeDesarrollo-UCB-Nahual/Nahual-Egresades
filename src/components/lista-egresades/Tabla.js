@@ -52,6 +52,7 @@ class Nahual_Table extends Component {
       })
       .then(res => {
         let dat = res;
+        console.log(dat.response)
         this.setState({
           api: dat.response,
           egresades: dat.response,
@@ -59,7 +60,6 @@ class Nahual_Table extends Component {
           cargando: false
         });
       })
-      
   }
 
   eliminarEgresadesVista(id) {
@@ -139,21 +139,14 @@ class Nahual_Table extends Component {
   render() {
     return (
       <div>
-   
-   <React.Fragment>
-              <Nahual_NavTest/>
-          </React.Fragment>
-        <div className="tabla">
+        <Nahual_NavTest/>
 
-
-          <p className="titulo" style={{  textAlign : "center"}} >Lista de Egresades</p>
-
-          {/* 
-          {<Link to={`/estadisticas`}>
-            <p className="titulo">Estadisticas</p>
-          </Link>} */}
-
-          <div className="linea"></div>
+        <p className="titulo" style={{  textAlign : "center"}} >Lista de Egresades</p>
+        <div className="linea"></div>
+          
+              
+          
+        <div className="tabla">   
           <div>
             {this.state.mostrarMensajeDeEstado ?
               <Message

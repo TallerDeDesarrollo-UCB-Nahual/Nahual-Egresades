@@ -5,7 +5,7 @@ import Navbar from './components/lista-egresades/Navbar';
 import EditarEgresades from './components/egresade/editar-egresades/EditarEgresades.js'; 
 import EncabezadoDeRegistrar from './components/egresade/editar-egresades/EncabezadoDeRegistrar.js';
 import Nahual_Table from './components/lista-egresades/Tabla';
-import Nahual_Estadisticas from './components/estadisticas/barras/Test';
+import Nahual_Estadisticas from './components/estadisticas/Estadisticas';
 import Nahual_Menu from './components/Menu/Menu';
 import InicioSesion from "./components/inicio-de-sesion/InicioSesion";
 import Autenticado from "./components/inicio-de-sesion/Autenticado"
@@ -18,20 +18,22 @@ function App() {
         <Navbar/>
         {estaAutenticado ? <Autenticado /> : <InicioSesion />}
         <Switch>
-            <Route exact path="/listaEgresades" component={Nahual_Table}/>
-     
-            <Route exact path="/estadisticas" render={ () =>(
-              <React.Fragment>
-                <Nahual_Estadisticas/>
-              </React.Fragment>
-            )}/>
 
-            <Route exact path="/editar/:id" render={ (props) =>(
-              <React.Fragment>   
-                <EncabezadoDeRegistrar/> 
-                <EditarEgresades {...props} />
-              </React.Fragment>
-            )}/>
+          <Route exact path="/" component={Nahual_Menu}/>
+
+          <Route exact path="/listaEgresades" component={Nahual_Table}/>
+          
+          <Route exact path="/estadisticas" render={ () =>(
+            <React.Fragment>
+              <Nahual_Estadisticas/>
+            </React.Fragment>
+          )}/>
+          <Route exact path="/editar/:id" render={ (props) =>(
+            <React.Fragment>   
+              <EncabezadoDeRegistrar/> 
+              <EditarEgresades {...props} />
+            </React.Fragment>
+          )}/>
         </Switch>
       </div>
   );

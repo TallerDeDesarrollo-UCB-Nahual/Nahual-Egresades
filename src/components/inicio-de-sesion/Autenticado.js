@@ -63,7 +63,7 @@ static contextType = Auth0Context;
     return (
       <>
         {this.iconoDeCarga()}
-        {(this.state.validado === true) && <Redirect to="/listaEgresades"/>}
+        {(this.state.validado === true) && <Redirect to="/"/>}
         {(this.state.validado === false) && <React.StrictMode><VistaNoAutorizado datosUsuario={this.state.datosRecuperados}/></React.StrictMode>}
       </>
     );
