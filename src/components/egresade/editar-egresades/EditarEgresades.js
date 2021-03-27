@@ -483,6 +483,7 @@ export class EditarEgresades extends Component {
                     <label htmlFor="fechaActualTrabajo">Fecha de obtencion trabajo (DD/MM/AAAA)</label>
                     <div  style={{ margin: "0px 12%"}}>
                     <DatePicker
+                    dateFormat={"dd/MM/yyyy"}
                     selected={this.obtenerNuevaFechaActualTrabajo()} 
                     onChange={this.editarFechaTrabajoActual}/>
                     </div>
@@ -528,6 +529,7 @@ export class EditarEgresades extends Component {
                     <label htmlFor="fechaPrimerEmpleo">Fecha de primer empleo (DD/MM/AAAA)</label>
                     <div  style={{ margin: "0px 12%"}}>
                     <DatePicker
+                    dateFormat={"dd/MM/yyyy"}
                     selected={this.obtenerNuevaFechaPrimerTrabajo()} 
                     onChange={this.editarFechaPrimerEmpleo}/>
                     </div>

@@ -15,6 +15,11 @@ function InformacionDelEgresade({ egresade }) {
   var hoy = new Date(egresade.fechaNacimiento);
   var mañana = new Date(hoy);
   mañana.setDate(hoy.getDate()+1);
+
+  var actualTrabajo = new Date(egresade.fechaActualTrabajo);
+
+  var primerEmpleo = new Date(egresade.fechaPrimerEmpleo);
+
   console.log(egresade.esEmpleado);
   return (
     <Item.Group>
@@ -68,7 +73,7 @@ function InformacionDelEgresade({ egresade }) {
             {              egresade.esEmpleado===true&&
               <Form.Field inline>
                 <label><Icon name='calendar outline' /><span className="title-data"> Fecha obtencion empleo actual:</span></label>
-                <Input>  {egresade.fechaActualTrabajo != null ? mañana.toLocaleDateString('es') : "Sin Fecha"} </Input>
+                <Input>  {egresade.fechaActualTrabajo != null ? actualTrabajo.toLocaleDateString('en-GB') : "Sin Fecha"} </Input>
               </Form.Field>
             }
             {(egresade.nombrePrimerTrabajo !== "" && egresade.nombrePrimerTrabajo !== null) &&
@@ -80,7 +85,7 @@ function InformacionDelEgresade({ egresade }) {
             {(egresade.nombrePrimerTrabajo !== "" && egresade.nombrePrimerTrabajo !== null) &&
               <Form.Field inline>
                 <label><Icon name='calendar outline' /><span className="title-data"> Fecha obtencion primer empleo:</span></label>
-                <Input>  {egresade.fechaPrimerEmpleo != null ? mañana.toLocaleDateString('es') : "Sin Fecha"} </Input>
+                <Input>  {egresade.fechaPrimerEmpleo != null ? primerEmpleo.toLocaleDateString('en-GB') : "Sin Fecha"} </Input>
               </Form.Field>
             }
 
