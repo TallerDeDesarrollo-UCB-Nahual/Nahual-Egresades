@@ -237,6 +237,7 @@ export class EditarEgresades extends Component {
     this.setState({ egresade: nuevoEstado });
   }
   
+  
   obtenerNuevaFecha() {
     if(this.state.egresade.fechaNacimiento == undefined || this.state.egresade.fechaNacimiento == ""){
       return null;
@@ -274,6 +275,15 @@ export class EditarEgresades extends Component {
       const fecha = anio+'-'+mes+'-'+dia+hora;
       return new Date(fecha);
     }
+  }
+  editarFechaPrimerEmpleo=fecha=>{
+    let estadoDepurado = this.state.egresade;
+    delete estadoDepurado[`fechaPrimerEmpleo`];
+    let nuevoEstado = { ...estadoDepurado, [`fechaPrimerEmpleo`]: ""};
+    if(fecha != "" && fecha != null){
+      nuevoEstado = { ...estadoDepurado, [`fechaPrimerEmpleo`]: fecha.toISOString().split('T')[0]};
+    } 
+    this.setState({ egresade: nuevoEstado });
   }
 
   render() {
@@ -519,7 +529,7 @@ export class EditarEgresades extends Component {
                     <div  style={{ margin: "0px 12%"}}>
                     <DatePicker
                     selected={this.obtenerNuevaFechaPrimerTrabajo()} 
-                    onChange={this.editarFechaTrabajoActual}/>
+                    onChange={this.editarFechaPrimerEmpleo}/>
                     </div>
                   </span>    
               }
