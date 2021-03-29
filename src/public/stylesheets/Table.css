@@ -1,5 +1,5 @@
 .tabla{
-    margin: 40px;
+    margin: 20px;
 }
 
 .titulo{
@@ -116,4 +116,12 @@
 }
 .search {
     float: left;
+}
+.ui.button.floating.labeled.dropdown.icon{
+    margin-left: 15px;
+    background-color: #87D734;
+}
+
+.divider.text{
+    color: black;
 }

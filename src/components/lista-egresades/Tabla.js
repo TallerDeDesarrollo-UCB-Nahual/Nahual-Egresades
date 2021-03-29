@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search, Segment, Dropdown, Input } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { OpcionesDeFiltro } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeFiltro.js';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
-import './Tablas.css'
-import { Dimmer, Loader } from "semantic-ui-react";
-import GenerarCertificado from  "../certificacion/GenerarCertificado"
-
-import '../../public/stylesheets/Table.css';
+import GenerarCertificado from '../certificacion/GenerarCertificado'
 import Modal from '../egresade/ver-egresade/Modal';
-const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
+import Nahual_Menu from '../Menu/Menu'
+import '../../public/stylesheets/Table.css';
 
+const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
 class Nahual_Table extends Component {
   constructor() {
     super();
@@ -54,7 +52,6 @@ class Nahual_Table extends Component {
           cargando: false
         });
       })
-      
   }
 
   eliminarEgresadesVista(id) {
@@ -89,13 +86,11 @@ class Nahual_Table extends Component {
         filasEncontradas: this.state.api
       });
     }
+  
     for (let contador = 0; contador < listaEgresades.length; contador++) {      
-      if ((listaEgresades[contador].nombre.toLowerCase()+" "+listaEgresades[contador].apellido.toLowerCase()).includes(buscado.toLowerCase()) ||
+      if ((listaEgresades[contador].nombre.toLowerCase() +" "+listaEgresades[contador].apellido.toLowerCase()).includes(buscado.toLowerCase()) ||
       listaEgresades[contador].nodo.toLowerCase().includes(buscado.toLowerCase()) ||
       listaEgresades[contador].sede.toLowerCase().includes(buscado.toLowerCase())) {
-        /* if(listaEgresades[contador].esEmpleado) {
-          resultados.push(listaEgresades[contador]);
-        } */
 
         switch (this.state.currentFilter) {
           case 'Egresade':
@@ -129,21 +124,16 @@ class Nahual_Table extends Component {
     )});
    
   }
-  certificado(){
-    console.log("entracertificado");
-    return(
-      <GenerarCertificado></GenerarCertificado>
-    )
-  }
-
-
+  
 
   render() {
     return (
       <div>
-        <div className="tabla">
-          <p className="titulo">Lista de Egresades</p>
-          <div className="linea"></div>
+        <Nahual_Menu/> 
+        <div className="tabla"> 
+        <p className="titulo" style={{  textAlign : "center"}} >Lista de Egresades</p>
+        <div className="linea"></div>
+          
           <div>
             {this.state.mostrarMensajeDeEstado ?
               <Message
@@ -156,7 +146,7 @@ class Nahual_Table extends Component {
               <p></p>
             }
           </div>
-
+          
           <div className="tabla-menu">
             <Search
               showNoResults={false}
