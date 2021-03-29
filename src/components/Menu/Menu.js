@@ -11,7 +11,7 @@ export default class Menu_Nahual extends Component {
   handleItemClick = (e, { name }) =>{ 
     this.setState({ activeItem: name })
   }
-
+  
   render() {
     const { activeItem } = this.state
     return (
@@ -31,7 +31,6 @@ export default class Menu_Nahual extends Component {
             onClick={this.handleItemClick}
           />
         </Menu>
-
       </div>
     )
   }

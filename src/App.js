@@ -22,11 +22,7 @@ function App() {
         <Route exact path="/" component={Nahual_Table}/>
         <Route exact path="/listaEgresades" component={Nahual_Table}/>
         <Route exact path="/certificado/:id" component={GenerarCertificado}/>
-        <Route exact path="/estadisticas" render={ () =>(
-          <React.Fragment>
-            <Nahual_Estadisticas/>
-          </React.Fragment>
-        )}/>
+        <Route exact path="/estadisticas" component={Nahual_Estadisticas}/>
 
         <Route exact path="/editar/:id" render={ (props) =>(
           <React.Fragment>   

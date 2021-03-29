@@ -1,20 +1,15 @@
 import React, { Component } from 'react'
-import { Label, Button, Message, Table, Search, Segment, Dropdown, Input } from 'semantic-ui-react'
+import { Label, Button, Message, Table, Search, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom';
 import { OpcionesDeFiltro } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeFiltro.js';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
-import { Dimmer, Loader } from "semantic-ui-react";
-import '../../public/stylesheets/Table.css';
+import GenerarCertificado from '../certificacion/GenerarCertificado'
 import Modal from '../egresade/ver-egresade/Modal';
-import { Menu } from 'semantic-ui-react'
-import Nahual_NavTest from '../Menu/Menu'
-
+import Nahual_Menu from '../Menu/Menu'
+import '../../public/stylesheets/Table.css';
 
 const { REACT_APP_EGRESADES_NAHUAL_API }  = process.env;
-// new
-
-
 class Nahual_Table extends Component {
   constructor() {
     super();
@@ -50,7 +45,6 @@ class Nahual_Table extends Component {
       })
       .then(res => {
         let dat = res;
-        console.log(dat.response)
         this.setState({
           api: dat.response,
           egresades: dat.response,
@@ -94,12 +88,9 @@ class Nahual_Table extends Component {
     }
   
     for (let contador = 0; contador < listaEgresades.length; contador++) {      
-      if ((listaEgresades[contador].nombre.toLowerCase()+" "+listaEgresades[contador].apellido.toLowerCase()).includes(buscado.toLowerCase()) ||
+      if ((listaEgresades[contador].nombre.toLowerCase() +" "+listaEgresades[contador].apellido.toLowerCase()).includes(buscado.toLowerCase()) ||
       listaEgresades[contador].nodo.toLowerCase().includes(buscado.toLowerCase()) ||
       listaEgresades[contador].sede.toLowerCase().includes(buscado.toLowerCase())) {
-        /* if(listaEgresades[contador].esEmpleado) {
-          resultados.push(listaEgresades[contador]);
-        } */
 
         switch (this.state.currentFilter) {
           case 'Egresade':
@@ -133,17 +124,12 @@ class Nahual_Table extends Component {
     )});
    
   }
-  certificado(){
-    console.log("entracertificado");
-    return(
-      <GenerarCertificado></GenerarCertificado>
-    )
-  }
+  
 
   render() {
     return (
       <div>
-        <Nahual_NavTest/> 
+        <Nahual_Menu/> 
         <div className="tabla"> 
         <p className="titulo" style={{  textAlign : "center"}} >Lista de Egresades</p>
         <div className="linea"></div>
