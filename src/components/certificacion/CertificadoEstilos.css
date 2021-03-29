@@ -1,0 +1,31 @@
+.certificado{
+    width: 122vh;
+    height: 85vh;
+    display: table;
+    background-image:url("../../public/imagenes/diploma.jpg");
+    background-size: 122vh 85vh;
+    background-position: center;
+    min-height: 85vh;
+    background-repeat: no-repeat;
+    margin-right: auto !important;
+    margin-left: auto !important;    
+}
+
+.nombreEgresade{
+  margin-left: 21%!important;
+  font-size:50px
+}
+
+.nodoEgresade
+{
+  margin-top:22%!important; 
+  margin-right: 23%;
+  text-align:right;
+  color:white;
+  text-transform: uppercase;
+  
+}
+.pdfBotones{
+  text-align: center;
+  margin-top: 2%;
+}
