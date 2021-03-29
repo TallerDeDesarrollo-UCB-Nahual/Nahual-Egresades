@@ -7,7 +7,8 @@ import EncabezadoDeRegistrar from './components/egresade/editar-egresades/Encabe
 import Nahual_Table from './components/lista-egresades/Tabla';
 import Nahual_Estadisticas from './components/estadisticas/Estadisticas';
 import InicioSesion from "./components/inicio-de-sesion/InicioSesion";
-import Autenticado from "./components/inicio-de-sesion/Autenticado"
+import Autenticado from "./components/inicio-de-sesion/Autenticado";
+import GenerarCertificado from "./components/certificacion/GenerarCertificado"
 import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Nahual_Table}/>
         <Route exact path="/listaEgresades" component={Nahual_Table}/>
+        <Route exact path="/certificado/:id" component={GenerarCertificado}/>
         <Route exact path="/estadisticas" render={ () =>(
           <React.Fragment>
             <Nahual_Estadisticas/>

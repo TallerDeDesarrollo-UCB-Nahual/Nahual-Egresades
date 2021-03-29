@@ -133,6 +133,12 @@ class Nahual_Table extends Component {
     )});
    
   }
+  certificado(){
+    console.log("entracertificado");
+    return(
+      <GenerarCertificado></GenerarCertificado>
+    )
+  }
 
   render() {
     return (
@@ -234,6 +240,11 @@ class Nahual_Table extends Component {
 
                     <Modal egresadeId={value.id} open={this.state.mostrarModal} />
                     <Eliminar egresadeId={value.id} eliminarVista={() => this.eliminarEgresadesVista(value.id)}></Eliminar>
+                    {<Link to={`/certificado/${value.id}`}><Button className="view-button">
+                      <i className="edit icon"></i>
+                      <label className="icon-text">Generar Certificado</label>
+                    </Button></Link>}
+                   
                   </Table.Cell>
                 </Table.Row>
               )))

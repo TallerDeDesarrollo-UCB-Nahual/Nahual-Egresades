@@ -3,6 +3,7 @@ import { Form, Input, Icon, Item } from "semantic-ui-react";
 import '../../../public/stylesheets/Modal.css';
 
 function MostrarEstadoDelEgresade(estado){
+  console.log("hola");
   var estadoEgresade = 'Desempleado'
   if(estado){
     estadoEgresade = 'Empleado';
@@ -14,6 +15,12 @@ function InformacionDelEgresade({ egresade }) {
   var hoy = new Date(egresade.fechaNacimiento);
   var mañana = new Date(hoy);
   mañana.setDate(hoy.getDate()+1);
+
+  var actualTrabajo = new Date(egresade.fechaActualTrabajo);
+
+  var primerEmpleo = new Date(egresade.fechaPrimerEmpleo);
+
+  console.log(egresade.esEmpleado);
   return (
     <Item.Group>
       <Item>
@@ -57,10 +64,30 @@ function InformacionDelEgresade({ egresade }) {
                 <Input> {MostrarEstadoDelEgresade(egresade.esEmpleado)} </Input>
               </Form.Field>
 
+            {             egresade.esEmpleado===true&&
+              <Form.Field inline>
+                <label><Icon name='briefcase' /><span className="title-data"> Empleo Actual:</span></label>
+                <Input>  {egresade.lugarActualTrabajo != "" ?egresade.lugarActualTrabajo : "No asginado"} </Input>
+              </Form.Field>
+            }
+            {              egresade.esEmpleado===true&&
+              <Form.Field inline>
+                <label><Icon name='calendar outline' /><span className="title-data"> Fecha obtencion empleo actual:</span></label>
+                <Input>  {egresade.fechaActualTrabajo != null ? actualTrabajo.toLocaleDateString('en-GB') : "Sin Fecha"} </Input>
+              </Form.Field>
+            }
+            {(egresade.nombrePrimerTrabajo !== "" && egresade.nombrePrimerTrabajo !== null) &&
               <Form.Field inline>
                 <label><Icon name='briefcase' /><span className="title-data"> Primer empleo:</span></label>
                 <Input> {egresade.nombrePrimerTrabajo} </Input>
               </Form.Field>
+            }
+            {(egresade.nombrePrimerTrabajo !== "" && egresade.nombrePrimerTrabajo !== null) &&
+              <Form.Field inline>
+                <label><Icon name='calendar outline' /><span className="title-data"> Fecha obtencion primer empleo:</span></label>
+                <Input>  {egresade.fechaPrimerEmpleo != null ? primerEmpleo.toLocaleDateString('en-GB') : "Sin Fecha"} </Input>
+              </Form.Field>
+            }
 
             </Form>
           </Item.Description>
