@@ -80,7 +80,7 @@ class BarrasChart extends Component {
               labels: ['Alumnes', 'Egresades', 'Empleades', 'Abandonades', 'Pre-inscripte'],
               datasets: [
                 {
-                  label: this.state.total,
+                  label: "Total: "+this.state.total,
                   data: [this.state.cantidadEstudiantes, this.state.cantidadEgresades, this.state.cantidadEmpleades, this.state.cantidadAbandonades, this.state.cantidadPreInscripte],
                   backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -108,8 +108,8 @@ class BarrasChart extends Component {
                 // },
               ],
             }}
-            height={400}
-            width={600}
+            height={500}
+            width={800}
             options={{
               maintainAspectRatio: false,
               scales: {

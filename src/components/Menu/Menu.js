@@ -8,8 +8,11 @@ import { useLocation, withRouter } from 'react-router-dom'
 
 export default class Menu_Nahual extends Component {
 
-  state = { 
-    activeItem: 'asdasd' 
+  constructor(){
+    super();
+
+    this.state={
+    }
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -21,21 +24,20 @@ export default class Menu_Nahual extends Component {
       <div>
         <Menu pointing secondary>
           <Menu.Item
-            as = {Link} to = '/listaEgresades'
+            as = {NavLink} to = '/listaEgresades'
             name='Lista'
             active={activeItem === 'Lista'}
             onClick={this.handleItemClick}
           />
           
           <Menu.Item
-            as = {Link} to ='/Estadisticas'
+            as = {NavLink} to ='/Estadisticas'
             name='Estadisticas'
             active={activeItem === 'Estadisticas'}
             onClick={this.handleItemClick}
           />
         </Menu>
 
-       
       </div>
     )
   }
