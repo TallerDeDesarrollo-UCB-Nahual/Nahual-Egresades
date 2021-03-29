@@ -224,11 +224,11 @@ export class EditarEgresades extends Component {
     let nuevoEstado = { ...estadoDepurado, [`fechaNacimiento`]: ""};
     if(fecha != "" && fecha != null){
       nuevoEstado = { ...estadoDepurado, [`fechaNacimiento`]: fecha.toISOString().split('T')[0]};
-    } 
+    }
     this.setState({ egresade: nuevoEstado });
   }
 
-  
+
   obtenerNuevaFecha() {
     if(this.state.egresade.fechaNacimiento == undefined || this.state.egresade.fechaNacimiento == ""){
       return null;
@@ -282,13 +282,14 @@ export class EditarEgresades extends Component {
               <Grid.Column>
                 {
                   <span className="etiquetas"  >
-                    <label htmlFor="fechaNacimiento">Fecha de Nacimiento (MM/DD/AAAA)</label>
+                    <label htmlFor="fechaNacimiento">Fecha de Nacimiento (dd/mm/aaaa)</label>
                     <div  style={{ margin: "0px 12%"}}>
                     <DatePicker
-                    selected={this.obtenerNuevaFecha()} 
+                    dateFormat={"dd/MM/yyyy"}
+                    selected={this.obtenerNuevaFecha()}
                     onChange={this.editarFecha}/>
                     </div>
-                  </span>    
+                  </span>
               }
               </Grid.Column>
               <Grid.Column>
