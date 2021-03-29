@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 import { OpcionesDeFiltro } from '../egresade/editar-egresades/opciones-de-seleccion/OpcionesDeFiltro.js';
 import ModalDeImportar from '../boton-importar/ModalDeImportar';
 import Eliminar from '../egresade/eliminar-egresade/Eliminar';
-import './Tablas.css'
 import { Dimmer, Loader } from "semantic-ui-react";
-
 import '../../public/stylesheets/Table.css';
 import Modal from '../egresade/ver-egresade/Modal';
 import { Menu } from 'semantic-ui-react'
@@ -139,14 +137,11 @@ class Nahual_Table extends Component {
   render() {
     return (
       <div>
-        <Nahual_NavTest/>
-
+        <Nahual_NavTest/> 
+        <div className="tabla"> 
         <p className="titulo" style={{  textAlign : "center"}} >Lista de Egresades</p>
         <div className="linea"></div>
           
-              
-          
-        <div className="tabla">   
           <div>
             {this.state.mostrarMensajeDeEstado ?
               <Message
@@ -159,7 +154,7 @@ class Nahual_Table extends Component {
               <p></p>
             }
           </div>
-
+          
           <div className="tabla-menu">
             <Search
               showNoResults={false}

@@ -16,7 +16,7 @@ class Nahual_Estadisticas extends Component {
         
        <div style ={{width: '70%', height: '500px', display: 'inline-flex', background:'antiquewhite', alignItems: 'center', justifyContent:'center', marginTop:'20px'}}>
         <Segment>
-        <Nahual_BarrasChart/>
+          <Nahual_BarrasChart/>
         </Segment>
           
        </div>
