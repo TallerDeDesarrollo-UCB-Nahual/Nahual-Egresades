@@ -19,7 +19,6 @@ function App() {
       <Navbar/>
       {estaAutenticado ? <Autenticado /> : <InicioSesion />}
       <Switch>
-        <Route exact path="/" component={Nahual_Table}/>
         <Route exact path="/listaEgresades" component={Nahual_Table}/>
         <Route exact path="/certificado/:id" component={GenerarCertificado}/>
         <Route exact path="/estadisticas" component={Nahual_Estadisticas}/>
