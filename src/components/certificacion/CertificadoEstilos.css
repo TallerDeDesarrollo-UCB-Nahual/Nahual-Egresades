@@ -7,9 +7,6 @@
     background-position: center;
     background-repeat: no-repeat;
     margin:auto !important;
-    /* margin-right: auto !important;
-    margin-left: auto !important;     */
-    orientation: landscape;
 }
 
 .nombreEgresade{
@@ -24,7 +21,6 @@
   text-align:right !important;
   color:white;
   text-transform: uppercase;
-  
 }
 .pdfBotones{
   text-align: center;

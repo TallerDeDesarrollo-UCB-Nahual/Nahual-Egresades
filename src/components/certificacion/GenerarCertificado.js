@@ -4,7 +4,7 @@ import Pdf from "react-to-pdf";
 import { Button } from 'semantic-ui-react'
 import diploma from "../../public/imagenes/diploma.jpg"
 import axios from 'axios';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import './CertificadoEstilos.css';
 
 const ref = React.createRef();
@@ -35,36 +35,28 @@ class GenerarCertificado extends Component {
   componentDidMount() {
     this.obtenerEgresade();
   }
-  retornar(){
+  retornar() {
     this.props.history.push("/listaEgresades");
   }
   render() {
     const { nombre, apellido, nodo } = this.state;
     return (
       <>
-        {/* <div className="certificado" ref={ref}>
+        <div className="certificado" ref={ref}>
           <div className="datos">
             <h2 className="nodoEgresade">{nodo}</h2>
             <h1 className="nombreEgresade">{nombre} {apellido}</h1>
           </div>
-        </div> */}
-        <page className="certificado" ref={ref} size="A4" layout="landscape">
-        <div className="datos">
-            <h2 className="nodoEgresade">{nodo}</h2>
-            <h1 className="nombreEgresade">{nombre} {apellido}</h1>
-          </div>
-        </page>
+        </div>
         <div className="pdfBotones">
-          <Button color='red' onClick={()=>{this.retornar()}} >
+          <Button color='red' onClick={() => { this.retornar() }} >
             <i className="cancel icon"></i>
             <label className="icon-text">Cancelar</label>
           </Button>
-          <Pdf options={options} targetRef={ref} filename={this.state.nombre + this.state.apellido + '.pdf'}>
+          <Pdf y='0' options={options} targetRef={ref} filename={this.state.nombre + this.state.apellido + '.pdf'}>
             {({ toPdf }) => <Button onClick={toPdf} color='green'>Descargar PDF</Button>}
           </Pdf>
-
         </div>
-
       </>
     );
   }
