@@ -42,18 +42,24 @@ class GenerarCertificado extends Component {
     const { nombre, apellido, nodo } = this.state;
     return (
       <>
-        <div className="certificado" ref={ref}>
+        {/* <div className="certificado" ref={ref}>
           <div className="datos">
             <h2 className="nodoEgresade">{nodo}</h2>
             <h1 className="nombreEgresade">{nombre} {apellido}</h1>
           </div>
-        </div>
+        </div> */}
+        <page className="certificado" ref={ref} size="A4" layout="landscape">
+        <div className="datos">
+            <h2 className="nodoEgresade">{nodo}</h2>
+            <h1 className="nombreEgresade">{nombre} {apellido}</h1>
+          </div>
+        </page>
         <div className="pdfBotones">
           <Button color='red' onClick={()=>{this.retornar()}} >
             <i className="cancel icon"></i>
             <label className="icon-text">Cancelar</label>
           </Button>
-          <Pdf x={-5} y={-0.3} scale={0.95} options={options} targetRef={ref} filename={this.state.nombre + this.state.apellido + '.pdf'}>
+          <Pdf options={options} targetRef={ref} filename={this.state.nombre + this.state.apellido + '.pdf'}>
             {({ toPdf }) => <Button onClick={toPdf} color='green'>Descargar PDF</Button>}
           </Pdf>
 
