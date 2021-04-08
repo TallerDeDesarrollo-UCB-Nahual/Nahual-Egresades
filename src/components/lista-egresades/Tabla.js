@@ -108,8 +108,6 @@ class Nahual_Table extends Component {
         }
       }
     }
-    console.log("Aleeeee")
-      console.log(resultados.length)
     this.setState({
       filasEncontradas: resultados,
       valueFilter: nombre.target.value
@@ -185,7 +183,7 @@ class Nahual_Table extends Component {
               </Dropdown.Menu>
             </Dropdown.Menu>
           </Dropdown>
-          
+
           <h1 class="ui button floating" style={{'backgroundColor':'white' }}>Total: {this.state.filasEncontradas.length}</h1>
           
           
