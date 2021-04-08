@@ -114,6 +114,7 @@ class Nahual_Table extends Component {
     },()=>{});
   }
 
+
   activeFilter(filter){
     console.log(filter)
     this.setState({
@@ -146,7 +147,6 @@ class Nahual_Table extends Component {
               <p></p>
             }
           </div>
-          
           <div className="tabla-menu">
             <Search
               showNoResults={false}
@@ -169,8 +169,7 @@ class Nahual_Table extends Component {
             button
             className='icon'
           >
-            <Dropdown.Menu>
-              
+            <Dropdown.Menu>  
               <Dropdown.Divider />
               <Dropdown.Header icon='tags' content='Estados' />
               <Dropdown.Menu scrolling>
@@ -184,6 +183,10 @@ class Nahual_Table extends Component {
               </Dropdown.Menu>
             </Dropdown.Menu>
           </Dropdown>
+
+          <h1 class="ui button floating" style={{'backgroundColor':'white' }}>Total: {this.state.filasEncontradas.length}</h1>
+          
+          
           <br /><br />
           <Table celled className="tarjeta-tabla">
             <Table.Header>
